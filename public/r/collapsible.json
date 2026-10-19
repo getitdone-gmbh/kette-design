@@ -4,7 +4,7 @@
   "title": "Collapsible",
   "description": "Collapsible from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-collapsible"
+    "@radix-ui/react-collapsible@^1.2.1"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/theme.json"

@@ -4,7 +4,7 @@
   "title": "Hover Card",
   "description": "Hover Card from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-hover-card"
+    "@radix-ui/react-hover-card@^1.2.1"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/labels-context.json",

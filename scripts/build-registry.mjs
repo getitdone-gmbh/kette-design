@@ -6,6 +6,8 @@ const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..')
 const BASE_URL = process.env.REGISTRY_URL ?? 'https://zero-design.itdone.de/r';
 const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
 const npmDeps = new Set(Object.keys(pkg.dependencies));
+// Pin the versions the code was built and tested against, otherwise the shadcn CLI installs the latest major (e.g. react-day-picker 9 instead of 8).
+const withVersion = (name) => (pkg.dependencies[name] ? `${name}@${pkg.dependencies[name]}` : name);
 const itemNameOfDir = (dir) => (dir === 'card' ? 'card-default' : dir);
 // Items exported from the barrel count as components, everything else is a helper.
 const COMPONENTS = new Set(
@@ -74,7 +76,7 @@ for (const { dir, kind, files, name, sub } of [...collect('components/ui', 'ui')
     type,
     title: describe(name),
     description: isComponent ? `${describe(name)} from the Get IT Done design system.` : `Helper used by the Get IT Done components.`,
-    dependencies: [...external].sort(),
+    dependencies: [...external].sort().map(withVersion),
     registryDependencies: [...internal].filter((d) => d !== name).sort().map((d) => `${BASE_URL}/${d}.json`).concat(`${BASE_URL}/theme.json`).filter((d) => !(name === 'utils' && d.endsWith('/theme.json'))),
     files: files.map((file) => ({ path: `registry/${kind}/${file}`, type })),
   });
@@ -89,7 +91,7 @@ items.unshift({
   type: 'registry:style',
   title: 'zero theme',
   description: 'CSS variables (light and dark), animations and the Tailwind CSS 3 preset of the Get IT Done design system. Import styles/getitdone/theme.css, animation.css and document-surface.css in your global CSS and add tailwind/getitdone/preset.cjs to presets.',
-  dependencies: ['tailwindcss-animate', 'tailwindcss-themer', '@tailwindcss/container-queries'],
+  dependencies: ['tailwindcss-animate', 'tailwindcss-themer', '@tailwindcss/container-queries'].map(withVersion),
   files: [
     { path: 'registry/theme/theme.css', type: 'registry:file', target: 'styles/getitdone/theme.css' },
     { path: 'registry/theme/animation.css', type: 'registry:file', target: 'styles/getitdone/animation.css' },

@@ -4,8 +4,8 @@
   "title": "Toggle Group",
   "description": "Toggle Group from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-toggle-group",
-    "class-variance-authority"
+    "@radix-ui/react-toggle-group@^1.2.1",
+    "class-variance-authority@^0.7.0"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/labels-context.json",

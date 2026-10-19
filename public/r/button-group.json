@@ -4,7 +4,7 @@
   "title": "Button Group",
   "description": "Button Group from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-slot"
+    "@radix-ui/react-slot@^1.5.0"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/labels-context.json",

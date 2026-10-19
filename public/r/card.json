@@ -4,8 +4,8 @@
   "title": "Card",
   "description": "Card from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-slot",
-    "class-variance-authority"
+    "@radix-ui/react-slot@^1.5.0",
+    "class-variance-authority@^0.7.0"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/labels-context.json",

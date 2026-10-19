@@ -9,9 +9,9 @@
       "title": "zero theme",
       "description": "CSS variables (light and dark), animations and the Tailwind CSS 3 preset of the Get IT Done design system. Import styles/getitdone/theme.css, animation.css and document-surface.css in your global CSS and add tailwind/getitdone/preset.cjs to presets.",
       "dependencies": [
-        "tailwindcss-animate",
-        "tailwindcss-themer",
-        "@tailwindcss/container-queries"
+        "tailwindcss-animate@^1.0.7",
+        "tailwindcss-themer@^3.1.2",
+        "@tailwindcss/container-queries@^0.1.1"
       ],
       "files": [
         {
@@ -52,8 +52,8 @@
       "title": "Accordion",
       "description": "Accordion from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-accordion",
-        "lucide-react"
+        "@radix-ui/react-accordion@^1.3.1",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -73,7 +73,7 @@
       "title": "Action Bar",
       "description": "Action Bar from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -100,7 +100,7 @@
       "title": "Activity Feed",
       "description": "Activity Feed from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/data-state-panel.json",
@@ -122,8 +122,8 @@
       "title": "Alert",
       "description": "Alert from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -143,8 +143,8 @@
       "title": "Autosave Status",
       "description": "Autosave Status from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -164,9 +164,9 @@
       "title": "Avatar",
       "description": "Avatar from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-avatar",
-        "class-variance-authority",
-        "lucide-react"
+        "@radix-ui/react-avatar@^1.3.1",
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -186,7 +186,7 @@
       "title": "Badge",
       "description": "Badge from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -206,7 +206,7 @@
       "title": "Blockquote",
       "description": "Blockquote from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/utils.json",
@@ -225,7 +225,7 @@
       "title": "Bottom Navigation",
       "description": "Bottom Navigation from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -246,9 +246,9 @@
       "title": "Breadcrumb",
       "description": "Breadcrumb from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority",
-        "lucide-react"
+        "@radix-ui/react-slot@^1.5.0",
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -269,8 +269,8 @@
       "title": "Button Close",
       "description": "Button Close from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -291,7 +291,7 @@
       "title": "Button Group",
       "description": "Button Group from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-slot"
+        "@radix-ui/react-slot@^1.5.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -312,9 +312,9 @@
       "title": "Button",
       "description": "Button from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority",
-        "lucide-react"
+        "@radix-ui/react-slot@^1.5.0",
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -336,7 +336,7 @@
       "title": "Calendar Grid",
       "description": "Calendar Grid from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/data-state-panel.json",
@@ -360,9 +360,9 @@
       "title": "Calendar",
       "description": "Calendar from the Get IT Done design system.",
       "dependencies": [
-        "date-fns",
-        "lucide-react",
-        "react-day-picker"
+        "date-fns@^2.30.0",
+        "lucide-react@^0.379.0",
+        "react-day-picker@^8.9.1"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -383,7 +383,7 @@
       "title": "Card Default",
       "description": "Card Default from the Get IT Done design system.",
       "dependencies": [
-        "clsx"
+        "clsx@^2.0.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -410,8 +410,8 @@
       "title": "Card",
       "description": "Card from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority"
+        "@radix-ui/react-slot@^1.5.0",
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -431,8 +431,8 @@
       "title": "Carousel",
       "description": "Carousel from the Get IT Done design system.",
       "dependencies": [
-        "embla-carousel-react",
-        "lucide-react"
+        "embla-carousel-react@^8.5.1",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -472,7 +472,7 @@
       "title": "Chart",
       "description": "Chart from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/data-state-panel.json",
@@ -494,7 +494,7 @@
       "title": "Chat Window",
       "description": "Chat Window from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels.json",
@@ -517,7 +517,7 @@
       "title": "Checkbox Group",
       "description": "Checkbox Group from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/recipes.json",
@@ -537,8 +537,8 @@
       "title": "Checkbox",
       "description": "Checkbox from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-checkbox",
-        "@radix-ui/react-icons"
+        "@radix-ui/react-checkbox@^1.4.1",
+        "@radix-ui/react-icons@^1.3.2"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -558,9 +558,9 @@
       "title": "Chip",
       "description": "Chip from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority",
-        "lucide-react"
+        "@radix-ui/react-slot@^1.5.0",
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels.json",
@@ -598,8 +598,8 @@
       "title": "Code Snippet",
       "description": "Code Snippet from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/code-highlight.json",
@@ -620,7 +620,7 @@
       "title": "Collapsible",
       "description": "Collapsible from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-collapsible"
+        "@radix-ui/react-collapsible@^1.2.1"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/theme.json"
@@ -638,8 +638,8 @@
       "title": "Color Picker",
       "description": "Color Picker from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-radio-group",
-        "class-variance-authority"
+        "@radix-ui/react-radio-group@^1.5.1",
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -663,9 +663,9 @@
       "title": "Command",
       "description": "Command from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-dialog",
-        "cmdk",
-        "lucide-react"
+        "@radix-ui/react-dialog@^1.3.1",
+        "cmdk@^1.1.1",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/dangling-controls.json",
@@ -708,7 +708,7 @@
       "title": "Content Divider",
       "description": "Content Divider from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/utils.json",
@@ -789,7 +789,7 @@
       "title": "Data State Panel",
       "description": "Data State Panel from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -811,9 +811,9 @@
       "title": "Date Picker",
       "description": "Date Picker from the Get IT Done design system.",
       "dependencies": [
-        "date-fns",
-        "lucide-react",
-        "react-day-picker"
+        "date-fns@^2.30.0",
+        "lucide-react@^0.379.0",
+        "react-day-picker@^8.9.1"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -838,7 +838,7 @@
       "title": "Description List",
       "description": "Description List from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/avatar.json",
@@ -883,8 +883,8 @@
       "title": "Dialog",
       "description": "Dialog from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-dialog",
-        "lucide-react"
+        "@radix-ui/react-dialog@^1.3.1",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -923,7 +923,7 @@
       "title": "Drawer",
       "description": "Drawer from the Get IT Done design system.",
       "dependencies": [
-        "vaul"
+        "vaul@^1.1.2"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -943,8 +943,8 @@
       "title": "Dropdown Menu",
       "description": "Dropdown Menu from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-dropdown-menu",
-        "lucide-react"
+        "@radix-ui/react-dropdown-menu@^2.2.1",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -982,8 +982,8 @@
       "title": "Empty State",
       "description": "Empty State from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/utils.json",
@@ -1002,7 +1002,7 @@
       "title": "Facet Filter",
       "description": "Facet Filter from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/checkbox.json",
@@ -1026,7 +1026,7 @@
       "title": "Featured Icon",
       "description": "Featured Icon from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/utils.json",
@@ -1045,8 +1045,8 @@
       "title": "Feed Item",
       "description": "Feed Item from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/empty-state.json",
@@ -1068,7 +1068,7 @@
       "title": "File Icon",
       "description": "File Icon from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -1088,7 +1088,7 @@
       "title": "File Upload",
       "description": "File Upload from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels.json",
@@ -1112,7 +1112,7 @@
       "title": "Filter Chip Bar",
       "description": "Filter Chip Bar from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -1134,7 +1134,7 @@
       "title": "Form Section",
       "description": "Form Section from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/utils.json",
@@ -1153,9 +1153,9 @@
       "title": "Form",
       "description": "Form from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-label",
-        "@radix-ui/react-slot",
-        "react-hook-form"
+        "@radix-ui/react-label@^2.1.17",
+        "@radix-ui/react-slot@^1.5.0",
+        "react-hook-form@^7.47.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/label.json",
@@ -1175,7 +1175,7 @@
       "title": "Grid",
       "description": "Grid from the Get IT Done design system.",
       "dependencies": [
-        "clsx"
+        "clsx@^2.0.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/theme.json"
@@ -1201,7 +1201,7 @@
       "title": "Heatmap",
       "description": "Heatmap from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/data-state-panel.json",
@@ -1224,7 +1224,7 @@
       "title": "Help Icon",
       "description": "Help Icon from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -1263,7 +1263,7 @@
       "title": "Hover Card",
       "description": "Hover Card from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-hover-card"
+        "@radix-ui/react-hover-card@^1.2.1"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -1318,7 +1318,7 @@
       "title": "Inline Edit",
       "description": "Inline Edit from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -1339,7 +1339,7 @@
       "title": "Input Digit",
       "description": "Input Digit from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -1360,7 +1360,7 @@
       "title": "Input",
       "description": "Input from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -1382,7 +1382,7 @@
       "title": "Kanban Move To Menu",
       "description": "Kanban Move To Menu from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -1421,8 +1421,8 @@
       "title": "Kanban",
       "description": "Kanban from the Get IT Done design system.",
       "dependencies": [
-        "@dnd-kit/core",
-        "lucide-react"
+        "@dnd-kit/core@6.3.1",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/data-state-panel.json",
@@ -1444,7 +1444,7 @@
       "title": "Kbd",
       "description": "Kbd from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -1464,8 +1464,8 @@
       "title": "Label",
       "description": "Label from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-label",
-        "class-variance-authority"
+        "@radix-ui/react-label@^2.1.17",
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -1553,7 +1553,7 @@
       "title": "Layout",
       "description": "Layout from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/utils.json",
@@ -1572,7 +1572,7 @@
       "title": "Link Card",
       "description": "Link Card from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/recipes.json",
@@ -1592,8 +1592,8 @@
       "title": "Link",
       "description": "Link from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority"
+        "@radix-ui/react-slot@^1.5.0",
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/recipes.json",
@@ -1613,7 +1613,7 @@
       "title": "List",
       "description": "List from the Get IT Done design system.",
       "dependencies": [
-        "clsx"
+        "clsx@^2.0.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/theme.json"
@@ -1639,8 +1639,8 @@
       "title": "List Item",
       "description": "List Item from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-slot",
-        "lucide-react"
+        "@radix-ui/react-slot@^1.5.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/recipes.json",
@@ -1660,7 +1660,7 @@
       "title": "Loading Overlay",
       "description": "Loading Overlay from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-dialog"
+        "@radix-ui/react-dialog@^1.3.1"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -1681,8 +1681,8 @@
       "title": "Loading Spinner",
       "description": "Loading Spinner from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -1702,7 +1702,7 @@
       "title": "Logo Tile",
       "description": "Logo Tile from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/avatar.json",
@@ -1722,8 +1722,8 @@
       "title": "Message",
       "description": "Message from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -1761,7 +1761,7 @@
       "title": "Metric",
       "description": "Metric from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -1782,9 +1782,9 @@
       "title": "Multiselect",
       "description": "Multiselect from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react",
-        "react-dnd",
-        "react-dnd-html5-backend"
+        "lucide-react@^0.379.0",
+        "react-dnd@^16.0.1",
+        "react-dnd-html5-backend@^16.0.1"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -1816,9 +1816,9 @@
       "title": "Navigation Menu",
       "description": "Navigation Menu from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-navigation-menu",
-        "class-variance-authority",
-        "lucide-react"
+        "@radix-ui/react-navigation-menu@^1.4.1",
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/recipes.json",
@@ -1859,8 +1859,8 @@
       "title": "Notification",
       "description": "Notification from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -1881,7 +1881,7 @@
       "title": "Object Icon",
       "description": "Object Icon from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -1901,7 +1901,7 @@
       "title": "Page Header",
       "description": "Page Header from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/utils.json",
@@ -1920,7 +1920,7 @@
       "title": "Pagination Dot Group",
       "description": "Pagination Dot Group from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels.json",
@@ -1942,8 +1942,8 @@
       "title": "Pagination",
       "description": "Pagination from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -1969,8 +1969,8 @@
       "title": "Phone Input",
       "description": "Phone Input from the Get IT Done design system.",
       "dependencies": [
-        "libphonenumber-js",
-        "lucide-react"
+        "libphonenumber-js@^1.11.3",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -2003,7 +2003,7 @@
       "title": "Popover",
       "description": "Popover from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-popover"
+        "@radix-ui/react-popover@^1.3.1"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2024,7 +2024,7 @@
       "title": "Progress Circle",
       "description": "Progress Circle from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2044,7 +2044,7 @@
       "title": "Progress",
       "description": "Progress from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2064,7 +2064,7 @@
       "title": "Radio Cards",
       "description": "Radio Cards from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-radio-group"
+        "@radix-ui/react-radio-group@^1.5.1"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2084,7 +2084,7 @@
       "title": "Radio Group",
       "description": "Radio Group from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-radio-group"
+        "@radix-ui/react-radio-group@^1.5.1"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/utils.json",
@@ -2103,8 +2103,8 @@
       "title": "Rating Input",
       "description": "Rating Input from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-radio-group",
-        "lucide-react"
+        "@radix-ui/react-radio-group@^1.5.1",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2163,7 +2163,7 @@
       "title": "Rich Text Toolbar",
       "description": "Rich Text Toolbar from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/kbd.json",
@@ -2186,7 +2186,7 @@
       "title": "Scroll Area",
       "description": "Scroll Area from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-scroll-area"
+        "@radix-ui/react-scroll-area@^1.4.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/utils.json",
@@ -2225,7 +2225,7 @@
       "title": "Secret Field",
       "description": "Secret Field from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -2267,7 +2267,7 @@
       "title": "Section Footer",
       "description": "Section Footer from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/utils.json",
@@ -2286,7 +2286,7 @@
       "title": "Section Header",
       "description": "Section Header from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/utils.json",
@@ -2322,8 +2322,8 @@
       "title": "Select",
       "description": "Select from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-select",
-        "lucide-react"
+        "@radix-ui/react-select@^2.4.1",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/input.json",
@@ -2363,9 +2363,9 @@
       "title": "Sheet",
       "description": "Sheet from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-dialog",
-        "class-variance-authority",
-        "lucide-react"
+        "@radix-ui/react-dialog@^1.3.1",
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/autosave-status.json",
@@ -2391,9 +2391,9 @@
       "title": "Sidebar Nav",
       "description": "Sidebar Nav from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-collapsible",
-        "class-variance-authority",
-        "lucide-react"
+        "@radix-ui/react-collapsible@^1.2.1",
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2416,9 +2416,9 @@
       "title": "Sidebar",
       "description": "Sidebar from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-collapsible",
-        "@radix-ui/react-slot",
-        "lucide-react"
+        "@radix-ui/react-collapsible@^1.2.1",
+        "@radix-ui/react-slot@^1.5.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/dropdown-menu.json",
@@ -2439,7 +2439,7 @@
       "title": "Signature Box",
       "description": "Signature Box from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2460,7 +2460,7 @@
       "title": "Signature Pad",
       "description": "Signature Pad from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -2482,7 +2482,7 @@
       "title": "Singleselect",
       "description": "Singleselect from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -2564,7 +2564,7 @@
       "title": "Spacing",
       "description": "Spacing from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/utils.json",
@@ -2595,7 +2595,7 @@
       "title": "Status Dot",
       "description": "Status Dot from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/utils.json",
@@ -2614,8 +2614,8 @@
       "title": "Step Marker",
       "description": "Step Marker from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2635,8 +2635,8 @@
       "title": "Stepper",
       "description": "Stepper from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -2698,7 +2698,7 @@
       "title": "Switch",
       "description": "Switch from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-switch"
+        "@radix-ui/react-switch@^1.4.1"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2718,7 +2718,7 @@
       "title": "Table Cells",
       "description": "Table Cells from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -2768,8 +2768,8 @@
       "title": "Table",
       "description": "Table from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/button.json",
@@ -2794,8 +2794,8 @@
       "title": "Tabs",
       "description": "Tabs from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-tabs",
-        "class-variance-authority"
+        "@radix-ui/react-tabs@^1.2.1",
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2854,9 +2854,9 @@
       "title": "Toast",
       "description": "Toast from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-toast",
-        "class-variance-authority",
-        "lucide-react"
+        "@radix-ui/react-toast@^1.3.1",
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2894,8 +2894,8 @@
       "title": "Toggle Group",
       "description": "Toggle Group from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-toggle-group",
-        "class-variance-authority"
+        "@radix-ui/react-toggle-group@^1.2.1",
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2915,8 +2915,8 @@
       "title": "Toggle",
       "description": "Toggle from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-toggle",
-        "class-variance-authority"
+        "@radix-ui/react-toggle@^1.2.1",
+        "class-variance-authority@^0.7.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2936,7 +2936,7 @@
       "title": "Tooltip",
       "description": "Tooltip from the Get IT Done design system.",
       "dependencies": [
-        "@radix-ui/react-tooltip"
+        "@radix-ui/react-tooltip@^1.4.1"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
@@ -2956,8 +2956,8 @@
       "title": "Topbar",
       "description": "Topbar from the Get IT Done design system.",
       "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
+        "class-variance-authority@^0.7.0",
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/accordion.json",
@@ -3037,7 +3037,7 @@
       "title": "Versions",
       "description": "Versions from the Get IT Done design system.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^0.379.0"
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/badge.json",
@@ -3157,8 +3157,8 @@
       "title": "Utils",
       "description": "Helper used by the Get IT Done components.",
       "dependencies": [
-        "clsx",
-        "tailwind-merge"
+        "clsx@^2.0.0",
+        "tailwind-merge@^2.0.0"
       ],
       "registryDependencies": [],
       "files": [

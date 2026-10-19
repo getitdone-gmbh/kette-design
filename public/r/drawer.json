@@ -4,7 +4,7 @@
   "title": "Drawer",
   "description": "Drawer from the Get IT Done design system.",
   "dependencies": [
-    "vaul"
+    "vaul@^1.1.2"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/labels-context.json",

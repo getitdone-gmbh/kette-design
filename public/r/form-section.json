@@ -4,7 +4,7 @@
   "title": "Form Section",
   "description": "Form Section from the Get IT Done design system.",
   "dependencies": [
-    "class-variance-authority"
+    "class-variance-authority@^0.7.0"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/utils.json",

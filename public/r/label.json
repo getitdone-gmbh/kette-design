@@ -4,8 +4,8 @@
   "title": "Label",
   "description": "Label from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-label",
-    "class-variance-authority"
+    "@radix-ui/react-label@^2.1.17",
+    "class-variance-authority@^0.7.0"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/labels-context.json",

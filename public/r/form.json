@@ -4,9 +4,9 @@
   "title": "Form",
   "description": "Form from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-label",
-    "@radix-ui/react-slot",
-    "react-hook-form"
+    "@radix-ui/react-label@^2.1.17",
+    "@radix-ui/react-slot@^1.5.0",
+    "react-hook-form@^7.47.0"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/label.json",

@@ -4,8 +4,8 @@
   "title": "Checkbox",
   "description": "Checkbox from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-checkbox",
-    "@radix-ui/react-icons"
+    "@radix-ui/react-checkbox@^1.4.1",
+    "@radix-ui/react-icons@^1.3.2"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/labels-context.json",

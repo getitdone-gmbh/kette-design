@@ -4,9 +4,9 @@
   "title": "zero theme",
   "description": "CSS variables (light and dark), animations and the Tailwind CSS 3 preset of the Get IT Done design system. Import styles/getitdone/theme.css, animation.css and document-surface.css in your global CSS and add tailwind/getitdone/preset.cjs to presets.",
   "dependencies": [
-    "tailwindcss-animate",
-    "tailwindcss-themer",
-    "@tailwindcss/container-queries"
+    "tailwindcss-animate@^1.0.7",
+    "tailwindcss-themer@^3.1.2",
+    "@tailwindcss/container-queries@^0.1.1"
   ],
   "files": [
     {

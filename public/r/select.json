@@ -4,8 +4,8 @@
   "title": "Select",
   "description": "Select from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-select",
-    "lucide-react"
+    "@radix-ui/react-select@^2.4.1",
+    "lucide-react@^0.379.0"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/input.json",

@@ -4,8 +4,8 @@
   "title": "Dropdown Menu",
   "description": "Dropdown Menu from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-dropdown-menu",
-    "lucide-react"
+    "@radix-ui/react-dropdown-menu@^2.2.1",
+    "lucide-react@^0.379.0"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/labels-context.json",

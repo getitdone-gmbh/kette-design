@@ -4,7 +4,7 @@
   "title": "Switch",
   "description": "Switch from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-switch"
+    "@radix-ui/react-switch@^1.4.1"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/labels-context.json",

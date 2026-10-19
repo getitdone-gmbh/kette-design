@@ -4,8 +4,8 @@
   "title": "Color Picker",
   "description": "Color Picker from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-radio-group",
-    "class-variance-authority"
+    "@radix-ui/react-radio-group@^1.5.1",
+    "class-variance-authority@^0.7.0"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/button.json",

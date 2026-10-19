@@ -4,9 +4,9 @@
   "title": "Sidebar Nav",
   "description": "Sidebar Nav from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-collapsible",
-    "class-variance-authority",
-    "lucide-react"
+    "@radix-ui/react-collapsible@^1.2.1",
+    "class-variance-authority@^0.7.0",
+    "lucide-react@^0.379.0"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/labels-context.json",

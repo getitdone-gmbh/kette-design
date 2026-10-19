@@ -4,7 +4,7 @@
   "title": "Activity Feed",
   "description": "Activity Feed from the Get IT Done design system.",
   "dependencies": [
-    "lucide-react"
+    "lucide-react@^0.379.0"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/data-state-panel.json",

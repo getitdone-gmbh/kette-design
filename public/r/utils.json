@@ -4,8 +4,8 @@
   "title": "Utils",
   "description": "Helper used by the Get IT Done components.",
   "dependencies": [
-    "clsx",
-    "tailwind-merge"
+    "clsx@^2.0.0",
+    "tailwind-merge@^2.0.0"
   ],
   "registryDependencies": [],
   "files": [

@@ -4,7 +4,7 @@
   "title": "Radio Cards",
   "description": "Radio Cards from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-radio-group"
+    "@radix-ui/react-radio-group@^1.5.1"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/labels-context.json",

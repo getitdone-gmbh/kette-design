@@ -4,8 +4,8 @@
   "title": "Rating Input",
   "description": "Rating Input from the Get IT Done design system.",
   "dependencies": [
-    "@radix-ui/react-radio-group",
-    "lucide-react"
+    "@radix-ui/react-radio-group@^1.5.1",
+    "lucide-react@^0.379.0"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/labels-context.json",

@@ -4,9 +4,9 @@
   "title": "Multiselect",
   "description": "Multiselect from the Get IT Done design system.",
   "dependencies": [
-    "lucide-react",
-    "react-dnd",
-    "react-dnd-html5-backend"
+    "lucide-react@^0.379.0",
+    "react-dnd@^16.0.1",
+    "react-dnd-html5-backend@^16.0.1"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/button.json",

@@ -4,9 +4,9 @@
   "title": "Date Picker",
   "description": "Date Picker from the Get IT Done design system.",
   "dependencies": [
-    "date-fns",
-    "lucide-react",
-    "react-day-picker"
+    "date-fns@^2.30.0",
+    "lucide-react@^0.379.0",
+    "react-day-picker@^8.9.1"
   ],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/button.json",
