@@ -12,7 +12,7 @@ const isExternal = (id: string) => externalPackages.some((name) => id === name |
 
 export default defineConfig({
   publicDir: false,
-  plugins: [react(), dts({ include: ['src'], exclude: ['**/*.test.*', 'src/lib/assert-compiled.ts', 'src/lib/token-contrast.ts'], entryRoot: 'src' })],
+  plugins: [react(), dts({ tsconfigPath: './tsconfig.build.json', include: ['src'], exclude: ['**/*.test.*', '**/*.stories.*', 'src/lib/assert-compiled.ts', 'src/lib/token-contrast.ts'], entryRoot: 'src' })],
   build: {
     lib: { entry: resolve(__dirname, 'src/index.ts'), formats: ['es'], fileName: () => 'index.js' },
     rollupOptions: {

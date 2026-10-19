@@ -1,6 +1,8 @@
-# @getitdone-gmbh/ui
+# @getitdone-gmbh/kette-design
 
-[![npm](https://img.shields.io/npm/v/@getitdone-gmbh/ui?label=npm&color=cb3837)](https://www.npmjs.com/package/@getitdone-gmbh/ui) [![license](https://img.shields.io/npm/l/@getitdone-gmbh/ui)](LICENSE)
+[![npm](https://img.shields.io/npm/v/@getitdone-gmbh/kette-design?label=npm&color=cb3837)](https://www.npmjs.com/package/@getitdone-gmbh/kette-design) [![license](https://img.shields.io/npm/l/@getitdone-gmbh/kette-design)](LICENSE)
+
+Formerly published as @getitdone-gmbh/ui.
 
 Free React components from the Get IT Done design system: the primitives plus the general components we build business software with. They are built on shadcn/ui and Radix UI, styled with Tailwind CSS, written in TypeScript, and they include a light and a dark theme.
 
@@ -16,6 +18,8 @@ We build business software with many screens, tables, forms and states. These co
 
 Plus the zero theme as CSS variables (typography, colours, radii, elevation, light and dark) and a Tailwind CSS 3 preset.
 
+Every component with a story in the library comes with it: 128 story files with 1015 stories, see [Storybook](#storybook).
+
 Synced from component-library-react 0.26.7 and figma-design-tokens 5.5.0 (release 0.3.0). See [docs/MAINTAINING.md](docs/MAINTAINING.md).
 
 ## Install
@@ -23,24 +27,24 @@ Synced from component-library-react 0.26.7 and figma-design-tokens 5.5.0 (releas
 ### As an npm package
 
 ```bash
-npm install @getitdone-gmbh/ui
+npm install @getitdone-gmbh/kette-design
 ```
 
 ```js
 // tailwind.config.cjs
 module.exports = {
-  presets: [require('@getitdone-gmbh/ui/tailwind/preset')],
+  presets: [require('@getitdone-gmbh/kette-design/tailwind/preset')],
   darkMode: ['class'],
-  content: ['./src/**/*.{ts,tsx}', './node_modules/@getitdone-gmbh/ui/dist/**/*.js'],
+  content: ['./src/**/*.{ts,tsx}', './node_modules/@getitdone-gmbh/kette-design/dist/**/*.js'],
 };
 ```
 
 ```css
 /* app.css */
-@import '@getitdone-gmbh/ui/theme.css';
-@import '@getitdone-gmbh/ui/animation.css';
+@import '@getitdone-gmbh/kette-design/theme.css';
+@import '@getitdone-gmbh/kette-design/animation.css';
 /* Only needed for DocumentSurface: keeps the paper light inside a dark app. */
-@import '@getitdone-gmbh/ui/document-surface.css';
+@import '@getitdone-gmbh/kette-design/document-surface.css';
 
 @tailwind base;
 @tailwind components;
@@ -48,7 +52,7 @@ module.exports = {
 ```
 
 ```tsx
-import { Button, Card, CardContent, CardHeader, CardTitle } from '@getitdone-gmbh/ui';
+import { Button, Card, CardContent, CardHeader, CardTitle } from '@getitdone-gmbh/kette-design';
 
 export function Example() {
   return (
@@ -64,11 +68,11 @@ export function Example() {
 }
 ```
 
-No Tailwind in your app? Import the prebuilt stylesheet instead: `import '@getitdone-gmbh/ui/styles.css'`.
+No Tailwind in your app? Import the prebuilt stylesheet instead: `import '@getitdone-gmbh/kette-design/styles.css'`.
 
 Dark mode follows the `dark` class on `<html>`, or the system setting when no class is set.
 
-`PhoneInput` shows country flags from `/flags/<code>.svg`. Copy `node_modules/@getitdone-gmbh/ui/flags` into your public folder, or point `flagBasePath` to where you serve them. Missing flags are hidden.
+`PhoneInput` shows country flags from `/flags/<code>.svg`. Copy `node_modules/@getitdone-gmbh/kette-design/flags` into your public folder, or point `flagBasePath` to where you serve them. Missing flags are hidden.
 
 `MultiSelect` and `SingleSelect` open only inside a `MultiSelectProvider` or `SingleSelectProvider` (one per page is enough, it keeps a single list open at a time).
 
@@ -97,6 +101,17 @@ This package is one layer. The full design system goes further, from single comp
 
 Licences for the complete chain (tokens, primitives, domain components, page templates, Figma files and the rule set) are available through [Die Kette](https://kette.itdone.de).
 
+## Storybook
+
+The stories sit next to the components (`src/components/ui/**/*.stories.tsx`). They are not part of the npm package or the shadcn registry. Start Storybook locally, with light and dark mode and German or English labels in the toolbar:
+
+```bash
+npm install
+npm run storybook
+```
+
+`npm run build-storybook` writes a static build to `storybook-static/`. The complete documentation of the full library is at [components.itdone.de](https://components.itdone.de).
+
 ## Development
 
 ```bash
@@ -104,6 +119,7 @@ npm install
 npm run typecheck
 npm test
 npm run build
+npm run build-storybook
 ```
 
 ## Licence

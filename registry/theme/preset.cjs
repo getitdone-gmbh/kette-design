@@ -2,7 +2,7 @@
  * Tailwind CSS Preset — CSS Variable Architecture
  *
  * Single import for consuming apps:
- *   const preset = require('@getitdone-gmbh/ui/tailwind/preset');
+ *   const preset = require('@getitdone-gmbh/kette-design/tailwind/preset');
  *   module.exports = { presets: [preset], darkMode: ['class'], content: [...] };
  *
  * Automatically handles:

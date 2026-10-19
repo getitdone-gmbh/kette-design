@@ -2,5 +2,6 @@
 module.exports = {
   presets: [require('./tailwind/preset.cjs')],
   darkMode: ['class'],
-  content: ['./src/**/*.{ts,tsx}'],
+  // Stories are not part of the package CSS.
+  content: ['./src/**/*.{ts,tsx}', '!./src/**/*.stories.tsx'],
 };

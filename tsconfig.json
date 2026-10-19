@@ -11,9 +11,8 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
-    "declaration": true,
     "baseUrl": "."
   },
-  "include": ["src"],
+  "include": ["src", ".storybook"],
   "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/lib/assert-compiled.ts", "src/lib/token-contrast.ts"]
 }

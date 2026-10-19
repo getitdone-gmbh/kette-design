@@ -1,0 +1,154 @@
+import type { Meta, StoryObj } from '@storybook/react';
+
+import { cn } from '../../lib/utils';
+import {
+  MenuListItem,
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from './navigation-menu';
+
+const meta = {
+  title: 'Primitives/NavigationMenu',
+  component: NavigationMenu,
+  tags: ['autodocs'],
+  argTypes: {},
+} satisfies Meta<typeof NavigationMenu>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+const components: { title: string; href: string; description: string }[] = [
+  {
+    title: 'Alert Dialog',
+    href: '/docs/primitives/alert-dialog',
+    description: 'A modal dialog that interrupts the user with important content and expects a response.',
+  },
+  {
+    title: 'Hover Card',
+    href: '/docs/primitives/hover-card',
+    description: 'For sighted users to preview content available behind a link.',
+  },
+  {
+    title: 'Progress',
+    href: '/docs/primitives/progress',
+    description:
+      'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.',
+  },
+  {
+    title: 'Scroll-area',
+    href: '/docs/primitives/scroll-area',
+    description: 'Visually or semantically separates content.',
+  },
+  {
+    title: 'Tabs',
+    href: '/docs/primitives/tabs',
+    description: 'A set of layered sections of content—known as tab panels—that are displayed one at a time.',
+  },
+  {
+    title: 'Tooltip',
+    href: '/docs/primitives/tooltip',
+    description:
+      'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.',
+  },
+];
+
+const Component = (args) => (
+  <div style={{ maxWidth: 500, margin: '0 auto' }}>
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+              <li className="row-span-3 bg-button-background-ghost-hover">
+                <NavigationMenuLink asChild>
+                  <a
+                    className={cn(
+                      'flex',
+                      'h-full',
+                      'w-full',
+                      'select-none',
+                      'flex-col',
+                      'justify-end',
+                      'rounded-default',
+                      'bg-gradient-to-b',
+                      'from-muted/50',
+                      'to-muted',
+                      'p-6',
+                      'no-underline',
+                      'outline-none',
+                      'focus:shadow-md',
+                    )}
+                    href="/"
+                  >
+                    <div className="mb-2 mt-4 text-lg font-medium">shadcn/ui</div>
+                    <p className={cn('text-sm', 'leading-4', 'text-text-subtle')}>
+                      Beautifully designed components built with Radix UI and Tailwind CSS.
+                    </p>
+                  </a>
+                </NavigationMenuLink>
+              </li>
+              <MenuListItem href="/docs" title="Introduction">
+                Re-usable components built using Radix UI and Tailwind CSS.
+              </MenuListItem>
+              <MenuListItem href="/docs/installation" title="Installation">
+                How to install dependencies and structure your app.
+              </MenuListItem>
+              <MenuListItem href="/docs/primitives/typography" title="Typography">
+                Styles for headings, paragraphs, lists...etc
+              </MenuListItem>
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+              {components.map((component) => (
+                <MenuListItem key={component.title} title={component.title} href={component.href}>
+                  {component.description}
+                </MenuListItem>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink className={navigationMenuTriggerStyle()}>Documentation</NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  </div>
+);
+
+const defaultArgs = {
+  clamp: false,
+  disabled: false,
+};
+
+export const Default: Story = {
+  args: {
+    ...defaultArgs,
+  } as any,
+  render: (args) => Component(args),
+};
+
+export const FluidFont: Story = {
+  args: {
+    ...defaultArgs,
+    clamp: true,
+  } as any,
+  render: (args) => Component(args),
+};
+
+export const Disabled: Story = {
+  args: {
+    ...defaultArgs,
+    disabled: true,
+  } as any,
+  render: (args) => Component(args),
+};
