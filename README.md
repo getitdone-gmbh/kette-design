@@ -1,5 +1,7 @@
 # @getitdone-gmbh/ui
 
+[![npm](https://img.shields.io/npm/v/@getitdone-gmbh/ui?label=npm&color=cb3837)](https://www.npmjs.com/package/@getitdone-gmbh/ui) [![license](https://img.shields.io/npm/l/@getitdone-gmbh/ui)](LICENSE)
+
 Free React components from the Get IT Done design system: the primitives plus the general components we build business software with. They are built on shadcn/ui and Radix UI, styled with Tailwind CSS, written in TypeScript, and they include a light and a dark theme.
 
 We build business software with many screens, tables, forms and states. These components are the base layer of that system. We are sharing them in case they are useful to others working on similar products.
