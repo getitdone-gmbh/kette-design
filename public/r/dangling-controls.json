@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dangling-controls",
+  "title": "Dangling Controls",
+  "description": "Helper used by the Get IT Done primitives.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/lib/dangling-controls.ts",
+      "content": "'use client';\n\nimport { useEffect, type RefObject } from 'react';\n\n// Keeps aria-controls only while the element it points at exists. Radix tabs and cmdk always emit the reference, even when the panel or list is not mounted, and a dangling reference fails aria-valid-attr-value. `scope` picks the ancestor watched for the target appearing.\nexport const useDanglingControls = (\n  ref: RefObject<HTMLElement | null>,\n  scope: (node: HTMLElement) => Element | null,\n  onSync?: (node: HTMLElement, exists: boolean) => void,\n) => {\n  useEffect(() => {\n    const node = ref.current;\n    if (!node) return undefined;\n    const root = scope(node) ?? document.body;\n    const sync = () => {\n      const id = node.getAttribute('aria-controls') ?? node.dataset.controlsId;\n      if (!id) return;\n      node.dataset.controlsId = id;\n      const exists = Boolean(document.getElementById(id));\n      if (exists) node.setAttribute('aria-controls', id);\n      else node.removeAttribute('aria-controls');\n      onSync?.(node, exists);\n    };\n    sync();\n    const observer = new MutationObserver(sync);\n    observer.observe(root, { childList: true, subtree: true });\n    return () => observer.disconnect();\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n  }, [ref]);\n};\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}

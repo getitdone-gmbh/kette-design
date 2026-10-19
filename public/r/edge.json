@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "edge",
+  "title": "Edge",
+  "description": "Helper used by the Get IT Done primitives.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/labels-context.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/edge.ts",
+      "content": "'use client';\n\nimport { usePreset } from '@/components/ui/labels-context';\n\n// Divider and frame colour of data surfaces. The zero preset draws them in the default border colour (semantic/border/default), other presets keep the quieter hairline.\nexport const edgeClass = (zero: boolean) => (zero ? 'border-border-default' : 'border-hairline');\n\nexport const useEdge = () => edgeClass(usePreset() === 'zero');\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

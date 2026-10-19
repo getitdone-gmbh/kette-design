@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kbd",
+  "title": "Kbd",
+  "description": "Kbd from the Get IT Done design system.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/labels-context.json",
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/kbd.tsx",
+      "content": "'use client';\n\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { usePreset } from '@/components/ui/labels-context';\n\n// Figma \"_Command shortcut\" (Size md | sm). md is the established 28px key, sm the 20px compact key.\nconst kbdVariants = cva(\n  'inline-flex shrink-0 select-none items-center justify-center whitespace-nowrap rounded-item border border-solid border-hairline bg-muted font-sans text-muted-foreground',\n  {\n    variants: {\n      // Product preset (DesignSystemProvider `preset`): `zero` uses the 4px radius and the default border, and the compact key unless a size is set.\n      preset: { default: '', zero: '' },\n      size: {\n        md: 'h-control-sm px-2 typography-ui',\n        sm: 'h-kbd px-1 typography-micro',\n      },\n    },\n    compoundVariants: [{ preset: 'zero', className: 'rounded-tight border-border-default' }],\n    defaultVariants: { size: 'md', preset: 'default' },\n  },\n);\n\nexport interface KbdProps extends React.HTMLAttributes<HTMLElement>, Omit<VariantProps<typeof kbdVariants>, 'preset'> {}\n\n// A single key cap. Pair with `KbdGroup` for sequences such as \"Cmd K then C\".\nconst Kbd = React.forwardRef<HTMLElement, KbdProps>(({ className, size, ...props }, ref) => {\n  const zero = usePreset() === 'zero';\n  return <kbd ref={ref} className={cn(kbdVariants({ size: size ?? (zero ? 'sm' : 'md'), preset: zero ? 'zero' : 'default' }), className)} {...props} />;\n});\nKbd.displayName = 'Kbd';\n\nexport interface KbdGroupProps extends React.HTMLAttributes<HTMLSpanElement> {\n  // Visual size of the connecting text between keys (matches the keys it contains).\n  size?: 'md' | 'sm';\n}\n\n// Inline row of keys and connecting words (\"then\", an arrow). Text children get the muted body role.\nconst KbdGroup = React.forwardRef<HTMLSpanElement, KbdGroupProps>(({ className, size = 'md', ...props }, ref) => (\n  <span\n    ref={ref}\n    className={cn(\n      'inline-flex items-center gap-gap-control text-muted-foreground',\n      size === 'sm' ? 'typography-micro' : 'typography-ui',\n      className,\n    )}\n    {...props}\n  />\n));\nKbdGroup.displayName = 'KbdGroup';\n\nexport { Kbd, KbdGroup, kbdVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

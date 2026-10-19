@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "status-dot",
+  "title": "Status Dot",
+  "description": "Helper used by the Get IT Done primitives.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/status-dot.tsx",
+      "content": "import { cva, type VariantProps } from 'class-variance-authority';\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\n\n// Full class strings so Tailwind's content scan finds every status token.\nconst statusDotVariants = cva('inline-block shrink-0 rounded-full', {\n  variants: {\n    tone: {\n      success: 'bg-status-success-dot',\n      warning: 'bg-status-warning-dot',\n      destructive: 'bg-status-destructive-dot',\n      info: 'bg-status-info-dot',\n      // Credit and billing status (data/status-credit).\n      credit: 'bg-data-status-credit-dot',\n      neutral: 'bg-text-subtlest',\n    },\n    // sm is the 6px status-dot token, md 8px.\n    size: {\n      sm: 'h-status-dot w-status-dot',\n      md: 'h-2 w-2',\n    },\n  },\n  defaultVariants: { tone: 'neutral', size: 'sm' },\n});\n\nexport interface StatusDotProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'color'>, VariantProps<typeof statusDotVariants> {\n  // Text for screen readers. The colour alone must never carry the meaning, so without a label the dot is decorative (aria-hidden) and a visible text must sit next to it.\n  label?: string;\n}\n\n// Small standalone status indicator. Use it beside a visible status text, or pass `label` when it stands alone.\nconst StatusDot = React.forwardRef<HTMLSpanElement, StatusDotProps>(({ className, tone, size, label, ...props }, ref) => (\n  <span\n    ref={ref}\n    role={label ? 'img' : undefined}\n    aria-label={label}\n    aria-hidden={label ? undefined : true}\n    data-tone={tone ?? 'neutral'}\n    className={cn(statusDotVariants({ tone, size }), className)}\n    {...props}\n  />\n));\nStatusDot.displayName = 'StatusDot';\n\nexport type StatusDotTone = NonNullable<VariantProps<typeof statusDotVariants>['tone']>;\n\nexport { StatusDot, statusDotVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "label",
+  "title": "Label",
+  "description": "Label from the Get IT Done design system.",
+  "dependencies": [
+    "@radix-ui/react-label",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/labels-context.json",
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/label.tsx",
+      "content": "'use client';\n\nimport * as LabelPrimitive from '@radix-ui/react-label';\nimport { cva } from 'class-variance-authority';\nimport { forwardRef } from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { usePreset } from '@/components/ui/labels-context';\n\nconst labelVariants = cva('leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70', {\n  variants: {\n    // Zero uses the 13/500 ui-medium role, the other themes keep the themeable input-label role.\n    preset: { default: 'typography-input-label', zero: 'typography-ui-medium' },\n  },\n  defaultVariants: { preset: 'default' },\n});\n\nconst Label = forwardRef<\n  React.ElementRef<typeof LabelPrimitive.Root>,\n  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>\n>(({ className, ...props }, ref) => {\n  const zero = usePreset() === 'zero';\n  return <LabelPrimitive.Root ref={ref} className={cn(labelVariants({ preset: zero ? 'zero' : 'default' }), className)} {...props} />;\n});\nLabel.displayName = LabelPrimitive.Root.displayName;\n\nexport { Label };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

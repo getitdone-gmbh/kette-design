@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "autosave-status",
+  "title": "Autosave Status",
+  "description": "Helper used by the Get IT Done primitives.",
+  "dependencies": [
+    "class-variance-authority",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/labels-context.json",
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/autosave-status.tsx",
+      "content": "'use client';\n\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { AlertCircle, CheckCircle2, CircleDot, CloudOff, Loader2 } from 'lucide-react';\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { useLabels, usePreset } from '@/components/ui/labels-context';\n\nconst autosaveStatusVariants = cva('inline-flex items-center gap-1 typography-ui-sm', {\n  variants: {\n    state: {\n      saved: 'text-text-subtle-on-muted',\n      saving: 'text-text-subtle-on-muted',\n      dirty: 'text-text-subtle-on-muted',\n      error: 'text-text-destructive',\n      offline: 'text-text-subtle-on-muted',\n    },\n  },\n  defaultVariants: { state: 'saved' },\n});\n\nexport type AutosaveState = NonNullable<VariantProps<typeof autosaveStatusVariants>['state']>;\n\nconst iconClass: Record<AutosaveState, string> = {\n  saved: 'text-icon-success',\n  saving: 'text-icon-subtle motion-safe:animate-spin',\n  dirty: 'text-icon-warning',\n  error: 'text-icon-destructive',\n  offline: 'text-icon-subtle',\n};\n\nconst icons: Record<AutosaveState, typeof CheckCircle2> = {\n  saved: CheckCircle2,\n  saving: Loader2,\n  dirty: CircleDot,\n  error: AlertCircle,\n  offline: CloudOff,\n};\n\nexport interface AutosaveStatusProps\n  extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'children'>,\n    VariantProps<typeof autosaveStatusVariants> {\n  /** Replaces the default English label of the current state. */\n  label?: React.ReactNode;\n}\n\n// Polite live region so assistive tech announces state changes without stealing focus.\nconst AutosaveStatus = React.forwardRef<HTMLSpanElement, AutosaveStatusProps>(\n  ({ className, state = 'saved', label, ...props }, ref) => {\n    const l = useLabels();\n    const current: AutosaveState = state ?? 'saved';\n    const Icon = icons[current];\n    // Zero: 16px icon and the control gap.\n    const zero = usePreset() === 'zero';\n    return (\n      <span\n        ref={ref}\n        role=\"status\"\n        aria-live=\"polite\"\n        data-state={current}\n        className={cn(autosaveStatusVariants({ state: current }), zero && 'gap-gap-control', className)}\n        {...props}\n      >\n        <Icon className={cn('shrink-0', zero ? 'h-icon-md w-icon-md' : 'h-icon-xs w-icon-xs', iconClass[current])} aria-hidden />\n        <span>{label ?? l.autosaveStates[current]}</span>\n      </span>\n    );\n  },\n);\nAutosaveStatus.displayName = 'AutosaveStatus';\n\nexport { AutosaveStatus, autosaveStatusVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

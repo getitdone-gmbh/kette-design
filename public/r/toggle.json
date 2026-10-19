@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle",
+  "title": "Toggle",
+  "description": "Toggle from the Get IT Done design system.",
+  "dependencies": [
+    "@radix-ui/react-toggle",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/labels-context.json",
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/toggle.tsx",
+      "content": "'use client';\n\nimport * as TogglePrimitive from '@radix-ui/react-toggle';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { usePreset } from '@/components/ui/labels-context';\n\nconst toggleVariants = cva(\n  'inline-flex items-center justify-center rounded-control transition-[color,background-color,border-color,box-shadow] duration-150 hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-focus focus-visible:ring-offset-focus focus-visible:ring-offset-background focus-visible:ring-ring-default disabled:pointer-events-none disabled:opacity-disabled data-[state=on]:bg-muted data-[state=on]:text-foreground',\n  {\n    variants: {\n      variant: {\n        default: 'bg-transparent',\n        outline:\n          'border border-solid border-input bg-background shadow-xs hover:border-border-bold hover:bg-background data-[state=on]:bg-muted',\n      },\n      size: {\n        default: 'h-9 px-3',\n        sm: 'h-8 px-2',\n        lg: 'h-10 px-3',\n      },\n      // Product preset (DesignSystemProvider `preset`): `zero` binds the heights to the control tokens and the label to the button roles.\n      preset: { default: 'text-sm font-medium', zero: '' },\n    },\n    compoundVariants: [\n      { preset: 'zero', size: 'default', className: 'h-control-md typography-button-md' },\n      { preset: 'zero', size: 'sm', className: 'h-control-sm typography-button-sm' },\n      { preset: 'zero', size: 'lg', className: 'h-control-lg typography-button-md' },\n    ],\n    defaultVariants: {\n      variant: 'default',\n      size: 'default',\n      preset: 'default',\n    },\n  },\n);\n\nconst Toggle = React.forwardRef<\n  React.ElementRef<typeof TogglePrimitive.Root>,\n  React.ComponentPropsWithoutRef<typeof TogglePrimitive.Root> & Omit<VariantProps<typeof toggleVariants>, 'preset'>\n>(({ className, variant, size, ...props }, ref) => {\n  const zero = usePreset() === 'zero';\n  return <TogglePrimitive.Root ref={ref} className={cn(toggleVariants({ variant, size, preset: zero ? 'zero' : 'default', className }))} {...props} />;\n});\n\nToggle.displayName = TogglePrimitive.Root.displayName;\n\nexport { Toggle, toggleVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

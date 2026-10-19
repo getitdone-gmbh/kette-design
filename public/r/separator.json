@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "separator",
+  "title": "Separator",
+  "description": "Separator from the Get IT Done design system.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/labels-context.json",
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/separator.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { usePreset } from '@/components/ui/labels-context';\n\nexport interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Direction of the rule. Vertical separators need a parent with a defined height (e.g. `flex` + `h-*`). */\n  orientation?: 'horizontal' | 'vertical';\n  /**\n   * `true` (default): purely visual, exposed with `role=\"none\"` so assistive tech skips it.\n   * `false`: a semantic divider (`role=\"separator\"` + `aria-orientation`) between distinct content groups.\n   */\n  decorative?: boolean;\n}\n\n/** 1px rule in the `border-subtle` role. Same API shape as the Radix separator (orientation + decorative). */\nconst Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(\n  ({ className, orientation = 'horizontal', decorative = true, ...props }, ref) => {\n    const zero = usePreset() === 'zero';\n    return (\n    <div\n      ref={ref}\n      role={decorative ? 'none' : 'separator'}\n      aria-orientation={decorative || orientation === 'horizontal' ? undefined : 'vertical'}\n      data-orientation={orientation}\n      className={cn('shrink-0', zero ? 'bg-border-default' : 'bg-border-subtle', orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px', className)}\n      {...props}\n    />\n    );\n  },\n);\nSeparator.displayName = 'Separator';\n\nexport { Separator };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

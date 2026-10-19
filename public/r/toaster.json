@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toaster",
+  "title": "Toaster",
+  "description": "Toaster from the Get IT Done design system.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/toast.json",
+    "https://zero-design.itdone.de/r/use-toast.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/toaster.tsx",
+      "content": "'use client';\n\nimport { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from '@/components/ui/toast';\nimport { useToast } from '@/components/ui/use-toast';\n\nexport function Toaster() {\n  const { toasts } = useToast();\n\n  return (\n    <ToastProvider>\n      {toasts.map(function ({ id, title, description, action, ...props }) {\n        return (\n          <Toast key={id} {...props}>\n            <div className=\"grid gap-1\">\n              {title && <ToastTitle>{title}</ToastTitle>}\n              {description && <ToastDescription>{description}</ToastDescription>}\n            </div>\n            {action}\n            <ToastClose />\n          </Toast>\n        );\n      })}\n      <ToastViewport />\n    </ToastProvider>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
