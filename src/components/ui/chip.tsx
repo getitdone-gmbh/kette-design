@@ -381,6 +381,8 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>(
     const resolvedVariant = invalid ? 'destructive' : variant;
     // Zero routes status meaning to the tinted look unless the caller sets `tinted` itself.
     const statusVariant = resolvedVariant === 'info' || resolvedVariant === 'success' || resolvedVariant === 'warning' || resolvedVariant === 'destructive';
+    // Filled status chips (info, success, warning, destructive) carry the on-fill text role; the secondary text inherits it instead of the muted grey.
+    const metaOnFill = statusVariant && chipStyle !== 'textOnly' && chipStyle !== 'productDot' && chipStyle !== 'weighted';
     // Dense chips that are operable get the same 24px floor.
     const meetsMinTargetSize = interactive && (effectiveSize === 'small' || effectiveSize === 'dense') ? 'min-h-target' : undefined;
 
@@ -480,7 +482,9 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>(
             {suffix}
           </span>
         )}
-        {meta != null && <span className="ml-1 shrink-0 font-regular text-text-muted">{meta}</span>}
+        {meta != null && <span className={cn('ml-1 shrink-0 font-regular', metaOnFill ? 'text-current' : 'text-text-muted')} data-chip-meta="">
+            {meta}
+          </span>}
         {count != null && (
           <span
             className={cn('ml-1 shrink-0 rounded-full px-1 tabular-nums', tinted ? 'bg-transparent text-current' : 'bg-muted text-text-muted')}

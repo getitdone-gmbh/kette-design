@@ -19,7 +19,7 @@ import { KanbanMoveToMenu } from './kanban-move-to-menu';
 const Board = ({ onMove }: { onMove?: (m: KanbanMove) => void }) => (
   <Kanban aria-label="Pipeline" onMove={onMove}>
     <KanbanColumn id="lead" title="Lead" count={2} meta="EUR 380k" addLabel="Add Demand" onAdd={() => {}}>
-      <KanbanCard id="a" title="Card A" subtitle="Acme" />
+      <KanbanCard id="a" title="Card A" subtitle="Nordwind Handel" />
       <KanbanCard id="b" title="Card B" />
     </KanbanColumn>
     <KanbanColumn id="won" title="Won" count={0} emptyLabel="No Demands in this stage" />

@@ -156,7 +156,7 @@ const Everything = () => (
       <Sheet key={state} open modal={false}>
         <SheetContent size="md" mode="push" state={state} padded={false} stackDepth={state === 'dirty' ? 1 : 0}>
           <SheetHeader variant="zero">
-            <SheetPath>Companies / Acme</SheetPath>
+            <SheetPath>Companies / Nordwind Handel</SheetPath>
             <SheetTitle variant="zero">Edit</SheetTitle>
             <SheetDescription className="sr-only">d</SheetDescription>
             <SheetMeta>
@@ -236,8 +236,8 @@ describe('app shell compiled classes', () => {
       <SidebarLayout>
         <SidebarWorkspaceSwitcher
           logo="A"
-          name="Acme"
-          workspaces={[{ id: 'a', name: 'Acme', logo: 'A' }]}
+          name="Nordwind Handel"
+          workspaces={[{ id: 'a', name: 'Nordwind Handel', logo: 'A' }]}
           activeWorkspaceId="a"
           personal={{ name: 'Me' }}
           onCreateWorkspace={() => {}}
@@ -245,7 +245,7 @@ describe('app shell compiled classes', () => {
         <SidebarTree level={1} />
       </SidebarLayout>,
     );
-    await userEvent.click(screen.getByRole('button', { name: 'Acme' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Nordwind Handel' }));
     await screen.findByRole('menu');
     expect(await missingCompiledClasses(collectRenderedClasses(document.body))).toEqual([]);
   });

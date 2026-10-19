@@ -27,6 +27,15 @@ const Example = ({ size }: { size?: 'sm' | 'md' | 'lg' | 'xl' }) => (
   </Dialog>
 );
 
+describe('Dialog close button', () => {
+  it('is the 40px icon button square with the shared focus ring, like the Sheet close', () => {
+    render(<Example />);
+    const close = screen.getByRole('button', { name: 'Close' });
+    expect(close).toHaveClass('h-control-md', 'w-control-md', 'focus-visible:ring-focus', 'focus-visible:ring-ring-default');
+    expect(close.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+  });
+});
+
 describe('Dialog sizes', () => {
   it('keeps max-w-lg without a size (unchanged)', () => {
     render(<Example />);

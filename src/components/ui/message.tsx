@@ -36,7 +36,7 @@ const bubbleVariants = cva('w-fit max-w-full', {
     ownTone: {
       brand: '',
       neutral: '',
-      // Inverse surface for own messages (dark bubble in light mode, light bubble in dark mode).
+      // Static inverse surface for own messages: dark in light and dark mode.
       inverse: '',
     },
     // Bare drops the bubble: no fill, no padding, text on the page surface.
@@ -48,9 +48,10 @@ const bubbleVariants = cva('w-fit max-w-full', {
   compoundVariants: [
     { own: true, ownTone: 'brand', className: 'bg-background-brand-bold-default text-text-on-brand' },
     { own: true, ownTone: 'neutral', className: 'bg-background-neutral-active text-text-default' },
-    { own: true, ownTone: 'inverse', className: 'bg-background-inverse text-text-inverse' },
+    { own: true, ownTone: 'inverse', className: 'bg-surface-inverse-static text-text-on-inverse-static' },
     { density: 'default', size: 'default', className: 'typography-p-ui' },
-    { density: 'default', size: 'sm', className: 'typography-small' },
+    // 14px UI role with its 20px line height (the `small` role is 16px, too tight for a bubble).
+    { density: 'default', size: 'sm', className: 'typography-text-small' },
     { bare: true, className: 'rounded-none bg-transparent p-0 text-text-default' },
   ],
   defaultVariants: { own: false, density: 'default', size: 'default', radius: 'control', ownTone: 'brand', bare: false },
@@ -65,7 +66,7 @@ export interface MessageProps extends Omit<React.HTMLAttributes<HTMLDivElement>,
   time?: React.ReactNode;
   // Outgoing message: right aligned, brand bubble, no avatar.
   own?: boolean;
-  // Colour of the own bubble. `neutral` keeps own messages without the brand colour, `inverse` uses the inverse surface.
+  // Colour of the own bubble. `neutral` keeps own messages without the brand colour, `inverse` uses the static inverse surface (dark in both modes). The default `brand` is the primary fill of the active theme (the Button primary role), blue in the zero theme.
   ownTone?: 'brand' | 'neutral' | 'inverse';
   // Text size of the bubble in default density: `default` is the 16px paragraph role (13px UI role in the zero preset), `sm` the 14px small role. Compact density keeps its own 13px role.
   size?: 'default' | 'sm';

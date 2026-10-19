@@ -34,6 +34,12 @@ export interface CookieConsentProps extends Omit<React.HTMLAttributes<HTMLElemen
   onCustomize?: () => void;
   // Per-category choices. Adds a settings view with one switch per category (nothing pre-selected except necessary ones).
   categories?: CookieConsentCategory[];
+  // Stored choice that the settings view starts from, for example the cookie value of a returning visitor. Uncontrolled: the switches stay editable and a changed `initialConsent` resets them. Unknown ids are ignored, missing ids stay off, necessary categories are always on. Without it nothing is pre-selected.
+  initialConsent?: CookieConsentSelection;
+  // Controlled selection of the settings view. Wins over `initialConsent`; pair it with `onValueChange`. Without `value` the component keeps the switch state itself.
+  value?: CookieConsentSelection;
+  // Called on every switch change in the settings view with the full selection (both modes).
+  onValueChange?: (selection: CookieConsentSelection) => void;
   // Receives the chosen categories from the settings view.
   onSave?: (selection: CookieConsentSelection) => void;
   // Shows a close button. By default closing gives no consent: it calls `onDecline`, exactly like declining (see `dismissBehavior`).
@@ -89,8 +95,8 @@ const revealAboveBanner = (target: Element, banner: HTMLElement) => {
   else window.scrollBy(0, delta);
 };
 
-const initialSelection = (categories: CookieConsentCategory[]): CookieConsentSelection =>
-  Object.fromEntries(categories.map((c) => [c.id, Boolean(c.necessary)]));
+const initialSelection = (categories: CookieConsentCategory[], stored?: CookieConsentSelection): CookieConsentSelection =>
+  Object.fromEntries(categories.map((c) => [c.id, Boolean(c.necessary) || Boolean(stored?.[c.id])]));
 
 // Privacy-preserving by design: nothing is pre-selected, accept and decline share variant, size and order weight,
 // and the banner does not trap focus or block the page.
@@ -105,6 +111,9 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
       onDecline,
       onCustomize,
       categories,
+      initialConsent,
+      value,
+      onValueChange,
       onSave,
       closable = false,
       dismissBehavior = 'decline',
@@ -139,7 +148,20 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
     const l = useLabels(labels);
     const titleId = React.useId();
     const [view, setView] = React.useState<'summary' | 'settings'>('summary');
-    const [selection, setSelection] = React.useState<CookieConsentSelection>(() => initialSelection(categories ?? []));
+    const [draft, setDraft] = React.useState<CookieConsentSelection>(() => initialSelection(categories ?? [], value ?? initialConsent));
+    const controlled = value !== undefined;
+    const selection = controlled ? initialSelection(categories ?? [], value) : draft;
+    // A new stored choice (for example after saving) resets the uncontrolled switches.
+    const storedKey = JSON.stringify(initialConsent ?? null);
+    const firstStored = React.useRef(true);
+    React.useEffect(() => {
+      if (firstStored.current) {
+        firstStored.current = false;
+        return;
+      }
+      setDraft(initialSelection(categories ?? [], initialConsent));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [storedKey]);
     const [deferred, setDeferred] = React.useState(false);
     const headingRef = React.useRef<HTMLHeadingElement | null>(null);
     const sectionRef = React.useRef<HTMLElement | null>(null);
@@ -207,6 +229,7 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
     const openSettings = () => {
       onCustomize?.();
       if (hasSettings) {
+        if (!controlled && initialConsent) setDraft(initialSelection(categories ?? [], initialConsent));
         viewChanged.current = true;
         setView('settings');
       }
@@ -272,7 +295,11 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
                       <Switch
                         checked={category.necessary ? true : Boolean(selection[category.id])}
                         disabled={category.necessary}
-                        onCheckedChange={(checked) => setSelection((prev) => ({ ...prev, [category.id]: checked }))}
+                        onCheckedChange={(checked) => {
+                          const next = { ...selection, [category.id]: checked };
+                          if (!controlled) setDraft(next);
+                          onValueChange?.(next);
+                        }}
                         aria-labelledby={nameId}
                         aria-describedby={category.description ? descId : undefined}
                       />
@@ -286,7 +313,7 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
           )}
         </div>
         {inSettings ? (
-          <div className="flex shrink-0 flex-wrap items-center gap-3">
+          <div className="flex shrink-0 flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <Button type="button" variant="outline" onClick={closeSettings}>
               {l.cookieBack}
             </Button>
@@ -295,7 +322,7 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
             </Button>
           </div>
         ) : (
-          <div className="flex shrink-0 flex-wrap items-center gap-3">
+          <div className="flex shrink-0 flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <Button type="button" variant={decisionVariant} onClick={onDecline}>
               {l.declineNonEssentialCookies}
             </Button>

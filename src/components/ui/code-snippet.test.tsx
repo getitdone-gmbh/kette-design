@@ -6,6 +6,22 @@ import { CodeSnippet } from './code-snippet';
 
 const code = "import a from 'a';\nconst b = 1;";
 
+describe('CodeSnippet terminal wide', () => {
+  const lines = [{ type: 'agent' as const, name: 'a-very-long-agent-name-that-wraps', status: 'ok', note: 'done' }];
+
+  it('sizes the name column to its content instead of a fixed width', () => {
+    const { container } = render(<CodeSnippet variant="terminal" terminalLines={lines} terminalWide />);
+    expect(container.querySelector('ol')?.className).toContain('fit-content(24rem)');
+    const name = screen.getByText('a-very-long-agent-name-that-wraps');
+    expect(name.className).not.toContain('sm:w-');
+  });
+
+  it('keeps the fixed 160px name column without terminalWide', () => {
+    render(<CodeSnippet variant="terminal" terminalLines={lines} />);
+    expect(screen.getByText('a-very-long-agent-name-that-wraps')).toHaveClass('sm:w-40');
+  });
+});
+
 describe('CodeSnippet', () => {
   it('block renders every line with a line number gutter', () => {
     const { container } = render(<CodeSnippet code={code} language="TypeScript" />);

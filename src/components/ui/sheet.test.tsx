@@ -137,7 +137,7 @@ describe('Sheet zero anatomy and states', () => {
   const Zero = ({ onRetry, ...props }: Partial<SheetContentProps> & { onRetry?: () => void }) => (
     <Example size="md" padded={false} {...props}>
       <SheetHeader variant="zero">
-        <SheetPath>Companies / Acme GmbH</SheetPath>
+        <SheetPath>Companies / Nordwind Handel GmbH</SheetPath>
         <SheetTitle variant="zero">Edit company</SheetTitle>
         <SheetMeta>12 contacts</SheetMeta>
       </SheetHeader>
@@ -154,7 +154,7 @@ describe('Sheet zero anatomy and states', () => {
 
   it('renders path with Esc hint, sections and a saved footer by default', () => {
     render(<Zero />);
-    expect(screen.getByText('Companies / Acme GmbH')).toBeInTheDocument();
+    expect(screen.getByText('Companies / Nordwind Handel GmbH')).toBeInTheDocument();
     expect(screen.getByText('Esc')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Label' })).toBeInTheDocument();
     expect(screen.getByRole('status')).toHaveTextContent('Saved');

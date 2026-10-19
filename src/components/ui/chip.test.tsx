@@ -584,6 +584,18 @@ describe('Chip in narrow containers', () => {
     expect(label).toHaveAttribute('title', 'Projektbedarf KW 44');
   });
 
+  it.each(['info', 'success', 'warning', 'destructive'] as const)('%s filled: the secondary text inherits the on-fill colour', (variant) => {
+    const { container } = render(<Chip label="Label" variant={variant} meta="3+ yrs" />);
+    const meta = container.querySelector('[data-chip-meta]');
+    expect(meta).toHaveClass('text-current');
+    expect(meta).not.toHaveClass('text-text-muted');
+  });
+
+  it('neutral chips keep the muted secondary text', () => {
+    const { container } = render(<Chip label="Label" meta="3+ yrs" />);
+    expect(container.querySelector('[data-chip-meta]')).toHaveClass('text-text-muted');
+  });
+
   it('keeps count, meta and dot from shrinking', () => {
     const { container } = render(<Chip label="In Prüfung" count={3} meta="3+ yrs" dotLeading />);
     expect(container.querySelector('[data-chip-count]')).toHaveClass('shrink-0');

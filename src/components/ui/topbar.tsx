@@ -328,6 +328,7 @@ const TopBarMenuButton = React.forwardRef<HTMLButtonElement, TopBarMenuButtonPro
   ({ className, open = false, tone = 'default', 'aria-label': ariaLabelProp, children, ...props }, ref) => {
     const l = useLabels();
     const ariaLabel = ariaLabelProp ?? l.menu;
+    const zero = usePreset() === 'zero';
     return (
     <button
       ref={ref}
@@ -335,7 +336,9 @@ const TopBarMenuButton = React.forwardRef<HTMLButtonElement, TopBarMenuButtonPro
       aria-label={ariaLabel}
       aria-expanded={open}
       className={cn(
-        'inline-flex h-control-lg w-control-lg shrink-0 items-center justify-center rounded-control',
+        'inline-flex shrink-0 items-center justify-center rounded-control',
+        // 40x40 in every theme: control-md in the default scale, control-xl in zero.
+        zero ? 'h-control-xl w-control-xl' : 'h-control-md w-control-md',
         transitionBase,
         tone === 'inverse'
           ? ['text-text-inverse hover:bg-text-inverse/10 active:bg-text-inverse/20', focusRingInverse]
@@ -555,8 +558,10 @@ export interface TopBarMobileMenuGroup {
   group: React.ReactNode;
   // Links inside the group.
   items: TopBarNavItem[];
-  // Starts expanded. Default: expanded when one of the links is the current page or section.
+  // Starts expanded. Default: expanded when one of the links is the current page or section. Ignored when `collapsible` is false.
   defaultOpen?: boolean;
+  // `false` shows the group label as a visible, always expanded section heading instead of an accordion trigger. Default `true`.
+  collapsible?: boolean;
 }
 
 export type TopBarMobileMenuItem = TopBarNavItem | TopBarMobileMenuGroup;
@@ -581,8 +586,10 @@ export interface TopBarMobileMenuProps {
   size?: React.ComponentProps<typeof SheetContent>['size'];
   // Accessible name of the close button of the drawer. Defaults to the provider text "Close menu" / "Menü schließen".
   closeLabel?: string;
-  // Extra content below the links, for example TopBarPreferences or a call to action.
+  // Extra content below the links, for example TopBarPreferences or a call to action. Scrolls with the links.
   children?: React.ReactNode;
+  // Sticky footer of the drawer, outside the scrolling list, for actions such as "Sign in" that must stay visible while the links scroll.
+  footer?: React.ReactNode;
   // Classes of the menu button. Default hides it from the md breakpoint up (pair TopBarNav with `hidden md:block`).
   triggerClassName?: string;
   // Keeps the menu button at every width, so the drawer replaces a desktop dropdown menu. Standard for landing pages, where the burger always opens this drawer.
@@ -604,12 +611,14 @@ const TopBarMobileMenu = ({
   size = 'sm',
   closeLabel,
   children,
+  footer,
   triggerClassName,
   alwaysVisible = false,
   tone,
   side = 'right',
 }: TopBarMobileMenuProps) => {
   const l = useLabels({ closeMenu: closeLabel });
+  const menuId = React.useId();
   const trigger = triggerLabel ?? labelProp ?? l.menu;
   const dialogTitle = title ?? labelProp ?? l.menu;
   const navName = navLabel ?? labelProp ?? l.navigation;
@@ -655,12 +664,21 @@ const TopBarMobileMenu = ({
             )}
           >
             {items.map((item, index) => {
+              if (isMenuGroup(item) && item.collapsible === false) {
+                const headingId = `${menuId}-group-${index}`;
+                return (
+                  <div key={index} role="group" aria-labelledby={headingId} className="flex flex-col gap-1">
+                    <p id={headingId} className="typography-ui-medium px-3 pb-1 pt-3 text-text-subtle">{item.group}</p>
+                    {item.items.map((child, childIndex) => renderLink(child, childIndex))}
+                  </div>
+                );
+              }
               if (isMenuGroup(item)) {
                 const openByDefault = item.defaultOpen ?? item.items.some((child) => child.current);
                 return (
                   <Accordion key={index} type="multiple" defaultValue={openByDefault ? ['group'] : []}>
                     <AccordionItem value="group" className="border-0">
-                      <AccordionTrigger className="typography-ui-medium h-control-lg px-3 py-0 text-text-default no-underline hover:no-underline">{item.group}</AccordionTrigger>
+                      <AccordionTrigger className="typography-ui-medium h-control-lg px-3 py-0 text-text-default no-underline hover:bg-muted hover:no-underline active:bg-muted-strong">{item.group}</AccordionTrigger>
                       <AccordionContent className="flex flex-col gap-1 pb-0 pl-3">{item.items.map((child, childIndex) => renderLink(child, childIndex))}</AccordionContent>
                     </AccordionItem>
                   </Accordion>
@@ -670,6 +688,7 @@ const TopBarMobileMenu = ({
             })}
             {children ? <div className="mt-4 flex flex-col gap-2 border-0 border-t border-solid border-hairline pt-4">{children}</div> : null}
           </nav>
+          {footer ? <div data-slot="topbar-mobile-menu-footer" className="flex shrink-0 flex-col gap-2 border-0 border-t border-solid border-hairline bg-background-default p-4">{footer}</div> : null}
         </SheetContent>
       </Sheet>
     </>

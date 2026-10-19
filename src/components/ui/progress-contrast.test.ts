@@ -34,7 +34,7 @@ const indicators = {
   default: { token: 'colors-general-ring-default', cls: 'bg-general-ring-default', track: { light: 4.34, dark: 3.98 } },
   success: { token: 'semantic-text-success', cls: 'bg-text-success', track: { light: 5.01, dark: 5.77 } },
   warning: { token: 'semantic-text-warning', cls: 'bg-text-warning', track: { light: 4.73, dark: 5.22 } },
-  destructive: { token: 'semantic-text-destructive', cls: 'bg-text-destructive', track: { light: 4.41, dark: 3.89 } },
+  destructive: { token: 'semantic-text-destructive', cls: 'bg-text-destructive', track: { light: 5.91, dark: 5.29 } },
 } as const;
 
 describe('Progress indicator contrast', () => {

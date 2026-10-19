@@ -178,11 +178,11 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
       <OpenerCapture onCapture={returnFocus.remember} />
       {children}
       {hideClose ? null : (
-        <DialogPrimitive.Close className={cn('absolute right-3 top-3 inline-flex min-h-target min-w-target items-center justify-center rounded-item transition-opacity focus:outline-none focus-visible:ring-focus focus-visible:ring-offset-focus focus-visible:ring-offset-background focus-visible:ring-ring-default disabled:pointer-events-none data-[state=open]:bg-muted data-[state=open]:text-muted-foreground',
-          // Zero: the close glyph rests at full opacity in the subtle icon role.
-          zero ? 'text-icon-subtle hover:text-icon-default' : 'opacity-disabled hover:opacity-100',
+        <DialogPrimitive.Close data-slot="dialog-close" className={cn('absolute right-3 top-3 inline-flex items-center justify-center rounded-control text-icon-subtle transition-colors hover:bg-muted hover:text-icon-default active:bg-muted-strong focus:outline-none focus-visible:ring-focus focus-visible:ring-offset-focus focus-visible:ring-offset-background focus-visible:ring-ring-default disabled:pointer-events-none data-[state=open]:bg-secondary',
+          // Same 40px square as the Sheet close: control-md in the default scale, control-xl in zero.
+          zero ? 'h-control-xl w-control-xl' : 'h-control-md w-control-md',
         )}>
-          <X className="h-4 w-4" />
+          <X className="h-icon-md w-icon-md" aria-hidden="true" />
           <span className="sr-only">{l.close}</span>
         </DialogPrimitive.Close>
       )}

@@ -41,7 +41,7 @@ export interface CodeSnippetProps
   terminalAction?: React.ReactNode;
   // Terminal only. Caption under the rows.
   terminalCaption?: React.ReactNode;
-  // Terminal only. Widens the name column of agent rows from 160px to 224px.
+  // Terminal only. Sizes the name column of agent rows to its content (up to 24rem) and aligns the status column across rows. Default is a fixed 160px name column.
   terminalWide?: boolean;
   // Terminal only. Rows fade in once, one after the other (90 ms apart). Default on, skipped for reduced motion.
   terminalAnimate?: boolean;
@@ -100,35 +100,35 @@ const CodeSnippetTerminal = React.forwardRef<HTMLElement, CodeSnippetTerminalPro
         <span className="typography-code min-w-0 flex-1 truncate text-text-subtle">{title}</span>
         {titleSlot ? <span className="shrink-0">{titleSlot}</span> : null}
       </div>
-      <ol className="typography-code m-0 flex list-none flex-col gap-2 p-4">
+      <ol className={cn('typography-code m-0 flex list-none flex-col gap-2 p-4', wide && 'sm:grid sm:[grid-template-columns:fit-content(24rem)_auto_minmax(0,1fr)]')}>
         {lines.map((line, index) => {
           const motion = animate ? rowMotion : undefined;
           const style = animate ? { animationDelay: `${index * ROW_STAGGER_MS}ms` } : undefined;
           if (line.type === 'agent') {
             return (
-              <li key={index} data-line="agent" style={style} className={cn('flex flex-wrap items-baseline gap-x-4', motion)}>
-                <span className={cn('min-w-0 flex-1 text-foreground sm:flex-none', wide ? 'sm:w-56' : 'sm:w-40')}>{line.name}</span>
-                <span className={cn('text-right sm:w-16 sm:text-left', terminalTone[line.tone ?? 'muted'])}>{line.status}</span>
+              <li key={index} data-line="agent" style={style} className={cn('flex flex-wrap items-baseline gap-x-4', wide && 'sm:col-span-full sm:grid sm:[grid-template-columns:subgrid]', motion)}>
+                <span className={cn('min-w-0 flex-1 text-foreground sm:flex-none', !wide && 'sm:w-40')}>{line.name}</span>
+                <span className={cn('text-right sm:text-left', wide ? 'sm:min-w-16' : 'sm:w-16', terminalTone[line.tone ?? 'muted'])}>{line.status}</span>
                 {line.note ? <span className="basis-full pl-4 text-text-subtle sm:min-w-0 sm:flex-1 sm:basis-0 sm:pl-0">{line.note}</span> : null}
               </li>
             );
           }
           if (line.type === 'route') {
             return (
-              <li key={index} data-line="route" style={style} className={cn('pl-4 text-text-warning', motion)}>
+              <li key={index} data-line="route" style={style} className={cn('pl-4 text-text-warning', wide && 'sm:col-span-full', motion)}>
                 {line.text}
               </li>
             );
           }
           if (line.type === 'meta') {
             return (
-              <li key={index} data-line="meta" style={style} className={cn('text-text-subtle', motion)}>
+              <li key={index} data-line="meta" style={style} className={cn('text-text-subtle', wide && 'sm:col-span-full', motion)}>
                 {line.text}
               </li>
             );
           }
           return (
-            <li key={index} data-line="cmd" style={style} className={cn('text-foreground', motion)}>
+            <li key={index} data-line="cmd" style={style} className={cn('text-foreground', wide && 'sm:col-span-full', motion)}>
               <span aria-hidden="true" className="text-text-subtle">
                 {'> '}
               </span>

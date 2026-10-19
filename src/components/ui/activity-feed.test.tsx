@@ -46,7 +46,7 @@ describe('NotificationList', () => {
   const List = (props: Partial<React.ComponentProps<typeof NotificationList>>) => (
     <NotificationList {...props}>
       <NotificationGroup label="Today">
-        <NotificationItem unread title="Anna mentioned you" meta="10:24">
+        <NotificationItem unread title="Lena Hartmann mentioned you" meta="10:24">
           <button>Reply</button>
         </NotificationItem>
         <NotificationItem title="Quote accepted" />
@@ -104,9 +104,9 @@ describe('TimelineItem avatar', () => {
 describe('NotificationItem time and wrapping actions', () => {
   it('renders the time on the meta line next to the meta text', () => {
     render(
-      <NotificationItem title="Anna mentioned you" meta="Acme GmbH" time="10:24" />,
+      <NotificationItem title="Lena Hartmann mentioned you" meta="Nordwind Handel GmbH" time="10:24" />,
     );
-    expect(screen.getByText('Acme GmbH').parentElement).toContainElement(screen.getByText('10:24'));
+    expect(screen.getByText('Nordwind Handel GmbH').parentElement).toContainElement(screen.getByText('10:24'));
   });
 
   it('actions wrap on narrow widths', () => {

@@ -269,7 +269,7 @@ describe('AvatarImage', () => {
   it('applies object-cover and fills the avatar circle', async () => {
     render(
       <Avatar>
-        <AvatarImage data-testid="image" src="https://example.com/avatar.png" alt="Jane Doe" />
+        <AvatarImage data-testid="image" src="https://example.com/avatar.png" alt="Lena Hartmann" />
       </Avatar>,
     );
     // Radix sets the loaded status in an effect, so the img mounts after the first render

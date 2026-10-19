@@ -28,6 +28,8 @@ const buttonVariants = cva('', {
         'data-[state=open]:bg-button-background-hover',
         'data-[state=open]:border-button-background-hover',
         'active:bg-button-background-hover',
+        // Disabled keeps the neutral disabled border role, never the brand fill colour or a hover stroke.
+        'disabled:border-border-disabled',
       ],
       // Brand-filled button (Figma "Variant=Filled, Color=Brand", node 3287:427299), bound to the
       // themeable `semantic/primary` role. Fill AND border use the primary token; hover darkens
@@ -42,6 +44,7 @@ const buttonVariants = cva('', {
         'data-[state=open]:border-button-background-primary-hover',
         'active:bg-background-brand-bold-active',
         'active:border-background-brand-bold-active',
+        'disabled:border-border-disabled',
       ],
       // general-error family: the only destructive fill with a dark-mode-tuned `-on` text and
       // hover step, so text stays >= 4.5:1 in every theme and mode (rest, hover, open, active).
@@ -66,8 +69,8 @@ const buttonVariants = cva('', {
         'hover:border-border-bold',
         'data-[state=open]:border-border-bold',
         'active:bg-muted',
-        // Disabled keeps the neutral stroke, never a hover or open stroke.
-        'disabled:border-input',
+        // Disabled keeps the neutral disabled border role, never a hover or open stroke.
+        'disabled:border-border-disabled',
       ],
       // Outline with destructive intent: error-coloured text and stroke on the page background, error tint with on-container text on hover/press (AA in light and dark).
       'outline-destructive': [
@@ -90,6 +93,8 @@ const buttonVariants = cva('', {
         'hover:bg-muted-strong',
         'data-[state=open]:bg-muted-strong',
         'active:bg-muted-strong',
+        // The border stays transparent when disabled (no brand or focus-like stroke).
+        'disabled:border-transparent',
       ],
       ghost: [
         'border-transparent',

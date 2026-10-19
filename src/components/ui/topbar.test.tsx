@@ -69,13 +69,13 @@ describe('TopBarBreadcrumb', () => {
   const items = [
     { label: 'vacancy', href: '/v' },
     { label: 'Demands', href: '/d' },
-    { label: 'Acme', href: '/a' },
+    { label: 'Nordwind Handel', href: '/a' },
   ];
 
   it('is a labelled navigation with the last item as current page', () => {
     render(<TopBarBreadcrumb items={items} />);
     expect(screen.getByRole('navigation', { name: 'Breadcrumb' })).toBeInTheDocument();
-    expect(screen.getByText('Acme')).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByText('Nordwind Handel')).toHaveAttribute('aria-current', 'page');
     expect(screen.getByRole('link', { name: 'vacancy' })).toHaveAttribute('href', '/v');
   });
 
@@ -429,6 +429,45 @@ describe('TopBar 0.10 additions', () => {
     expect(products).toHaveAttribute('aria-expanded', 'true');
     await user.click(screen.getByRole('link', { name: 'Vacancy' }));
     expect(screen.queryByRole('dialog')).toBeNull();
+  });
+
+  it('TopBarMobileMenu menu button is 40x40 in the default scale and in zero', () => {
+    const { unmount } = render(<TopBarMobileMenu items={[{ label: 'Pricing', href: '#p' }]} />);
+    expect(screen.getByRole('button', { name: 'Menu' })).toHaveClass('h-control-md', 'w-control-md');
+    expect(screen.getByRole('button', { name: 'Menu' })).not.toHaveClass('h-control-lg');
+    unmount();
+    render(
+      <DesignSystemProvider preset="zero">
+        <TopBarMobileMenu items={[{ label: 'Pricing', href: '#p' }]} />
+      </DesignSystemProvider>,
+    );
+    expect(screen.getByRole('button', { name: 'Menu' })).toHaveClass('h-control-xl', 'w-control-xl');
+  });
+
+  it('TopBarMobileMenu keeps the footer outside the scrolling list', async () => {
+    const user = userEvent.setup();
+    render(<TopBarMobileMenu items={[{ label: 'Pricing', href: '#p' }]} footer={<a href="/login">Sign in</a>} />);
+    await user.click(screen.getByRole('button', { name: 'Menu' }));
+    const signIn = screen.getByRole('link', { name: 'Sign in' });
+    expect(signIn.closest('nav')).toBeNull();
+    expect(signIn.closest('[data-slot="topbar-mobile-menu-footer"]')).toHaveClass('shrink-0');
+  });
+
+  it('TopBarMobileMenu shows a visible heading for non-collapsible groups and a hover surface on collapsible triggers', async () => {
+    const user = userEvent.setup();
+    render(
+      <TopBarMobileMenu
+        items={[
+          { group: 'Products', collapsible: false, items: [{ label: 'Vacancy', href: '#vacancy' }] },
+          { group: 'Company', items: [{ label: 'About', href: '#about' }] },
+        ]}
+      />,
+    );
+    await user.click(screen.getByRole('button', { name: 'Menu' }));
+    const group = screen.getByRole('group', { name: 'Products' });
+    expect(group).toContainElement(screen.getByRole('link', { name: 'Vacancy' }));
+    expect(screen.queryByRole('button', { name: 'Products' })).toBeNull();
+    expect(screen.getByRole('button', { name: 'Company' })).toHaveClass('hover:bg-muted');
   });
 
   it('TopBarMobileMenu keeps `label` as the fallback for all three names', async () => {

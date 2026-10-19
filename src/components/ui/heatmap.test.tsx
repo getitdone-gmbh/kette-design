@@ -105,7 +105,7 @@ describe('Heatmap revenue states and intensity', () => {
   it('renders paid, unpaid and forecast tones with the forecast dashed', () => {
     render(
       <Heatmap aria-label="Revenue" columns={['A', 'B', 'C']}>
-        <HeatmapRow header="Acme">
+        <HeatmapRow header="Nordwind Handel">
           <HeatmapCell tone="paid">1</HeatmapCell>
           <HeatmapCell tone="unpaid">2</HeatmapCell>
           <HeatmapCell tone="forecast">3</HeatmapCell>

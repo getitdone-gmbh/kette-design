@@ -266,8 +266,8 @@ describe('Sidebar round 3', () => {
       <SidebarLayout>
         <SidebarWorkspaceSwitcher
           logo="GD"
-          name="Acme"
-          workspaces={[{ id: 'a', name: 'Acme' }, { id: 'b', name: 'Beta' }]}
+          name="Nordwind Handel"
+          workspaces={[{ id: 'a', name: 'Nordwind Handel' }, { id: 'b', name: 'Beta' }]}
           activeWorkspaceId="a"
           onWorkspaceChange={onChange}
           personal={{ name: 'Personal' }}
@@ -275,14 +275,14 @@ describe('Sidebar round 3', () => {
         />
       </SidebarLayout>,
     );
-    const trigger = screen.getByRole('button', { name: 'Acme' });
+    const trigger = screen.getByRole('button', { name: 'Nordwind Handel' });
     expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
     trigger.focus();
     await user.keyboard('{ArrowDown}');
     expect(await screen.findByRole('menu')).toBeInTheDocument();
     expect(trigger).toHaveAttribute('aria-expanded', 'true');
-    expect(screen.getByRole('menuitem', { name: 'Acme' })).toHaveAttribute('aria-current', 'true');
+    expect(screen.getByRole('menuitem', { name: 'Nordwind Handel' })).toHaveAttribute('aria-current', 'true');
     await user.keyboard('{Escape}');
     expect(screen.queryByRole('menu')).not.toBeInTheDocument();
     expect(trigger).toHaveFocus();

@@ -128,23 +128,29 @@ describe('Message quiet variant', () => {
     expect(screen.getByRole('status', { name: 'Typing' })).toHaveClass('bg-muted');
   });
 
-  it('ownTone inverse uses the inverse surface', () => {
+  it('defaults the own bubble to the brand primary fill', () => {
+    render(<Message author="You" own text="Sure" />);
+    expect(screen.getByText('Sure')).toHaveClass('bg-background-brand-bold-default', 'text-text-on-brand');
+  });
+
+  it('ownTone inverse uses the static inverse surface that stays dark in both modes', () => {
     render(<Message author="You" own ownTone="inverse" text="Sure" />);
     const bubble = screen.getByText('Sure');
-    expect(bubble).toHaveClass('bg-background-inverse', 'text-text-inverse');
+    expect(bubble).toHaveClass('bg-surface-inverse-static', 'text-text-on-inverse-static');
+    expect(bubble).not.toHaveClass('bg-background-inverse', 'text-text-inverse');
     expect(bubble).not.toHaveClass('bg-background-brand-bold-default');
   });
 
   it('size sm uses the 14px small role in default density', () => {
     render(<Message author="P" text="Hi" size="sm" />);
-    expect(screen.getByText('Hi')).toHaveClass('typography-small');
-    expect(screen.getByText('Hi')).not.toHaveClass('typography-p-ui');
+    expect(screen.getByText('Hi')).toHaveClass('typography-text-small');
+    expect(screen.getByText('Hi')).not.toHaveClass('typography-small', 'typography-p-ui');
   });
 
   it('compact density keeps the UI role regardless of size', () => {
     render(<Message author="P" text="Hi" size="sm" density="compact" />);
     expect(screen.getByText('Hi')).toHaveClass('typography-ui');
-    expect(screen.getByText('Hi')).not.toHaveClass('typography-small');
+    expect(screen.getByText('Hi')).not.toHaveClass('typography-text-small');
   });
 
   it('radius defaults to control and accepts token tiers', () => {

@@ -22,6 +22,13 @@ const renderAccordion = (itemTwoProps: Record<string, unknown> = {}) =>
     </Accordion>,
   );
 
+describe('Accordion horizontal padding', () => {
+  it('pads trigger and content equally so the hover surface and the text line up', () => {
+    renderAccordion();
+    expect(screen.getByRole('button', { name: 'Is it accessible?' })).toHaveClass('px-3');
+  });
+});
+
 describe('Accordion component', () => {
   it('is closed by default', () => {
     renderAccordion();

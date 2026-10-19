@@ -97,6 +97,41 @@ describe('CookieConsent', () => {
       expect(screen.getByRole('switch', { name: 'Necessary' })).not.toHaveAccessibleDescription(/Privacy/);
     });
 
+    it('starts the switches from initialConsent and ignores unknown ids', async () => {
+      const user = userEvent.setup();
+      const onSave = vi.fn();
+      render(
+        <CookieConsent categories={categories} initialConsent={{ statistics: true, other: true }} onSave={onSave} description="x" onAccept={() => undefined} onDecline={() => undefined} />,
+      );
+      await user.click(screen.getByRole('button', { name: 'Settings' }));
+      expect(screen.getByRole('switch', { name: 'Statistics' })).toBeChecked();
+      expect(screen.getByRole('switch', { name: 'Marketing' })).not.toBeChecked();
+      await user.click(screen.getByRole('button', { name: 'Save selection' }));
+      expect(onSave).toHaveBeenCalledWith({ necessary: true, statistics: true, marketing: false });
+    });
+
+    it('restores the stored choice when settings are reopened after editing', async () => {
+      const user = userEvent.setup();
+      render(<CookieConsent categories={categories} initialConsent={{ marketing: true }} description="x" onAccept={() => undefined} onDecline={() => undefined} />);
+      await user.click(screen.getByRole('button', { name: 'Settings' }));
+      await user.click(screen.getByRole('switch', { name: 'Marketing' }));
+      expect(screen.getByRole('switch', { name: 'Marketing' })).not.toBeChecked();
+      await user.click(screen.getByRole('button', { name: 'Back' }));
+      await user.click(screen.getByRole('button', { name: 'Settings' }));
+      expect(screen.getByRole('switch', { name: 'Marketing' })).toBeChecked();
+    });
+
+    it('controlled value drives the switches and reports changes', async () => {
+      const user = userEvent.setup();
+      const onValueChange = vi.fn();
+      render(<CookieConsent categories={categories} value={{ statistics: true }} onValueChange={onValueChange} description="x" onAccept={() => undefined} onDecline={() => undefined} />);
+      await user.click(screen.getByRole('button', { name: 'Settings' }));
+      expect(screen.getByRole('switch', { name: 'Statistics' })).toBeChecked();
+      await user.click(screen.getByRole('switch', { name: 'Marketing' }));
+      expect(onValueChange).toHaveBeenCalledWith({ necessary: true, statistics: true, marketing: true });
+      expect(screen.getByRole('switch', { name: 'Marketing' })).not.toBeChecked();
+    });
+
     it('goes back to the first layer', async () => {
       const user = userEvent.setup();
       render(<CookieConsent categories={categories} description="x" onAccept={() => undefined} onDecline={() => undefined} />);
@@ -273,5 +308,27 @@ describe('CookieConsent focus reveal', () => {
     (container.querySelector('[data-testid="outside"]') as HTMLElement).focus();
     expect(scrollIntoView).not.toHaveBeenCalled();
     Reflect.deleteProperty(HTMLElement.prototype, 'scrollIntoView');
+  });
+});
+
+describe('CookieConsent action stacking', () => {
+  it('stacks the actions below sm and keeps the row layout from sm up', () => {
+    render(<CookieConsent description="x" onAccept={() => undefined} onDecline={() => undefined} onCustomize={() => undefined} />);
+    const row = screen.getByRole('button', { name: 'Accept all' }).parentElement as HTMLElement;
+    expect(row).toHaveClass('flex-col', 'items-stretch', 'sm:flex-row', 'sm:flex-wrap', 'sm:items-center');
+    expect(row).not.toHaveClass('flex-wrap');
+    expect(Array.from(row.querySelectorAll('button')).map((b) => b.textContent)).toEqual(['Decline non-essential', 'Accept all', 'Settings']);
+  });
+
+  it('stacks two actions and the settings view actions the same way', async () => {
+    const user = userEvent.setup();
+    const { unmount } = render(<CookieConsent description="x" onAccept={() => undefined} onDecline={() => undefined} />);
+    expect(screen.getByRole('button', { name: 'Accept all' }).parentElement).toHaveClass('flex-col', 'sm:flex-row');
+    unmount();
+    render(
+      <CookieConsent description="x" onAccept={() => undefined} onDecline={() => undefined} categories={[{ id: 'a', title: 'A' }]} />,
+    );
+    await user.click(screen.getByRole('button', { name: 'Settings' }));
+    expect(screen.getByRole('button', { name: 'Back' }).parentElement).toHaveClass('flex-col', 'sm:flex-row');
   });
 });

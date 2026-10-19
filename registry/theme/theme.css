@@ -67,7 +67,7 @@
   --typo-blockquote-size: 1rem;
   --typo-blockquote-lh: 1.5rem;
   --typo-blockquote-ls: 0.0000em;
-  --typo-code-font: Menlo;
+  --typo-code-font: ui-monospace, SFMono-Regular, Menlo, monospace;
   --typo-code-weight: 700;
   --typo-code-size: 0.875rem;
   --typo-code-lh: 1.125rem;
@@ -182,7 +182,7 @@
   --typo-table-cell-size: 0.8125rem;
   --typo-table-cell-lh: 1rem;
   --typo-table-cell-ls: -0.0060em;
-  --typo-inline-code-font: Menlo;
+  --typo-inline-code-font: ui-monospace, SFMono-Regular, Menlo, monospace;
   --typo-inline-code-weight: 700;
   --typo-inline-code-size: 0.875rem;
   --typo-inline-code-lh: 1.5rem;
@@ -359,12 +359,12 @@
   --typo-ui-sm-semibold-size: 0.75rem;
   --typo-ui-sm-semibold-lh: 0.9375rem;
   --typo-ui-sm-semibold-ls: -0.0060em;
-  --typo-code-sm-font: Menlo;
+  --typo-code-sm-font: ui-monospace, SFMono-Regular, Menlo, monospace;
   --typo-code-sm-weight: 400;
   --typo-code-sm-size: 0.6875rem;
   --typo-code-sm-lh: 1rem;
   --typo-code-sm-ls: 0;
-  --typo-code-block-font: Menlo;
+  --typo-code-block-font: ui-monospace, SFMono-Regular, Menlo, monospace;
   --typo-code-block-weight: 400;
   --typo-code-block-size: 0.75rem;
   --typo-code-block-lh: 1.1875rem;
@@ -789,6 +789,8 @@
   --colors-data-project-7-on: 2 6 23;
   --colors-data-project-8: 100 116 139;
   --colors-data-project-8-on: 255 255 255;
+  --colors-data-rose-default: 225 29 72;
+  --colors-data-rose-on: 255 255 255;
   --colors-data-score-good-bg: 239 246 255;
   --colors-data-score-good-border: 37 99 235;
   --colors-data-score-good-fg: 29 78 216;
@@ -1239,6 +1241,7 @@
   --semantic-success-800: 6 95 70;
   --semantic-success-900: 6 78 59;
   --semantic-surface-canvas: 241 245 249;
+  --semantic-surface-inverse-static: 30 41 59;
   --semantic-surface-overlay: 255 255 255;
   --semantic-surface-paper: 255 255 255;
   --semantic-surface-raised: 255 255 255;
@@ -1259,6 +1262,7 @@
   --semantic-text-on-brand: 248 250 252;
   --semantic-text-on-destructive: 248 250 252;
   --semantic-text-on-info: 248 250 252;
+  --semantic-text-on-inverse-static: 248 250 252;
   --semantic-text-on-paper: 15 23 42;
   --semantic-text-on-paper-subtle: 71 85 105;
   --semantic-text-on-success: 248 250 252;

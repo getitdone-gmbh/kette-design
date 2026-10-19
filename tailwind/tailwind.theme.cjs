@@ -520,6 +520,14 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-project-8-on))`
                         : `rgb(var(--colors-data-project-8-on) / ${opacityValue})`,
+                'data-rose-default': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--colors-data-rose-default))`
+                        : `rgb(var(--colors-data-rose-default) / ${opacityValue})`,
+                'data-rose-on': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--colors-data-rose-on))`
+                        : `rgb(var(--colors-data-rose-on) / ${opacityValue})`,
                 'data-score-good-bg': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-score-good-bg))`
@@ -2482,6 +2490,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--semantic-surface-canvas))`
                         : `rgb(var(--semantic-surface-canvas) / ${opacityValue})`,
+                'surface-inverse-static': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--semantic-surface-inverse-static))`
+                        : `rgb(var(--semantic-surface-inverse-static) / ${opacityValue})`,
                 'surface-overlay': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--semantic-surface-overlay))`
@@ -2562,6 +2574,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--semantic-text-on-info))`
                         : `rgb(var(--semantic-text-on-info) / ${opacityValue})`,
+                'text-on-inverse-static': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--semantic-text-on-inverse-static))`
+                        : `rgb(var(--semantic-text-on-inverse-static) / ${opacityValue})`,
                 'text-on-paper': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--semantic-text-on-paper))`

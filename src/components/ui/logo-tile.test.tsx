@@ -5,9 +5,9 @@ import { LogoTile } from './logo-tile';
 
 describe('LogoTile', () => {
   it('renders initials on the project colour with on-brand text and the item radius', () => {
-    render(<LogoTile initials="AC" data-testid="tile" />);
+    render(<LogoTile initials="NH" data-testid="tile" />);
     const tile = screen.getByTestId('tile');
-    expect(tile).toHaveTextContent('AC');
+    expect(tile).toHaveTextContent('NH');
     expect(tile).toHaveClass('bg-data-project-1', 'text-data-project-1-on', 'rounded-item', 'h-avatar-xs', 'w-avatar-xs', 'typography-avatar-xs');
   });
 
@@ -17,15 +17,15 @@ describe('LogoTile', () => {
   });
 
   it('is decorative without a label and an image with one', () => {
-    const { rerender } = render(<LogoTile initials="AC" data-testid="tile" />);
+    const { rerender } = render(<LogoTile initials="NH" data-testid="tile" />);
     expect(screen.getByTestId('tile')).toHaveAttribute('aria-hidden', 'true');
-    rerender(<LogoTile initials="AC" label="Acme Corp" />);
-    expect(screen.getByRole('img', { name: 'Acme Corp' })).toBeInTheDocument();
+    rerender(<LogoTile initials="NH" label="Nordwind Handel GmbH" />);
+    expect(screen.getByRole('img', { name: 'Nordwind Handel GmbH' })).toBeInTheDocument();
   });
 
   it('supports larger sizes and forwards the ref', () => {
     const ref = createRef<HTMLSpanElement>();
-    render(<LogoTile ref={ref} initials="AC" size="md" data-testid="tile" />);
+    render(<LogoTile ref={ref} initials="NH" size="md" data-testid="tile" />);
     expect(ref.current).toBe(screen.getByTestId('tile'));
     expect(ref.current).toHaveClass('h-avatar-md', 'w-avatar-md');
   });

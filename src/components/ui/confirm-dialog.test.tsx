@@ -11,7 +11,7 @@ const setup = (props: Partial<React.ComponentProps<typeof ConfirmDialog>> = {}) 
   render(
     <ConfirmDialog
       open
-      title="Delete Acme?"
+      title="Delete Nordwind Handel?"
       description="Cannot be undone."
       onConfirm={onConfirm}
       onOpenChange={onOpenChange}
@@ -24,7 +24,7 @@ const setup = (props: Partial<React.ComponentProps<typeof ConfirmDialog>> = {}) 
 describe('ConfirmDialog', () => {
   it('renders title, text and right aligned actions without a body or input', () => {
     setup();
-    expect(screen.getByRole('dialog', { name: 'Delete Acme?' })).toBeInTheDocument();
+    expect(screen.getByRole('dialog', { name: 'Delete Nordwind Handel?' })).toBeInTheDocument();
     expect(screen.getByText('Cannot be undone.')).toBeInTheDocument();
     expect(screen.queryByRole('textbox')).toBeNull();
     expect(screen.getByRole('button', { name: 'Confirm' })).toBeEnabled();
@@ -50,11 +50,11 @@ describe('ConfirmDialog', () => {
 
   it('keeps confirm disabled until the typed value matches', async () => {
     const user = userEvent.setup();
-    const { onConfirm } = setup({ confirmValue: 'Acme GmbH' });
+    const { onConfirm } = setup({ confirmValue: 'Nordwind Handel GmbH' });
     const confirm = screen.getByRole('button', { name: 'Confirm' });
-    const input = screen.getByLabelText('Type Acme GmbH to confirm');
+    const input = screen.getByLabelText('Type Nordwind Handel GmbH to confirm');
     expect(confirm).toBeDisabled();
-    await user.type(input, 'Acme');
+    await user.type(input, 'Nordwind Handel');
     expect(confirm).toBeDisabled();
     await user.type(input, ' GmbH');
     expect(confirm).toBeEnabled();
@@ -64,7 +64,7 @@ describe('ConfirmDialog', () => {
 
   it('does not confirm with Enter while the value does not match', async () => {
     const user = userEvent.setup();
-    const { onConfirm } = setup({ confirmValue: 'Acme' });
+    const { onConfirm } = setup({ confirmValue: 'Nordwind Handel' });
     await user.type(screen.getByRole('textbox'), 'Ac{Enter}');
     expect(onConfirm).not.toHaveBeenCalled();
   });
@@ -79,10 +79,10 @@ describe('ConfirmDialog', () => {
   it('takes the default texts from the provider locale', () => {
     render(
       <DesignSystemProvider locale="de">
-        <ConfirmDialog open title="T" confirmValue="Acme" onConfirm={() => undefined} />
+        <ConfirmDialog open title="T" confirmValue="Nordwind Handel" onConfirm={() => undefined} />
       </DesignSystemProvider>,
     );
-    expect(screen.getByLabelText('Zum Bestätigen Acme eingeben')).toBeInTheDocument();
+    expect(screen.getByLabelText('Zum Bestätigen Nordwind Handel eingeben')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Bestätigen' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Abbrechen' })).toBeInTheDocument();
   });

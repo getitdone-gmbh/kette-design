@@ -77,7 +77,8 @@ const alertVariants = cva(['relative w-full border border-solid', '[&>svg]:absol
       ],
       destructive: [
         'border-general-error-hover/70 bg-general-error-default/10',
-        'text-general-error-hover [&>svg]:text-general-error-hover',
+        // On-subtle text role: 5.0:1 or better on the tint in every theme and mode (the hover role fell to 3.9:1 in windows-95).
+        'text-text-destructive-on-subtle [&>svg]:text-text-destructive-on-subtle',
       ],
     },
     // `default` is the established layout. `compact` is a single-line note: no border, severity tint

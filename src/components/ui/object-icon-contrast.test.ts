@@ -30,7 +30,7 @@ const tones = {
   info: ['info', 5.49, 8.49],
   success: ['success', 4.84, 8.57],
   warning: ['warning', 4.52, 8.18],
-  destructive: ['error', 5.3, 8.2],
+  destructive: ['error', 5.3, 8.16],
 } as const;
 
 describe('ObjectIcon tone contrast', () => {

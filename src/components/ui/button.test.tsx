@@ -262,6 +262,17 @@ describe('Button state model (Attio recipe)', () => {
     },
   );
 
+  it.each(['default', 'primary', 'outline'] as const)('%s: disabled uses the neutral disabled border role', (variant) => {
+    render(<Button variant={variant}>Go</Button>);
+    const button = screen.getByRole('button', { name: 'Go' });
+    expect(button).toHaveClass('disabled:border-border-disabled');
+  });
+
+  it('secondary: disabled keeps the transparent border', () => {
+    render(<Button variant="secondary">Go</Button>);
+    expect(screen.getByRole('button', { name: 'Go' })).toHaveClass('disabled:border-transparent');
+  });
+
   it.each(['default', 'primary', 'destructive'] as const)('%s: filled variants carry no shadow', (variant) => {
     render(<Button variant={variant}>Go</Button>);
     expect(screen.getByRole('button', { name: 'Go' }).className).not.toMatch(/(^|\s)shadow(-|\s|$)/);

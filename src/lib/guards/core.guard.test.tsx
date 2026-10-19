@@ -67,9 +67,9 @@ const Everything = () => (
 
     {colors.map((c) => (
       <Fragment key={c}>
-        <LogoTile color={c} initials="AC" />
-        <LogoTile color={c} initials="AC" size="sm" label="Acme" />
-        <LogoTile color={c} initials="AC" size="md" />
+        <LogoTile color={c} initials="NH" />
+        <LogoTile color={c} initials="NH" size="sm" label="Nordwind Handel" />
+        <LogoTile color={c} initials="NH" size="md" />
       </Fragment>
     ))}
     <Avatar>
@@ -83,7 +83,7 @@ const Everything = () => (
     <Table>
       <TableBody>
         <TableRow selected>
-          <TableLeadCell logo={<LogoTile initials="AC" />} control={<input type="checkbox" aria-label="s" />} name="Acme" supportingText="Berlin" tag={<Chip size="small">Required</Chip>} />
+          <TableLeadCell logo={<LogoTile initials="NH" />} control={<input type="checkbox" aria-label="s" />} name="Nordwind Handel" supportingText="Berlin" tag={<Chip size="small">Required</Chip>} />
           <TableBadgeCell>
             <Chip variant="success">Active</Chip>
           </TableBadgeCell>

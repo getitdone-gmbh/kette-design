@@ -192,17 +192,17 @@ describe('TableActionsCell align', () => {
 describe('TableEditCell', () => {
   it('shows the value as a named button and edits with Enter, saving on Enter', async () => {
     const onCommit = vi.fn();
-    inRow(<TableEditCell label="Name" value="Acme" onCommit={onCommit} />);
-    const button = screen.getByRole('button', { name: 'Edit Name: Acme' });
-    expect(button).toHaveTextContent('Acme');
+    inRow(<TableEditCell label="Name" value="Nordwind Handel" onCommit={onCommit} />);
+    const button = screen.getByRole('button', { name: 'Edit Name: Nordwind Handel' });
+    expect(button).toHaveTextContent('Nordwind Handel');
     button.focus();
     await userEvent.keyboard('{Enter}');
     const input = screen.getByRole('textbox', { name: 'Name' });
     expect(input).toHaveFocus();
     expect(screen.getByRole('cell')).toHaveClass('ring-inset');
-    await userEvent.keyboard('{Control>}a{/Control}Globex{Enter}');
+    await userEvent.keyboard('{Control>}a{/Control}Example Studio{Enter}');
     expect(onCommit).toHaveBeenCalledTimes(1);
-    expect(onCommit).toHaveBeenCalledWith('Globex');
+    expect(onCommit).toHaveBeenCalledWith('Example Studio');
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Edit Name/ })).toHaveFocus();
   });
@@ -210,18 +210,18 @@ describe('TableEditCell', () => {
   it('opens on click and cancels with Escape without saving', async () => {
     const onCommit = vi.fn();
     const onCancel = vi.fn();
-    inRow(<TableEditCell label="Name" value="Acme" onCommit={onCommit} onCancel={onCancel} />);
-    await userEvent.click(screen.getByRole('button', { name: 'Edit Name: Acme' }));
+    inRow(<TableEditCell label="Name" value="Nordwind Handel" onCommit={onCommit} onCancel={onCancel} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Edit Name: Nordwind Handel' }));
     await userEvent.keyboard('X{Escape}');
     expect(onCommit).not.toHaveBeenCalled();
     expect(onCancel).toHaveBeenCalledTimes(1);
-    expect(screen.getByRole('button', { name: 'Edit Name: Acme' })).toHaveFocus();
+    expect(screen.getByRole('button', { name: 'Edit Name: Nordwind Handel' })).toHaveFocus();
   });
 
   it('saves a changed draft on blur (the text is preselected)', async () => {
     const onCommit = vi.fn();
-    inRow(<TableEditCell label="Name" value="Acme" onCommit={onCommit} />);
-    await userEvent.click(screen.getByRole('button', { name: 'Edit Name: Acme' }));
+    inRow(<TableEditCell label="Name" value="Nordwind Handel" onCommit={onCommit} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Edit Name: Nordwind Handel' }));
     await userEvent.keyboard('s');
     await userEvent.tab();
     expect(onCommit).toHaveBeenCalledWith('s');
@@ -229,8 +229,8 @@ describe('TableEditCell', () => {
 
   it('does not commit an unchanged value', async () => {
     const onCommit = vi.fn();
-    inRow(<TableEditCell label="Name" value="Acme" onCommit={onCommit} />);
-    await userEvent.click(screen.getByRole('button', { name: 'Edit Name: Acme' }));
+    inRow(<TableEditCell label="Name" value="Nordwind Handel" onCommit={onCommit} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Edit Name: Nordwind Handel' }));
     await userEvent.keyboard('{Enter}');
     expect(onCommit).not.toHaveBeenCalled();
   });
@@ -252,7 +252,7 @@ describe('TableEditCell', () => {
 
   it('can be driven from outside', async () => {
     const onEditingChange = vi.fn();
-    inRow(<TableEditCell label="Name" value="Acme" editing onEditingChange={onEditingChange} />);
+    inRow(<TableEditCell label="Name" value="Nordwind Handel" editing onEditingChange={onEditingChange} />);
     expect(screen.getByRole('textbox')).toBeInTheDocument();
     await userEvent.keyboard('{Escape}');
     expect(onEditingChange).toHaveBeenCalledWith(false);
@@ -339,6 +339,27 @@ describe('TableEditCell mode="always"', () => {
       </TableBody>
     </Table>
   );
+
+  it('does not draw the cell ring while the input has focus (the input keeps its own indicator)', async () => {
+    render(<Grid />);
+    const input = screen.getByRole('textbox', { name: 'R0C0' });
+    await userEvent.click(input);
+    expect(input).toHaveFocus();
+    expect(input.closest('td')?.className).not.toContain('ring-border-focus');
+  });
+
+  it('draws the cell ring when the consumer marks the cell focused', () => {
+    render(
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableEditCell mode="always" focused label="F" value="" onCommit={() => {}} />
+          </TableRow>
+        </TableBody>
+      </Table>,
+    );
+    expect(screen.getByRole('textbox', { name: 'F' }).closest('td')?.className).toContain('ring-border-focus');
+  });
 
   it('renders typeable inputs without click-to-edit', async () => {
     render(<Grid />);

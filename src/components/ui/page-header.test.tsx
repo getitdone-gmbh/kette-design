@@ -28,7 +28,7 @@ describe('PageHeader', () => {
     render(
       <PageHeader
         variant="record"
-        title="Acme GmbH"
+        title="Nordwind Handel GmbH"
         leading={<span data-testid="lead" />}
         badges={<span>Client</span>}
         breadcrumbs={<nav aria-label="Breadcrumb" />}
@@ -67,9 +67,9 @@ describe('PageHeader', () => {
   it('renders scope chips after the subtitle and nothing without the prop', () => {
     const { rerender, container } = render(<PageHeader title="t" subtitle="sub" />);
     expect(container.querySelector('[data-scope-chips]')).toBeNull();
-    rerender(<PageHeader title="t" subtitle="sub" scopeChips={<span>Acme GmbH</span>} />);
+    rerender(<PageHeader title="t" subtitle="sub" scopeChips={<span>Nordwind Handel GmbH</span>} />);
     const row = container.querySelector('[data-scope-chips]') as HTMLElement;
-    expect(row).toHaveTextContent('Acme GmbH');
+    expect(row).toHaveTextContent('Nordwind Handel GmbH');
     expect(screen.getByText('sub').compareDocumentPosition(row) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 

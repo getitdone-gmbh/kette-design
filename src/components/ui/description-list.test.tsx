@@ -67,19 +67,19 @@ describe('Attribute typed values', () => {
   it('renders each type inside the dd', () => {
     render(
       <Attributes title="Details">
-        <Attribute label="Name" type="text" value="Acme" />
+        <Attribute label="Name" type="text" value="Nordwind Handel" />
         <Attribute label="Status" type="chip" value="Client" />
         <Attribute label="Owner" type="avatar" value="Anna Berger" initials="AB" />
-        <Attribute label="Parent" type="logo" value="Acme Group" initials="AG" logoColor={3} />
-        <Attribute label="Website" type="input" value="acme.de" />
+        <Attribute label="Parent" type="logo" value="Example Studio" initials="ES" logoColor={3} />
+        <Attribute label="Website" type="input" value="example.com" />
         <Attribute label="Tags" type="tags" tags={['Retail', 'DACH']} />
       </Attributes>,
     );
-    expect(screen.getByText('Acme')).toBeInTheDocument();
+    expect(screen.getByText('Nordwind Handel')).toBeInTheDocument();
     expect(screen.getByText('Client')).toBeInTheDocument();
     expect(screen.getByText('Anna Berger')).toBeInTheDocument();
-    expect(screen.getByText('AG')).toHaveAttribute('data-color', '3');
-    expect(screen.getByRole('textbox', { name: 'Website' })).toHaveValue('acme.de');
+    expect(screen.getByText('ES')).toHaveAttribute('data-color', '3');
+    expect(screen.getByRole('textbox', { name: 'Website' })).toHaveValue('example.com');
     expect(screen.getByText('Retail')).toBeInTheDocument();
     expect(screen.getByText('DACH')).toBeInTheDocument();
   });

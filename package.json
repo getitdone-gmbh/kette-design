@@ -1,6 +1,6 @@
 {
   "name": "@getitdone-gmbh/ui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Free React components of the Get IT Done design system for complex software: primitives plus general components such as sidebar, data grid, date picker, multiselect, file upload, charts and kanban. shadcn/ui and Radix UI based, Tailwind CSS, TypeScript, light and dark theme included.",
   "license": "MIT",
   "author": "Get IT Done GmbH",

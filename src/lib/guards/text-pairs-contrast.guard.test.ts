@@ -84,6 +84,25 @@ describe('text pair contrast over all themes', () => {
     });
   });
 
+  describe('Alert text on the severity tint', () => {
+    // The tint is the 10 percent severity colour over the page background.
+    const tintWorst = (mode: 'light' | 'dark', fg: string, severity: string) => {
+      let min = Infinity;
+      for (const file of themeFiles) {
+        const css = readFileSync(join(dist, file), 'utf8');
+        const tint = blend(readToken(css, mode, `colors-general-${severity}-default`), readToken(css, mode, 'semantic-background-default'), 0.1);
+        min = Math.min(min, ratio(readToken(css, mode, fg), tint));
+      }
+      return Number(min.toFixed(2));
+    };
+    it.each(['light', 'dark'] as const)('destructive text-destructive-on-subtle holds AA in %s in every theme', (mode) => {
+      expect(tintWorst(mode, 'semantic-text-destructive-on-subtle', 'error')).toBeGreaterThanOrEqual(AA);
+    });
+    it.each(['info', 'success', 'warning'] as const)('%s hover text holds AA in light and dark in every theme', (severity) => {
+      for (const mode of ['light', 'dark'] as const) expect(tintWorst(mode, `colors-general-${severity}-hover`, severity)).toBeGreaterThanOrEqual(AA);
+    });
+  });
+
   describe('MetricPanel inverse-fixed', () => {
     // The dark theme is scoped to the panel, so the dark values apply in both page modes.
     it('text-default and its 80 percent tint hold AA on background-subtle', () => {

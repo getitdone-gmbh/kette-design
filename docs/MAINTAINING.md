@@ -18,3 +18,10 @@ This repo is the free MIT core of the Get IT Done design system. It is a copy, n
 8. Ask Alex to publish: `npm publish --registry=https://registry.npmjs.org` in his own terminal (browser confirmation, no OTP app). Verify with `curl -s https://registry.npmjs.org/@getitdone-gmbh%2fui` that `dist-tags.latest` is the new version.
 9. Tag `vX.Y.Z` and create the GitHub release only after npm shows the new version.
 10. Tell the atlas keeper so the atlas shows the new state.
+
+## Sync history
+
+| ui | component-library-react | figma-design-tokens | Notes |
+| --- | --- | --- | --- |
+| 0.3.0 | 0.26.7 | 5.5.0 | Theme roles data rose, surface inverse static, text on inverse static, monospace stack; new props in Cookie Consent (initialConsent, value, onValueChange), Top Bar mobile menu (collapsible, footer), Message inverse static tone; example data on the shared cast. The Tailwind preset lists the windows-95 theme (part of the token preset); `styles/theme.css` stays zero only. |
+| 0.2.0 | ~0.26.4 | 5.2.0 | 87 general components added. |

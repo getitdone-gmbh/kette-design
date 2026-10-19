@@ -575,12 +575,12 @@ describe('Table rows (Attio recipe)', () => {
         <Table>
           <TableBody>
             <TableRow>
-              <TableLeadCell name="Acme" supportingText="Berlin" logo={<span data-testid="logo" />} />
+              <TableLeadCell name="Nordwind Handel" supportingText="Berlin" logo={<span data-testid="logo" />} />
             </TableRow>
           </TableBody>
         </Table>,
       );
-      expect(screen.getByRole('cell', { name: /Acme/ })).toHaveTextContent('AcmeBerlin');
+      expect(screen.getByRole('cell', { name: /Nordwind Handel/ })).toHaveTextContent('Nordwind HandelBerlin');
       expect(screen.getByTestId('logo').parentElement).toHaveAttribute('aria-hidden', 'true');
     });
   });
@@ -609,7 +609,7 @@ describe('Table cell styles and states (Figma Table cell)', () => {
   it('row selected still tints the row and exposes aria-selected for lead logo, badge and checkbox cells', () => {
     inTable(
       <>
-        <TableLeadCell logo={<LogoTile initials="AC" />} name="Acme Corp" />
+        <TableLeadCell logo={<LogoTile initials="NH" />} name="Nordwind Handel GmbH" />
         <TableBadgeCell>
           <Chip variant="success">Active</Chip>
         </TableBadgeCell>
@@ -692,16 +692,16 @@ describe('Table cell styles and states (Figma Table cell)', () => {
   it('TableLeadCell: control slot is exposed, logo stays decorative, tag follows the name', () => {
     inTable(
       <TableLeadCell
-        control={<input type="checkbox" aria-label="Select Acme" />}
-        logo={<LogoTile initials="AC" color={3} />}
-        name="Acme Corp"
+        control={<input type="checkbox" aria-label="Select Nordwind Handel" />}
+        logo={<LogoTile initials="NH" color={3} />}
+        name="Nordwind Handel GmbH"
         supportingText="Berlin"
         tag={<Chip size="small">Required</Chip>}
       />,
     );
-    expect(screen.getByRole('checkbox', { name: 'Select Acme' })).toBeInTheDocument();
-    expect(screen.getByText('AC')).toHaveAttribute('aria-hidden', 'true');
-    expect(screen.getByText('AC')).toHaveClass('bg-data-project-3');
+    expect(screen.getByRole('checkbox', { name: 'Select Nordwind Handel' })).toBeInTheDocument();
+    expect(screen.getByText('NH')).toHaveAttribute('aria-hidden', 'true');
+    expect(screen.getByText('NH')).toHaveClass('bg-data-project-3');
     expect(screen.getByText('Required')).toBeInTheDocument();
   });
 

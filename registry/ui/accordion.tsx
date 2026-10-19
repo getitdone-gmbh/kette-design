@@ -49,7 +49,7 @@ const AccordionTrigger = React.forwardRef<
         // renders the Trigger as a real button (see react-collapsible's `Collapsible.Trigger`), and
         // without this a wrapping multi-line header label would center instead of following the
         // left-aligned "label | chevron" row every other disclosure/menu trigger in this system uses.
-        'flex flex-1 items-center justify-between gap-2 py-4 text-left transition-all [&[data-state=open]>svg]:rotate-180',
+        'flex flex-1 items-center justify-between gap-2 px-3 py-4 text-left transition-all [&[data-state=open]>svg]:rotate-180',
         // Type comes from the dedicated `typography-accordion-title` role (size/weight/line-height/
         // letter-spacing token, currently 16px/500/24px) rather than the ad hoc `font-medium` this
         // used before. `leading-normal` is required alongside it because Tailwind Preflight resets
@@ -108,7 +108,8 @@ const AccordionContent = React.forwardRef<
     )}
     {...props}
   >
-    <div className={cn('pb-4 pt-0', className)}>{children}</div>
+    {/* Same horizontal padding as the trigger so the content text stays aligned with the header label. */}
+    <div className={cn('px-3 pb-4 pt-0', className)}>{children}</div>
   </AccordionPrimitive.Content>
   );
 });

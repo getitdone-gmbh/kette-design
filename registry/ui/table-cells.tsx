@@ -216,7 +216,7 @@ export interface TableButtonCellProps extends Omit<TableCellProps, 'children' | 
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   // Outline is the Figma default, ghost is the quiet alternative.
   variant?: Extract<ButtonProps['variant'], 'outline' | 'ghost'>;
-  // Accessible name when the visible text alone is ambiguous across rows, e.g. `Open Acme GmbH`.
+  // Accessible name when the visible text alone is ambiguous across rows, e.g. `Open Nordwind Handel GmbH`.
   'aria-label'?: string;
 }
 
@@ -454,7 +454,6 @@ const TableEditCellAlways = React.forwardRef<HTMLTableCellElement, TableEditCell
     const noteSettled = React.useRef(false);
     const wasNoteOpen = React.useRef(noteOpen);
     const noteId = React.useId();
-    const [hasFocus, setHasFocus] = React.useState(false);
     const cellRef = React.useRef<HTMLTableCellElement | null>(null);
     const committed = React.useRef(value);
     const timer = React.useRef<ReturnType<typeof setTimeout>>();
@@ -565,7 +564,7 @@ const TableEditCellAlways = React.forwardRef<HTMLTableCellElement, TableEditCell
         }}
         className={className}
         disabled={disabled}
-        focused={focused || hasFocus}
+        focused={focused}
         invalid={hasError}
         data-mode="always"
         {...props}
@@ -588,13 +587,9 @@ const TableEditCellAlways = React.forwardRef<HTMLTableCellElement, TableEditCell
                 clearTimeout(timer.current);
                 if (commitDelay != null && commitDelay > 0) timer.current = setTimeout(() => commit(next), commitDelay);
               }}
-              onFocus={(event) => {
-                inputProps?.onFocus?.(event);
-                setHasFocus(true);
-              }}
+              onFocus={inputProps?.onFocus}
               onBlur={(event) => {
                 inputProps?.onBlur?.(event);
-                setHasFocus(false);
                 commit(event.target.value);
               }}
               onKeyDown={(event) => {

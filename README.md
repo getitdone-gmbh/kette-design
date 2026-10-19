@@ -16,6 +16,8 @@ We build business software with many screens, tables, forms and states. These co
 
 Plus the zero theme as CSS variables (typography, colours, radii, elevation, light and dark) and a Tailwind CSS 3 preset.
 
+Synced from component-library-react 0.26.7 and figma-design-tokens 5.5.0 (release 0.3.0). See [docs/MAINTAINING.md](docs/MAINTAINING.md).
+
 ## Install
 
 ### As an npm package

@@ -167,6 +167,8 @@ const TableHeader = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTable
         style={stickyOffset && stickyMode === 'page' ? ({ '--table-sticky-offset': stickyOffset, ...style } as CSSProperties) : style}
         className={cn(
           '[&_tr]:border-b border-solid',
+          // A muted header paints the row accent gutter (border-l-4) in the header fill, so no strip of table surface shows next to the first header cell.
+          headerTone === 'muted' && '[&_tr]:border-l-muted',
           edge,
           // NOTE: `bg-table-background-default` replaces a previously hardcoded `bg-white` here —
           // that raw value stayed white in dark mode, occluding scrolled-under rows with a
