@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kanban-move",
+  "title": "Kanban Move",
+  "description": "Kanban Move from the Get IT Done design system.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/kanban.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/kanban-move.ts",
+      "content": "import type { KanbanMove } from '@/components/ui/kanban';\n\n// A board column as plain data: the page owns the order, the Kanban only reports moves.\nexport interface KanbanColumnData<T extends { id: string }> {\n  id: string;\n  items: T[];\n}\n\n// Applies a Kanban move (drag, touch long press or keyboard). `index` counts the cards of the target column without the moved card.\nexport function applyKanbanMove<T extends { id: string }, C extends KanbanColumnData<T>>(columns: C[], move: KanbanMove): C[] {\n  const source = columns.find((c) => c.id === move.fromColumnId);\n  const card = source?.items.find((i) => i.id === move.cardId);\n  if (!card || !columns.some((c) => c.id === move.toColumnId)) return columns;\n  return columns.map((c) => {\n    const items = c.items.filter((i) => i.id !== move.cardId);\n    if (c.id !== move.toColumnId) return c.id === move.fromColumnId ? { ...c, items } : c;\n    const index = Math.max(0, Math.min(move.index, items.length));\n    return { ...c, items: [...items.slice(0, index), card, ...items.slice(index)] };\n  });\n}\n\n// \"Move to\" menu: puts the card at the end of the target column. A move to its own column changes nothing.\nexport function moveToColumn<T extends { id: string }, C extends KanbanColumnData<T>>(columns: C[], cardId: string, toColumnId: string): C[] {\n  const from = columns.find((c) => c.items.some((i) => i.id === cardId));\n  const to = columns.find((c) => c.id === toColumnId);\n  if (!from || !to || from.id === to.id) return columns;\n  return applyKanbanMove(columns, { cardId, fromColumnId: from.id, toColumnId, index: to.items.length });\n}\n\n// Column that currently holds a card, e.g. for the current mark in the \"Move to\" menu.\nexport const kanbanColumnOf = <T extends { id: string }>(columns: KanbanColumnData<T>[], cardId: string) =>\n  columns.find((c) => c.items.some((i) => i.id === cardId))?.id;\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

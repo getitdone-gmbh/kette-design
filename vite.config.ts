@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import preserveDirectives from 'rollup-plugin-preserve-directives';
@@ -11,7 +12,7 @@ const isExternal = (id: string) => externalPackages.some((name) => id === name |
 
 export default defineConfig({
   publicDir: false,
-  plugins: [react(), dts({ include: ['src'], entryRoot: 'src' })],
+  plugins: [react(), dts({ include: ['src'], exclude: ['**/*.test.*', 'src/lib/assert-compiled.ts', 'src/lib/token-contrast.ts'], entryRoot: 'src' })],
   build: {
     lib: { entry: resolve(__dirname, 'src/index.ts'), formats: ['es'], fileName: () => 'index.js' },
     rollupOptions: {
@@ -21,5 +22,10 @@ export default defineConfig({
     },
     target: 'es2020',
     sourcemap: true,
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './setupTests.js',
   },
 });

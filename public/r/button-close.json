@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-close",
+  "title": "Button Close",
+  "description": "Button Close from the Get IT Done design system.",
+  "dependencies": [
+    "class-variance-authority",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/labels-context.json",
+    "https://zero-design.itdone.de/r/recipes.json",
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/button-close.tsx",
+      "content": "'use client';\n\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { X } from 'lucide-react';\nimport * as React from 'react';\n\nimport { focusRing } from '@/lib/recipes';\nimport { cn } from '@/lib/utils';\nimport { useLabels, usePreset } from '@/components/ui/labels-context';\n\n// Figma ButtonClose (2763:420129): Size sm|md|lg, Color Neutral|Brand, State Default|Hover|Focused. Theme=Light only (role bound).\nconst buttonCloseVariants = cva(\n  [\n    'inline-flex shrink-0 items-center justify-center rounded-control transition-colors',\n    'disabled:pointer-events-none disabled:opacity-disabled',\n    ...focusRing,\n  ],\n  {\n    variants: {\n      size: {\n        sm: 'h-control-sm w-control-sm',\n        md: 'h-control-md w-control-md',\n        lg: 'h-control-lg w-control-lg',\n      },\n      color: {\n        neutral: 'text-icon-subtle hover:bg-muted hover:text-icon-default',\n        brand: 'text-icon-brand hover:bg-background-brand-subtle',\n      },\n    },\n    defaultVariants: { size: 'sm', color: 'neutral' },\n  },\n);\n\nexport interface ButtonCloseProps\n  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'>,\n    VariantProps<typeof buttonCloseVariants> {}\n\nconst ButtonClose = React.forwardRef<HTMLButtonElement, ButtonCloseProps>(\n  ({ className, size, color, type = 'button', 'aria-label': ariaLabelProp, ...props }, ref) => {\n    const l = useLabels();\n    const zero = usePreset() === 'zero';\n    const ariaLabel = ariaLabelProp ?? l.close;\n    return (\n    <button\n      ref={ref}\n      type={type}\n      aria-label={ariaLabel}\n      className={cn(buttonCloseVariants({ size, color }), className)}\n      {...props}\n    >\n      <X aria-hidden=\"true\" className={size === 'lg' && !zero ? 'h-icon-lg w-icon-lg' : 'h-icon-md w-icon-md'} />\n    </button>\n  );\n  },\n);\nButtonClose.displayName = 'ButtonClose';\n\nexport { ButtonClose, buttonCloseVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

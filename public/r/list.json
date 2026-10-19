@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "list",
+  "title": "List",
+  "description": "List from the Get IT Done design system.",
+  "dependencies": [
+    "clsx"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/list/List.tsx",
+      "content": "import clsx from 'clsx';\nimport { Children, isValidElement, type CSSProperties, type ReactNode } from 'react';\n// Server component safe: no hooks or context. Items read the list options from data attributes on the parent via a named group.\n\ninterface ListOwnProps {\n  type?: 'numeric' | 'bullet' | 'alphabetical' | 'history';\n  children?: ReactNode;\n  style?: CSSProperties;\n  itemStyle?: CSSProperties;\n  clamp?: boolean;\n  noPadding?: boolean;\n}\n\nconst List = ({ type = 'bullet', children, style = {}, itemStyle = {}, clamp = false, noPadding = false }: ListOwnProps) => {\n  const Comp = type === 'bullet' ? 'ul' : type === 'history' ? 'ul' : 'ol';\n\n  return (\n    <>\n      <Comp\n        data-list-type={type}\n        data-list-clamp={clamp || undefined}\n        data-list-no-padding={noPadding || undefined}\n        className={clsx(\n          'group/list',\n          'relative',\n          'list-none',\n          'typography-p-ui',\n          'm-0',\n          '[&_ul]:pl-5',\n          '[&_ol]:pl-5',\n          '[&_ul]:pt-2',\n          '[&_ol]:pt-2',\n          '[counter-reset:section]',\n          {\n            '[&>li:before]:print:top-[-2px] p-0 inline-block before:content-[\"\"] before:absolute before:w-[2px] before:h-[calc(100%-1.25rem)] before:bg-input-border-default before:left-0 before:top-5 [&>li]:w-full [&>li]:relative [&>li]:m-0 [&>li]:pl-[30px] [&>li]:pb-[64px] [&>li]:print:pb-[32px] [&+ul]:print:pt-0 [&>li:before]:content-[\"\"] [&>li:before]:absolute [&>li:before]:h-6 [&>li:before]:w-6 [&>li:before]:bg-background-light [&>li:before]:border-2 [&>li:before]:left-[-12px] [&>li:before]:rounded-[100%] [&>li:before]:border-solid [&>li:before]:border-input-border-default  [&>li:last-child]:pb-0 print:left-3':\n              type === 'history',\n          },\n        )}\n        style={style}\n      >\n        {Children.map(children, (child) =>\n          // A nested List is not a valid direct child of ul or ol, so it moves into an unmarked list item.\n          isValidElement(child) && child.type === List ? <li className=\"list-none\">{child}</li> : child,\n        )}\n      </Comp>\n    </>\n  );\n};\n\nconst Item = ({ children, itemStyle = {} }: { children?: ReactNode; itemStyle?: CSSProperties }) => {\n  return (\n    <li\n      className={clsx(\n        'pl-4',\n        'group-data-[list-no-padding]/list:pl-0',\n        'relative',\n        'flex',\n        'items-baseline',\n        'py-[0.125rem]',\n        '[counter-increment:section]',\n        'before:w-4',\n        'before:h-4',\n        'before:mr-2',\n        'before:text-center',\n        'before:shrink-0',\n        'group-data-[list-type=bullet]/list:before:[content:\"•\"]',\n        'group-data-[list-type=none]/list:before:hidden',\n        'group-data-[list-type=alphabetical]/list:before:[content:counter(section,lower-alpha)]',\n        'group-data-[list-type=numeric]/list:before:[content:counter(section)]',\n        'group-data-[list-clamp]/list:text-clamp-small',\n        'group-data-[list-clamp]/list:leading-clamp-small',\n      )}\n      style={itemStyle}\n    >\n      {children}\n    </li>\n  );\n};\n\nconst HistoryItem = ({ date, title, description, clamp = false }: { date?: ReactNode; title?: ReactNode; description?: ReactNode; clamp?: boolean }) => (\n  <li className=\"w-full h-auto flex flex-col flex-nowrap relative items-start gap-4\">\n    <span\n      className={clsx(\n        { 'text-clamp-small leading-clamp-small': clamp },\n        'typography-small',\n        'leading-5',\n        'inline-block',\n        'bg-inline-block',\n        'bg-input-border-default',\n        'whitespace-nowrap',\n        'rounded-[50px]',\n        'px-2',\n        'print:py-1',\n        'print:px-2',\n      )}\n    >\n      {date}\n    </span>\n    <div className=\"place\">\n      <span className=\"typography-large block\">{title}</span>\n      <span>{description}</span>\n    </div>\n  </li>\n);\n\nList.Item = Item;\nList.HistoryItem = HistoryItem;\n\nexport { List };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/ui/list/index.ts",
+      "content": "export { List } from './List';\nexport type { ListProps } from './list.interface';\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/ui/list/list.interface.ts",
+      "content": "import { ReactNode } from 'react';\n\nexport interface ListProps {\n  children: ReactNode;\n  type: 'numeric' | 'bullet' | 'alphabetical' | 'history';\n}\n\nexport interface ListItemProps {\n  children: ReactNode;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

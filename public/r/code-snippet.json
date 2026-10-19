@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "code-snippet",
   "title": "Code Snippet",
-  "description": "Helper used by the Get IT Done primitives.",
+  "description": "Code Snippet from the Get IT Done design system.",
   "dependencies": [
     "class-variance-authority",
     "lucide-react"

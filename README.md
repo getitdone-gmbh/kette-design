@@ -1,14 +1,16 @@
 # @getitdone-gmbh/ui
 
-Free React primitives from the Get IT Done design system. They are built on shadcn/ui and Radix UI, styled with Tailwind CSS, written in TypeScript, and they include a light and a dark theme.
+Free React components from the Get IT Done design system: the primitives plus the general components we build business software with. They are built on shadcn/ui and Radix UI, styled with Tailwind CSS, written in TypeScript, and they include a light and a dark theme.
 
-We build business software with many screens, tables, forms and states. These primitives are the base layer of that system. We are sharing them in case they are useful to others working on similar products.
+We build business software with many screens, tables, forms and states. These components are the base layer of that system. We are sharing them in case they are useful to others working on similar products.
 
 ## What is included
 
-40 components, plus the `useToast` hook and their helpers:
+127 components: 40 primitives and 87 general components, plus the `useToast` hook, German and English labels and their helpers.
 
-Accordion, Alert, Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Checkbox, Collapsible, Command, Dialog, Drawer, Dropdown Menu, Form, Hover Card, Input, Kbd, Label, Navigation Menu, Pagination, Popover, Progress, Radio Group, Scroll Area, Select, Separator, Sheet, Skeleton, Slider, Switch, Table, Tabs, Textarea, Toast, Toaster, Toggle, Toggle Group, Tooltip.
+**Primitives (40):** Accordion, Alert, Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Checkbox, Collapsible, Command, Dialog, Drawer, Dropdown Menu, Form, Hover Card, Input, Kbd, Label, Navigation Menu, Pagination, Popover, Progress, Radio Group, Scroll Area, Select, Separator, Sheet, Skeleton, Slider, Switch, Table, Tabs, Textarea, Toast, Toaster, Toggle, Toggle Group, Tooltip.
+
+**General components (87):** Action Bar, Activity Feed (Timeline, Notification List), Autosave Status, Blockquote, Bottom Navigation, Button Close, Button Group, Calendar Grid (Week Grid, Month Grid), Card Default, Cell Grid, Charts (line and bar, pie, radar, histogram, treemap, sparkline, bar list, gauge), Chat Window, Checkbox Group, Chip, Code Snippet, Color Picker, Confirm Dialog, Content Divider, Cookie Consent, Countdown, Data Grid, Data State Panel, Date Picker, Description List (Attributes, Summary List), Design System Provider, Document Surface, Empty State, Facet Filter, Featured Icon, Feed Item, File Icon, File Upload, Filter Chip Bar, Form Section, Grid, Heatmap, Help Icon, Hero Section, Illustration, Inline CTA, Inline Edit, Input Digit, Kanban (with Move To Menu), Layout (Stack, Cluster, Tile Grid, Split View), Link, Link Card, List, List Item, Loading Overlay, Loading Spinner, Logo Tile, Message, Metric (KPI Strip), Metric Panel, Multiselect, Notification, Notification Matrix, Object Icon, Page Header, Pagination Dot Group, Phone Input, Progress Circle, Radio Cards, Rating Input, Rich Text Editor, Rich Text Toolbar, Secondary Nav, Secret Field, Section, Section Footer, Section Header, Section Label, Sidebar, Sidebar Nav, Signature Box, Signature Pad, Single Select, Spacing (Spacing, Spacer), Status Dot, Step Marker, Stepper, Table Cells, Table of Contents, Tag Input, Top Bar, Verified Tick, Versions.
 
 Plus the zero theme as CSS variables (typography, colours, radii, elevation, light and dark) and a Tailwind CSS 3 preset.
 
@@ -33,6 +35,8 @@ module.exports = {
 /* app.css */
 @import '@getitdone-gmbh/ui/theme.css';
 @import '@getitdone-gmbh/ui/animation.css';
+/* Only needed for DocumentSurface: keeps the paper light inside a dark app. */
+@import '@getitdone-gmbh/ui/document-surface.css';
 
 @tailwind base;
 @tailwind components;
@@ -60,6 +64,12 @@ No Tailwind in your app? Import the prebuilt stylesheet instead: `import '@getit
 
 Dark mode follows the `dark` class on `<html>`, or the system setting when no class is set.
 
+`PhoneInput` shows country flags from `/flags/<code>.svg`. Copy `node_modules/@getitdone-gmbh/ui/flags` into your public folder, or point `flagBasePath` to where you serve them. Missing flags are hidden.
+
+`MultiSelect` and `SingleSelect` open only inside a `MultiSelectProvider` or `SingleSelectProvider` (one per page is enough, it keeps a single list open at a time).
+
+Texts are English by default. Wrap your app in `<DesignSystemProvider locale="de">` for German, or pass your own labels.
+
 ### With the shadcn CLI
 
 Every component is also available from our registry, so you can copy the source into your project and change it:
@@ -68,11 +78,11 @@ Every component is also available from our registry, so you can copy the source 
 npx shadcn@latest add https://zero-design.itdone.de/r/theme.json https://zero-design.itdone.de/r/button.json
 ```
 
-The `theme` item adds `styles/getitdone/theme.css`, `styles/getitdone/animation.css` and the Tailwind preset in `tailwind/getitdone/` (inside `src/` when your project has one). Import both CSS files in your global CSS and add the preset to `presets` in your Tailwind config, as shown above. Components pull in their helpers automatically.
+The `theme` item adds `styles/getitdone/theme.css`, `styles/getitdone/animation.css`, `styles/getitdone/document-surface.css` and the Tailwind preset in `tailwind/getitdone/` (inside `src/` when your project has one). Import both CSS files in your global CSS and add the preset to `presets` in your Tailwind config, as shown above. Components pull in their helpers automatically.
 
 ## The rest of the system
 
-The primitives are one layer. The full design system goes further, from single components to complete application screens and the rules behind them. These parts are not open source, but you can browse all of them:
+This package is one layer. The full design system goes further, from single components to complete application screens and the rules behind them. These parts are not open source, but you can browse all of them:
 
 | Layer | What it is | Browse |
 | --- | --- | --- |
@@ -88,11 +98,12 @@ Licences for the complete chain (tokens, primitives, domain components, page tem
 ```bash
 npm install
 npm run typecheck
+npm test
 npm run build
 ```
 
 ## Licence
 
-MIT, see [LICENSE](LICENSE). Parts are derived from shadcn/ui, see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+MIT, see [LICENSE](LICENSE). Parts are derived from shadcn/ui, and the country flags come from flag-icons (MIT), see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 Made by [Get IT Done GmbH](https://itdone.de). Questions and feedback are welcome as GitHub issues.

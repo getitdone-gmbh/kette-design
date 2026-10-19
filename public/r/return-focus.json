@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "return-focus",
   "title": "Return Focus",
-  "description": "Helper used by the Get IT Done primitives.",
+  "description": "Helper used by the Get IT Done components.",
   "dependencies": [],
   "registryDependencies": [
     "https://zero-design.itdone.de/r/theme.json"

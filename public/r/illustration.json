@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "illustration",
+  "title": "Illustration",
+  "description": "Illustration from the Get IT Done design system.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/illustration.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\n\n// Figma: Empty state 1182:317 Icon=Illustration (background circle, cloud, dots, centered featured icon).\nconst SIZES = { sm: { w: 152, h: 110 }, md: { w: 172, h: 125 }, lg: { w: 220, h: 160 } } as const;\n\nexport interface IllustrationProps extends Omit<React.SVGAttributes<SVGSVGElement>, 'children'> {\n  size?: keyof typeof SIZES;\n  // primary uses the brand chart ramp, gray the neutral surface roles.\n  tone?: 'primary' | 'gray';\n  // Glyph shown on the centered badge (usually a lucide icon).\n  icon?: React.ReactNode;\n}\n\nconst Illustration = React.forwardRef<SVGSVGElement, IllustrationProps>(\n  ({ className, size = 'md', tone = 'primary', icon, ...props }, ref) => {\n    const primary = tone === 'primary';\n    const dim = SIZES[size];\n    return (\n      <svg\n        ref={ref}\n        viewBox=\"0 0 220 160\"\n        width={dim.w}\n        height={dim.h}\n        role=\"presentation\"\n        aria-hidden=\"true\"\n        focusable=\"false\"\n        className={cn('shrink-0', className)}\n        {...props}\n      >\n        <circle cx=\"110\" cy=\"80\" r=\"80\" className={primary ? 'fill-background-brand-subtle' : 'fill-background-neutral-default'} />\n        <circle cx=\"26\" cy=\"18\" r=\"8\" className={primary ? 'fill-chart-brand-2' : 'fill-border-subtle'} />\n        <circle cx=\"198\" cy=\"126\" r=\"6\" className={primary ? 'fill-chart-brand-3' : 'fill-border-subtle'} />\n        <circle cx=\"25\" cy=\"138\" r=\"10\" className={primary ? 'fill-chart-brand-3' : 'fill-border-subtle'} />\n        <circle cx=\"210\" cy=\"46\" r=\"10\" className={primary ? 'fill-chart-brand-2' : 'fill-border-subtle'} />\n        <path\n          d=\"M52 96a26 26 0 0 1 8-47 36 36 0 0 1 68-6 28 28 0 0 1 36 32 22 22 0 0 1-4 21z\"\n          className=\"fill-background-default stroke-current text-border\"\n          strokeWidth=\"1\"\n        />\n        <circle cx=\"110\" cy=\"112\" r=\"28\" className={primary ? 'fill-icon-brand' : 'fill-icon-default'} />\n        {icon ? (\n          <foreignObject x=\"82\" y=\"84\" width=\"56\" height=\"56\">\n            <div className=\"flex h-full w-full items-center justify-center text-icon-on-brand\">{icon}</div>\n          </foreignObject>\n        ) : null}\n      </svg>\n    );\n  },\n);\nIllustration.displayName = 'Illustration';\n\nexport { Illustration };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

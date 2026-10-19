@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "rating-input",
+  "title": "Rating Input",
+  "description": "Rating Input from the Get IT Done design system.",
+  "dependencies": [
+    "@radix-ui/react-radio-group",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/labels-context.json",
+    "https://zero-design.itdone.de/r/recipes.json",
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/rating-input.tsx",
+      "content": "'use client';\n\nimport * as RadioGroupPrimitive from '@radix-ui/react-radio-group';\nimport { Star } from 'lucide-react';\nimport * as React from 'react';\n\nimport { focusRing } from '@/lib/recipes';\nimport { cn } from '@/lib/utils';\nimport { useLabels } from '@/components/ui/labels-context';\n\nconst starSize = {\n  sm: 'h-icon-sm w-icon-sm',\n  md: 'h-icon-md w-icon-md',\n  lg: 'h-icon-lg w-icon-lg',\n} as const;\n\nexport interface RatingInputProps\n  extends Omit<React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>, 'value' | 'defaultValue' | 'onValueChange' | 'children' | 'dir'> {\n  // Accessible name of the rating, e.g. `Quality`. Required because there is no visible label.\n  'aria-label': string;\n  // Selected stars, 0 for none.\n  value?: number;\n  defaultValue?: number;\n  onValueChange?: (value: number) => void;\n  // Number of stars. Default 5.\n  max?: number;\n  size?: keyof typeof starSize;\n  // Shows the value as a static image and takes the control out of the tab order.\n  readOnly?: boolean;\n  invalid?: boolean;\n}\n\n// Star rating field. A radio group: Tab enters, the arrow keys move and select, Home and End jump to the ends. Hover previews the value.\nconst RatingInput = React.forwardRef<React.ElementRef<typeof RadioGroupPrimitive.Root>, RatingInputProps>(\n  ({ className, value, defaultValue = 0, onValueChange, max = 5, size = 'md', readOnly = false, invalid, disabled, 'aria-label': ariaLabel, ...props }, ref) => {\n    const l = useLabels();\n    const controlled = value !== undefined;\n    const [inner, setInner] = React.useState(defaultValue);\n    const [hovered, setHovered] = React.useState<number | null>(null);\n    const current = Math.min(Math.max(Math.round(controlled ? value : inner), 0), max);\n    const shown = hovered ?? current;\n    const stars = Array.from({ length: max }, (_, i) => i + 1);\n\n    if (readOnly) {\n      return (\n        <span\n          ref={ref as React.Ref<HTMLSpanElement>}\n          role=\"img\"\n          aria-label={l.ratingOf(ariaLabel, current, max)}\n          data-readonly=\"\"\n          className={cn('inline-flex items-center gap-1', className)}\n        >\n          {stars.map((n) => (\n            <Star\n              key={n}\n              aria-hidden=\"true\"\n              data-filled={n <= current ? '' : undefined}\n              className={cn(starSize[size], 'shrink-0', n <= current ? 'fill-current text-icon-warning' : 'text-icon-disabled')}\n            />\n          ))}\n        </span>\n      );\n    }\n\n    return (\n      <RadioGroupPrimitive.Root\n        ref={ref}\n        orientation=\"horizontal\"\n        disabled={disabled}\n        aria-label={ariaLabel}\n        aria-invalid={invalid || undefined}\n        value={current > 0 ? String(current) : ''}\n        onValueChange={(next) => {\n          const n = Number(next);\n          if (!controlled) setInner(n);\n          onValueChange?.(n);\n        }}\n        onMouseLeave={() => setHovered(null)}\n        className={cn('inline-flex items-center gap-1', invalid && 'rounded-control ring-1 ring-general-error-default', className)}\n        {...props}\n      >\n        {stars.map((n) => (\n          <RadioGroupPrimitive.Item\n            key={n}\n            value={String(n)}\n            aria-label={l.ratingOption(n, max)}\n            onMouseEnter={() => !disabled && setHovered(n)}\n            className={cn(\n              'inline-flex shrink-0 items-center justify-center rounded-item p-1 transition-colors',\n              focusRing,\n              'disabled:cursor-not-allowed disabled:opacity-disabled',\n            )}\n          >\n            <Star\n              aria-hidden=\"true\"\n              data-filled={n <= shown ? '' : undefined}\n              className={cn(starSize[size], n <= shown ? 'fill-current text-icon-warning' : 'text-icon-subtle')}\n            />\n          </RadioGroupPrimitive.Item>\n        ))}\n      </RadioGroupPrimitive.Root>\n    );\n  },\n);\nRatingInput.displayName = 'RatingInput';\n\nexport { RatingInput };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

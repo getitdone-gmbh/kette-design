@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "section-label",
+  "title": "Section Label",
+  "description": "Section Label from the Get IT Done design system.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/section-label.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\n\nexport interface SectionLabelProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {\n  // Section number or index, for example \"01\".\n  index: React.ReactNode;\n  // Short label above the title, for example \"Process\".\n  overline?: React.ReactNode;\n  // Heading text of the section.\n  title?: React.ReactNode;\n  titleAs?: 'h2' | 'h3' | 'h4';\n  description?: React.ReactNode;\n  // Index size. `lg` is a large display index for dashboard rails and long pages.\n  indexSize?: 'default' | 'lg';\n  // `inline` puts the index beside the text. `stacked` puts it above the title, for narrow rails where a side index leaves too little text width.\n  layout?: 'inline' | 'stacked';\n}\n\nconst indexStyle = {\n  default: 'typography-ui-semibold min-w-icon-lg',\n  lg: 'typography-display-sm w-12 shrink-0',\n} as const;\n\n// A stacked index sits on its own line, so the fixed index column width is dropped.\nconst stackedIndexStyle = {\n  default: 'typography-ui-semibold',\n  lg: 'typography-display-sm',\n} as const;\n\n// Numbered section label for landing sections and long pages. The index is decorative and hidden from assistive technology.\nconst SectionLabel = React.forwardRef<HTMLDivElement, SectionLabelProps>(\n  ({ className, index, indexSize = 'default', layout = 'inline', overline, title, titleAs: Title = 'h2', description, ...props }, ref) => (\n    <div ref={ref} data-layout={layout} className={cn('flex', layout === 'stacked' ? 'flex-col items-start gap-2' : 'items-start gap-4', className)} {...props}>\n      <span aria-hidden=\"true\" data-index-size={indexSize} className={cn(layout === 'stacked' ? stackedIndexStyle[indexSize] : indexStyle[indexSize], 'tabular-nums text-text-brand')}>\n        {index}\n      </span>\n      <div className=\"flex min-w-0 flex-col gap-1\">\n        {overline ? <p className=\"typography-ui-semibold m-0 uppercase text-text-subtle\">{overline}</p> : null}\n        {title ? <Title className=\"typography-h3 m-0\">{title}</Title> : null}\n        {description ? <p className=\"typography-body m-0 max-w-reading text-text-subtle\">{description}</p> : null}\n      </div>\n    </div>\n  ),\n);\nSectionLabel.displayName = 'SectionLabel';\n\nexport { SectionLabel };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

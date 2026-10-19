@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "button-group",
   "title": "Button Group",
-  "description": "Helper used by the Get IT Done primitives.",
+  "description": "Button Group from the Get IT Done design system.",
   "dependencies": [
     "@radix-ui/react-slot"
   ],

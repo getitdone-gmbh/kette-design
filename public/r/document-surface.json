@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "document-surface",
+  "title": "Document Surface",
+  "description": "Document Surface from the Get IT Done design system.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/document-surface.tsx",
+      "content": "import { forwardRef, type HTMLAttributes } from 'react';\n\nimport { cn } from '@/lib/utils';\n\nexport interface DocumentSurfaceProps extends HTMLAttributes<HTMLDivElement> {\n  // Drops the fixed document width so the paper fills its container.\n  fluid?: boolean;\n}\n\n// Paper-like page for document previews such as offers and invoices. Stays light in dark mode and prints without shadow.\n// Children get a light token context via styles/document-surface.css (generated from styles/theme.css, part of dist/styles.css).\nconst DocumentSurface = forwardRef<HTMLDivElement, DocumentSurfaceProps>(({ className, fluid, ...props }, ref) => (\n  <div\n    ref={ref}\n    data-document-surface=\"\"\n    className={cn(\n      'w-full rounded-surface border border-solid border-border-default bg-surface-paper p-8 text-text-on-paper shadow-sm print:rounded-none print:border-0 print:p-0 print:shadow-none',\n      !fluid && 'mx-auto max-w-document',\n      className,\n    )}\n    {...props}\n  />\n));\nDocumentSurface.displayName = 'DocumentSurface';\n\nexport { DocumentSurface };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blockquote",
+  "title": "Blockquote",
+  "description": "Blockquote from the Get IT Done design system.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/blockquote.tsx",
+      "content": "'use client';\n\nimport { cva } from 'class-variance-authority';\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\n\n// Quote on the token layer: surface, text and rule colours follow the theme in light and dark, spacing sits on the scale.\nconst blockquoteVariants = cva('m-0 flex flex-col gap-3', {\n  variants: {\n    // `default` is a quote with a left rule. `pull` is a larger centred pull quote with a decorative quotation mark.\n    variant: {\n      default: 'border-0 border-l-2 border-solid border-border-bold pl-6',\n      pull: 'relative items-center px-6 py-8 text-center',\n    },\n  },\n  defaultVariants: { variant: 'default' },\n});\n\nexport interface BlockquoteProps extends React.HTMLAttributes<HTMLQuoteElement> {\n  variant?: 'default' | 'pull';\n  // Attribution under the quote, for example a name and role. Renders a caption of the figure.\n  cite?: React.ReactNode;\n  // Address of the source, set as the `cite` attribute of the quote element.\n  citeUrl?: string;\n}\n\nconst Blockquote = React.forwardRef<HTMLQuoteElement, BlockquoteProps>(\n  ({ className, variant = 'default', cite, citeUrl, children, ...props }, ref) => {\n    const quote = (\n      <blockquote\n        ref={ref}\n        cite={citeUrl}\n        data-variant={variant}\n        className={cn(\n          'm-0 text-text-default',\n          variant === 'pull' ? 'typography-h3' : 'typography-title-sm',\n          // Without attribution the quote is its own block and carries the figure spacing.\n          !cite && blockquoteVariants({ variant }),\n          !cite && className,\n        )}\n        {...props}\n      >\n        {variant === 'pull' && !cite ? <PullMark /> : null}\n        {children}\n      </blockquote>\n    );\n    if (!cite) return quote;\n    return (\n      <figure data-variant={variant} className={cn(blockquoteVariants({ variant }), className)}>\n        {variant === 'pull' ? <PullMark /> : null}\n        {quote}\n        <figcaption className=\"typography-text-small text-text-subtle\">{cite}</figcaption>\n      </figure>\n    );\n  },\n);\nBlockquote.displayName = 'Blockquote';\n\n// Decorative opening mark of the pull quote. Hidden from assistive technology.\nconst PullMark = () => (\n  <span aria-hidden=\"true\" className=\"typography-display select-none text-text-subtlest\">\n    {'“'}\n  </span>\n);\n\nexport { Blockquote, blockquoteVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

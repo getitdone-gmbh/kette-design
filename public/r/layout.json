@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "layout",
+  "title": "Layout",
+  "description": "Layout from the Get IT Done design system.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/layout.tsx",
+      "content": "'use client';\n\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\n\n// Figma: Layout 10196:370718 (Grid, Span, Stack block|section|card, Cluster, Tile) and SplitView (rail or filter column + content).\n// Grid and GridItem already exist (components/ui/grid); these are the missing layout primitives.\nconst stackVariants = cva('flex flex-col', {\n  variants: {\n    gap: {\n      card: 'gap-3',\n      block: 'gap-5',\n      section: 'gap-8',\n    },\n  },\n  defaultVariants: { gap: 'block' },\n});\n\nexport interface StackProps extends React.HTMLAttributes<HTMLElement>, VariantProps<typeof stackVariants> {\n  as?: React.ElementType;\n}\n\nconst Stack = React.forwardRef<HTMLElement, StackProps>(({ className, gap, as: Comp = 'div', ...props }, ref) => (\n  <Comp ref={ref} className={cn(stackVariants({ gap }), className)} {...props} />\n));\nStack.displayName = 'Stack';\n\nconst clusterVariants = cva('flex flex-wrap items-center', {\n  variants: {\n    gap: { 1: 'gap-1', 2: 'gap-2', 3: 'gap-3', 4: 'gap-4' },\n  },\n  defaultVariants: { gap: 2 },\n});\n\nexport interface ClusterProps extends React.HTMLAttributes<HTMLElement>, VariantProps<typeof clusterVariants> {\n  as?: React.ElementType;\n}\n\n// Horizontal wrapping row (buttons, chips, filters).\nconst Cluster = React.forwardRef<HTMLElement, ClusterProps>(({ className, gap, as: Comp = 'div', ...props }, ref) => (\n  <Comp ref={ref} className={cn(clusterVariants({ gap }), className)} {...props} />\n));\nCluster.displayName = 'Cluster';\n\nexport interface TileGridProps extends React.HTMLAttributes<HTMLDivElement> {\n  // Minimum tile width in px (Figma: 220, 260, 280, 296, 360). Tiles wrap and share the remaining space.\n  min?: number;\n}\n\nconst TileGrid = React.forwardRef<HTMLDivElement, TileGridProps>(({ className, min = 260, style, ...props }, ref) => (\n  <div\n    ref={ref}\n    className={cn('grid gap-4', className)}\n    style={{ gridTemplateColumns: `repeat(auto-fill, minmax(min(100%, ${min}px), 1fr))`, ...style }}\n    {...props}\n  />\n));\nTileGrid.displayName = 'TileGrid';\n\nconst splitViewAsideVariants = cva('shrink-0 max-lg:w-full', {\n  variants: {\n    asideWidth: {\n      inner: 'lg:w-inner-column',\n      filter: 'lg:w-filter-column',\n      aside: 'lg:w-aside',\n    },\n    side: {\n      start: 'border-b border-solid border-border lg:border-b-0 lg:border-r',\n      end: 'order-last border-t border-solid border-border lg:border-l lg:border-t-0',\n    },\n  },\n  defaultVariants: { asideWidth: 'filter', side: 'start' },\n});\n\nexport interface SplitViewProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof splitViewAsideVariants> {\n  // Filters, section navigation or a record list.\n  aside: React.ReactNode;\n  asideLabel?: string;\n  // Draws the outer card border and radius.\n  bordered?: boolean;\n}\n\n// Two panes. On narrow screens the aside stacks above (start) or below (end) the content.\nconst SplitView = React.forwardRef<HTMLDivElement, SplitViewProps>(\n  ({ className, aside, asideLabel, asideWidth, side, bordered = true, children, ...props }, ref) => (\n    <div\n      ref={ref}\n      className={cn(\n        'flex w-full flex-col overflow-hidden bg-card lg:flex-row',\n        bordered && 'rounded-surface border border-solid border-border',\n        className,\n      )}\n      {...props}\n    >\n      <aside aria-label={asideLabel} className={cn(splitViewAsideVariants({ asideWidth, side }), 'p-4')}>\n        {aside}\n      </aside>\n      <div className=\"min-w-0 flex-1 p-4\">{children}</div>\n    </div>\n  ),\n);\nSplitView.displayName = 'SplitView';\n\nexport { Cluster, SplitView, Stack, TileGrid, clusterVariants, stackVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

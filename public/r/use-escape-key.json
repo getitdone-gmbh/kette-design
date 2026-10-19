@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-escape-key",
+  "title": "Use Escape Key",
+  "description": "Helper used by the Get IT Done components.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/lib/use-escape-key.ts",
+      "content": "'use client';\n\nimport { useEffect, useRef } from 'react';\n\n// Calls `handler` when Escape is pressed anywhere on the page, unless another handler already consumed the event.\nexport function useEscapeKey(handler: (() => void) | undefined, enabled = true) {\n  const ref = useRef(handler);\n  ref.current = handler;\n  const active = enabled && handler !== undefined;\n  useEffect(() => {\n    if (!active) return undefined;\n    const onKeyDown = (event: KeyboardEvent) => {\n      if (event.key !== 'Escape' || event.defaultPrevented) return;\n      ref.current?.();\n    };\n    document.addEventListener('keydown', onKeyDown);\n    return () => document.removeEventListener('keydown', onKeyDown);\n  }, [active]);\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}

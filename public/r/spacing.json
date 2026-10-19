@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spacing",
+  "title": "Spacing",
+  "description": "Spacing from the Get IT Done design system.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/spacing/Spacing.tsx",
+      "content": "import { cva } from 'class-variance-authority';\nimport { cn } from '@/lib/utils';\nimport { SpacingProps } from './spacing.interface';\n\nexport const spacing = cva('flex', {\n  variants: {\n    direction: {\n      row: 'flex-row',\n      column: 'flex-col',\n    },\n    gap: {\n      '0': '',\n      '1': 'gap-1',\n      '2': 'gap-2',\n      '3': 'gap-3',\n      '4': 'gap-4',\n      '5': 'gap-5',\n      '6': 'gap-6',\n      '7': 'gap-7',\n      '8': 'gap-8',\n      '9': 'gap-9',\n      '10': 'gap-10',\n      '11': 'gap-11',\n      '12': 'gap-12',\n      '13': 'gap-13',\n      '14': 'gap-14',\n      '15': 'gap-15',\n      '16': 'gap-16',\n      '17': 'gap-17',\n      '18': 'gap-18',\n      '19': 'gap-19',\n      '20': 'gap-20',\n    },\n    justifyContent: {\n      start: 'justify-start',\n      end: 'justify-end',\n      center: 'justify-center',\n      between: 'justify-between',\n      around: 'justify-around',\n      evenly: 'justify-evenly',\n    },\n    alignItems: {\n      start: 'items-start',\n      end: 'items-end',\n      center: 'items-center',\n      baseline: 'items-baseline',\n      stretch: 'items-stretch',\n    },\n    wrap: {\n      wrap: 'flex-wrap',\n      nowrap: 'flex-nowrap',\n    },\n  },\n});\n\nexport const Spacing: React.FC<SpacingProps> = ({\n  children,\n  direction = 'row',\n  gap = '1',\n  justifyContent = 'start',\n  alignItems = 'start',\n  wrap = 'wrap',\n  className,\n  Comp = 'div',\n  childrenFullWidth = true,\n}) => {\n  return (\n    <Comp\n      className={cn(\n        `${spacing({\n          direction,\n          gap,\n          justifyContent,\n          alignItems,\n          wrap,\n          className,\n        })} max-sm:[&>*]:grow`,\n        { '[&>*]:self-start': !childrenFullWidth },\n      )}\n      data-testid=\"spacing\"\n    >\n      {children}\n    </Comp>\n  );\n};\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/ui/spacing/index.ts",
+      "content": "export { Spacing } from './Spacing';\nexport type { SpacingProps } from './spacing.interface';\nexport { ContainerSpacer, Spacer } from './spacer';\nexport type { ContainerSpacerProps, SpacerProps, SpacerSize } from './spacer';\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/ui/spacing/spacer.tsx",
+      "content": "import * as React from 'react';\n\nimport { cn } from '@/lib/utils';\n\n// Figma \"Spacer\": Size 4|8|12|16|20|24|32|40|48|64|80|96 px, Direction X-axis|Y-axis (global spacing scale).\nconst ySize = {\n  4: 'h-1',\n  8: 'h-2',\n  12: 'h-3',\n  16: 'h-4',\n  20: 'h-5',\n  24: 'h-6',\n  32: 'h-8',\n  40: 'h-10',\n  48: 'h-12',\n  64: 'h-16',\n  80: 'h-20',\n  96: 'h-24',\n} as const;\n\nconst xSize = {\n  4: 'w-1',\n  8: 'w-2',\n  12: 'w-3',\n  16: 'w-4',\n  20: 'w-5',\n  24: 'w-6',\n  32: 'w-8',\n  40: 'w-10',\n  48: 'w-12',\n  64: 'w-16',\n  80: 'w-20',\n  96: 'w-24',\n} as const;\n\nexport type SpacerSize = keyof typeof ySize;\n\nexport interface SpacerProps extends React.HTMLAttributes<HTMLDivElement> {\n  size?: SpacerSize;\n  // `y` adds vertical space (height), `x` adds horizontal space (width).\n  direction?: 'x' | 'y';\n}\n\n// Empty, non-interactive block that adds a fixed gap. Prefer `gap` on the parent; use this where only one spot needs space.\nconst Spacer = React.forwardRef<HTMLDivElement, SpacerProps>(({ className, size = 16, direction = 'y', ...props }, ref) => (\n  <div\n    ref={ref}\n    aria-hidden=\"true\"\n    data-direction={direction}\n    className={cn('shrink-0', direction === 'y' ? cn('w-full', ySize[size]) : cn('self-stretch', xSize[size]), className)}\n    {...props}\n  />\n));\nSpacer.displayName = 'Spacer';\n\n// Figma \"Container spacer\": Size sm 640 | md 768 | lg 1024 | xl 1280.\nconst containerSize = {\n  sm: 'max-w-screen-sm',\n  md: 'max-w-screen-md',\n  lg: 'max-w-screen-lg',\n  xl: 'max-w-screen-xl',\n} as const;\n\nexport interface ContainerSpacerProps extends React.HTMLAttributes<HTMLDivElement> {\n  size?: keyof typeof containerSize;\n}\n\n// Centred content column with a maximum width and the page gutter.\nconst ContainerSpacer = React.forwardRef<HTMLDivElement, ContainerSpacerProps>(({ className, size = 'lg', ...props }, ref) => (\n  <div ref={ref} data-size={size} className={cn('mx-auto w-full px-4', containerSize[size], className)} {...props} />\n));\nContainerSpacer.displayName = 'ContainerSpacer';\n\nexport { ContainerSpacer, Spacer };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/ui/spacing/spacing.interface.ts",
+      "content": "import { VariantProps } from 'class-variance-authority';\nimport { ReactNode } from 'react';\nimport { spacing } from './Spacing';\nexport interface SpacingProps extends React.HTMLAttributes<HTMLElement>, VariantProps<typeof spacing> {\n  children: ReactNode;\n  Comp?: keyof JSX.IntrinsicElements;\n  childrenFullWidth?: boolean;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "is-mobile",
+  "title": "Is Mobile",
+  "description": "Helper used by the Get IT Done components.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/lib/is-mobile.ts",
+      "content": "export function isMobileDevice(): boolean {\n  // Check if window is available (client-side)\n  if (typeof window === 'undefined') {\n    return false;\n  }\n\n  // Check if it's a touch device\n  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;\n\n  // Check viewport width\n  const isSmallViewport = window.innerWidth < 768;\n\n  // Check user agent\n  const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;\n  const isUserAgentMobile = mobileRegex.test(navigator.userAgent);\n\n  return isTouchDevice || isSmallViewport || isUserAgentMobile;\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}

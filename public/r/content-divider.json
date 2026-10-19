@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "content-divider",
+  "title": "Content Divider",
+  "description": "Content Divider from the Get IT Done design system.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/content-divider.tsx",
+      "content": "'use client';\n\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\n\n// Figma \"Content divider\" Style: Single line (rule, content, rule), Dual line (a rule above and below the content),\n// Background fill (filled band). Type Heading / Text / Button / Button group is whatever the children are.\nconst contentDividerVariants = cva('flex w-full', {\n  variants: {\n    variant: {\n      single: 'items-center gap-2',\n      dual: 'flex-col items-center border-y border-solid border-border-default py-3',\n      filled: 'flex-col items-center rounded-control bg-muted py-2',\n    },\n    // `heading` uses the default text colour, `text` the subtle one (Figma Type Heading / Text).\n    emphasis: {\n      text: 'typography-text-small text-text-subtle',\n      heading: 'typography-text-small text-foreground',\n    },\n  },\n  defaultVariants: { variant: 'single', emphasis: 'heading' },\n});\n\nexport interface ContentDividerProps\n  extends React.HTMLAttributes<HTMLDivElement>,\n    VariantProps<typeof contentDividerVariants> {}\n\nconst Rule = () => <span aria-hidden=\"true\" data-divider-rule=\"\" className=\"h-px min-w-0 flex-1 bg-border-default\" />;\n\n// Divider with content in it: a label, a heading, a Button or a button group. Without children it is a plain rule.\nconst ContentDivider = React.forwardRef<HTMLDivElement, ContentDividerProps>(\n  ({ className, variant, emphasis, children, ...props }, ref) => {\n    const resolved = variant ?? 'single';\n    if (children == null || children === false) {\n      return (\n        <div ref={ref} data-variant={resolved} className={cn('flex w-full items-center', className)} {...props}>\n          <Rule />\n        </div>\n      );\n    }\n    return (\n      <div\n        ref={ref}\n        data-variant={resolved}\n        className={cn(contentDividerVariants({ variant, emphasis }), className)}\n        {...props}\n      >\n        {resolved === 'single' ? <Rule /> : null}\n        <div className=\"flex shrink-0 items-center gap-2\">{children}</div>\n        {resolved === 'single' ? <Rule /> : null}\n      </div>\n    );\n  },\n);\nContentDivider.displayName = 'ContentDivider';\n\nexport { ContentDivider, contentDividerVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

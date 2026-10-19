@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "utils",
   "title": "Utils",
-  "description": "Helper used by the Get IT Done primitives.",
+  "description": "Helper used by the Get IT Done components.",
   "dependencies": [
     "clsx",
     "tailwind-merge"

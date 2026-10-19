@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "section-footer",
+  "title": "Section Footer",
+  "description": "Section Footer from the Get IT Done design system.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/section-footer.tsx",
+      "content": "'use client';\n\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\n\n// Figma: Section footer 3275:372571 (Type=Section|Card, Breakpoint=Desktop|Mobile, Divider, Button group, Secondary button, Actions).\n// Layout: optional hairline on top, then one row: button group, \"Learn more\" link, actions pushed to the end.\nconst sectionFooterVariants = cva('flex w-full flex-col items-center', {\n  variants: {\n    type: {\n      section: 'gap-5 max-sm:gap-4',\n      card: 'gap-4 pb-4 max-sm:gap-3 max-sm:pb-3',\n    },\n  },\n  defaultVariants: { type: 'section' },\n});\n\nconst contentVariants = cva('flex w-full items-center justify-end', {\n  variants: {\n    type: {\n      section: 'gap-5',\n      card: 'gap-4 px-6 max-sm:px-4',\n    },\n  },\n  defaultVariants: { type: 'section' },\n});\n\nexport interface SectionFooterProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof sectionFooterVariants> {\n  // Button group or segmented control at the start of the row (for example a range switcher).\n  start?: React.ReactNode;\n  // Link next to the start slot (\"Learn more\"), shown in the subtle link style.\n  supporting?: React.ReactNode;\n  // Hairline above the row.\n  divider?: boolean;\n}\n\n// Children are the actions (tertiary, secondary, primary), right aligned.\nconst SectionFooter = React.forwardRef<HTMLDivElement, SectionFooterProps>(\n  ({ className, type, start, supporting, divider = true, children, ...props }, ref) => (\n    <div ref={ref} className={cn(sectionFooterVariants({ type }), className)} {...props}>\n      {divider ? <div aria-hidden=\"true\" data-slot=\"divider\" className=\"h-px w-full shrink-0 bg-border\" /> : null}\n      <div className={contentVariants({ type })}>\n        {start}\n        {supporting ? <div className=\"typography-link-sm shrink-0 text-text-subtle\">{supporting}</div> : null}\n        <div className=\"flex min-w-0 flex-1 flex-wrap items-center justify-end gap-3\">{children}</div>\n      </div>\n    </div>\n  ),\n);\nSectionFooter.displayName = 'SectionFooter';\n\nexport { SectionFooter, sectionFooterVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

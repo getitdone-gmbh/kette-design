@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-scroll-region",
+  "title": "Use Scroll Region",
+  "description": "Use Scroll Region from the Get IT Done design system.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/use-scroll-region.ts",
+      "content": "'use client';\n\nimport { useEffect, useRef, useState } from 'react';\n\n// A scroll area with nothing focusable inside must be reachable by keyboard (WCAG 2.1.1). The area becomes a tab stop only while it really overflows.\nexport const useScrollRegion = <T extends HTMLElement>() => {\n  const ref = useRef<T | null>(null);\n  const [overflowing, setOverflowing] = useState(false);\n  useEffect(() => {\n    const node = ref.current;\n    if (!node) return undefined;\n    const measure = () => setOverflowing(node.scrollWidth > node.clientWidth || node.scrollHeight > node.clientHeight);\n    measure();\n    if (typeof ResizeObserver === 'undefined') return undefined;\n    const observer = new ResizeObserver(measure);\n    observer.observe(node);\n    if (node.firstElementChild) observer.observe(node.firstElementChild);\n    return () => observer.disconnect();\n  }, []);\n  return { ref, overflowing };\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

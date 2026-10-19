@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "featured-icon",
+  "title": "Featured Icon",
+  "description": "Featured Icon from the Get IT Done design system.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/utils.json",
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/featured-icon.tsx",
+      "content": "'use client';\n\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\n\n// Tinted tile around an icon. DialogFeaturedIcon stays the modal header variant, this one is general (empty states, list rows, cards).\nconst featuredIconVariants = cva('inline-grid shrink-0 place-items-center', {\n  variants: {\n    tone: {\n      neutral: 'bg-muted text-icon-default',\n      brand: 'bg-general-brand-container text-general-brand-on-container',\n      success: 'bg-general-success-container text-general-success-on-container',\n      warning: 'bg-general-warning-container text-general-warning-on-container',\n      destructive: 'bg-general-destructive-container text-general-destructive-on-container',\n      info: 'bg-general-info-container text-general-info-on-container',\n    },\n    size: {\n      sm: 'h-control-md w-control-md [&>svg]:h-icon-sm [&>svg]:w-icon-sm',\n      md: 'h-control-xl w-control-xl [&>svg]:h-icon-md [&>svg]:w-icon-md',\n      lg: 'h-control-2xl w-control-2xl [&>svg]:h-icon-lg [&>svg]:w-icon-lg',\n    },\n    shape: {\n      circle: 'rounded-full',\n      square: 'rounded-surface',\n    },\n  },\n  defaultVariants: { tone: 'neutral', size: 'md', shape: 'circle' },\n});\n\nexport interface FeaturedIconProps extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof featuredIconVariants> {\n  // Accessible name when the icon carries meaning. Without it the icon is decorative and hidden from assistive technology.\n  label?: string;\n}\n\nconst FeaturedIcon = React.forwardRef<HTMLSpanElement, FeaturedIconProps>(({ className, tone, size, shape, label, ...props }, ref) => (\n  <span\n    ref={ref}\n    {...(label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': true })}\n    className={cn(featuredIconVariants({ tone, size, shape }), className)}\n    {...props}\n  />\n));\nFeaturedIcon.displayName = 'FeaturedIcon';\n\nexport { FeaturedIcon, featuredIconVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
