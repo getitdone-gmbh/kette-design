@@ -1,4 +1,4 @@
-# @getitdone/ui
+# @getitdone-gmbh/ui
 
 Free React primitives from the Get IT Done design system. They are built on shadcn/ui and Radix UI, styled with Tailwind CSS, written in TypeScript, and they include a light and a dark theme.
 
@@ -17,22 +17,22 @@ Plus the zero theme as CSS variables (typography, colours, radii, elevation, lig
 ### As an npm package
 
 ```bash
-npm install @getitdone/ui
+npm install @getitdone-gmbh/ui
 ```
 
 ```js
 // tailwind.config.cjs
 module.exports = {
-  presets: [require('@getitdone/ui/tailwind/preset')],
+  presets: [require('@getitdone-gmbh/ui/tailwind/preset')],
   darkMode: ['class'],
-  content: ['./src/**/*.{ts,tsx}', './node_modules/@getitdone/ui/dist/**/*.js'],
+  content: ['./src/**/*.{ts,tsx}', './node_modules/@getitdone-gmbh/ui/dist/**/*.js'],
 };
 ```
 
 ```css
 /* app.css */
-@import '@getitdone/ui/theme.css';
-@import '@getitdone/ui/animation.css';
+@import '@getitdone-gmbh/ui/theme.css';
+@import '@getitdone-gmbh/ui/animation.css';
 
 @tailwind base;
 @tailwind components;
@@ -40,7 +40,7 @@ module.exports = {
 ```
 
 ```tsx
-import { Button, Card, CardContent, CardHeader, CardTitle } from '@getitdone/ui';
+import { Button, Card, CardContent, CardHeader, CardTitle } from '@getitdone-gmbh/ui';
 
 export function Example() {
   return (
@@ -56,7 +56,7 @@ export function Example() {
 }
 ```
 
-No Tailwind in your app? Import the prebuilt stylesheet instead: `import '@getitdone/ui/styles.css'`.
+No Tailwind in your app? Import the prebuilt stylesheet instead: `import '@getitdone-gmbh/ui/styles.css'`.
 
 Dark mode follows the `dark` class on `<html>`, or the system setting when no class is set.
 
