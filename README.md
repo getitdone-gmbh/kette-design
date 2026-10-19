@@ -6,7 +6,7 @@ We build business software with many screens, tables, forms and states. These pr
 
 ## What is included
 
-41 components and their helpers:
+40 components, plus the `useToast` hook and their helpers:
 
 Accordion, Alert, Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Checkbox, Collapsible, Command, Dialog, Drawer, Dropdown Menu, Form, Hover Card, Input, Kbd, Label, Navigation Menu, Pagination, Popover, Progress, Radio Group, Scroll Area, Select, Separator, Sheet, Skeleton, Slider, Switch, Table, Tabs, Textarea, Toast, Toaster, Toggle, Toggle Group, Tooltip.
 
@@ -77,7 +77,7 @@ The primitives are one layer. The full design system goes further, from single c
 | Layer | What it is | Browse |
 | --- | --- | --- |
 | Design system and drafts | UI and UX rules for complex software with dos and don'ts, plus exploratory drafts of real product screens | [zero-design.itdone.de](https://zero-design.itdone.de) |
-| Primitives | This package | [components.itdone.de](https://components.itdone.de) |
+| Primitives | The full primitive library this package is taken from, with every variant and state as a story | [components.itdone.de](https://components.itdone.de) |
 | Complex application components | Domain components built on the primitives: task boards, time grids, goal and capacity cards, pipelines, file views | [zero.itdone.de](https://zero.itdone.de) |
 | Page templates | Complete pages: app frame, dashboard, data grid, guided processes, settings, calendar, mobile, with a build guide per page | [zero-pages.itdone.de](https://zero-pages.itdone.de) |
 
