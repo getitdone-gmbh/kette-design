@@ -364,3 +364,18 @@ export const Localized: Story = {
     </DesignSystemProvider>
   ),
 };
+
+const InvalidValueDemo = () => {
+    const [selected, setSelected] = useState<string | null>('retired');
+    return (
+      <SingleSelectProvider>
+        <SingleSelect id="invalid-value" label="Job Type" options={[{ id: 'design', label: 'Design' }, { id: 'development', label: 'Development' }]} selected={selected} onChange={setSelected} disableAddNew />
+      </SingleSelectProvider>
+    );
+};
+
+export const InvalidValue: Story = {
+  args: {} as any,
+  parameters: { docs: { description: { story: 'The current value can be invalid without the field being invalid. Mark it with `invalid: true` on the option, `invalidValues` or `isValueInvalid(id)`. A `selected` id that is not in the options is shown as invalid with its id as text. The value uses the destructive text role and is announced as invalid.' } } },
+  render: () => <InvalidValueDemo />,
+};

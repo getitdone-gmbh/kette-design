@@ -5,16 +5,37 @@ import { ChevronDown } from 'lucide-react';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+import { InsideCardContext } from '@/components/ui/card';
 import { usePreset } from '@/components/ui/labels-context';
 
-const Accordion = AccordionPrimitive.Root;
+// Horizontal inset of trigger and content. Set on the root or per item, the item wins. Undefined means follow the context: inset on a standalone accordion, none inside a Card.
+const AccordionInsetContext = React.createContext<boolean | undefined>(undefined);
+
+type AccordionInsetProp = {
+  // Horizontal padding (px-3) of trigger and content. Default follows the context: true standalone (page, menu, panel), false inside a Card so the labels align with the card heading (the workload.zero prototype aligns card content with the card heading). Set true or false to override.
+  inset?: boolean;
+};
+
+const Accordion = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Root> & AccordionInsetProp
+>(({ inset, ...props }, ref) => (
+  <AccordionInsetContext.Provider value={inset}>
+    <AccordionPrimitive.Root ref={ref} {...(props as React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Root>)} />
+  </AccordionInsetContext.Provider>
+));
+Accordion.displayName = 'Accordion';
 
 const AccordionItem = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item> & AccordionInsetProp
+>(({ className, inset: insetProp, ...props }, ref) => {
   const zero = usePreset() === 'zero';
+  const rootInset = React.useContext(AccordionInsetContext);
+  const inCard = React.useContext(InsideCardContext);
+  const inset = insetProp ?? rootInset ?? !inCard;
   return (
+  <AccordionInsetContext.Provider value={inset}>
   <AccordionPrimitive.Item
     ref={ref}
     className={cn(
@@ -31,6 +52,7 @@ const AccordionItem = React.forwardRef<
     )}
     {...props}
   />
+  </AccordionInsetContext.Provider>
   );
 });
 AccordionItem.displayName = 'AccordionItem';
@@ -40,6 +62,7 @@ const AccordionTrigger = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
   const zero = usePreset() === 'zero';
+  const inset = React.useContext(AccordionInsetContext) ?? true;
   return (
   <AccordionPrimitive.Header className="flex">
     <AccordionPrimitive.Trigger
@@ -49,12 +72,13 @@ const AccordionTrigger = React.forwardRef<
         // renders the Trigger as a real button (see react-collapsible's `Collapsible.Trigger`), and
         // without this a wrapping multi-line header label would center instead of following the
         // left-aligned "label | chevron" row every other disclosure/menu trigger in this system uses.
-        'flex flex-1 items-center justify-between gap-2 px-3 py-4 text-left transition-all [&[data-state=open]>svg]:rotate-180',
+        'flex flex-1 items-center justify-between gap-2 py-4 text-left transition-all [&[data-state=open]>svg]:rotate-180',
         // Type comes from the dedicated `typography-accordion-title` role (size/weight/line-height/
         // letter-spacing token, currently 16px/500/24px) rather than the ad hoc `font-medium` this
         // used before. `leading-normal` is required alongside it because Tailwind Preflight resets
         // `line-height: inherit` on real `<button>` elements — same reset `button.tsx`/`input.tsx`/
         // `tabs.tsx` already work around for the same reason.
+        inset && 'px-3',
         zero ? 'typography-ui-medium min-h-row py-0' : 'typography-accordion-title leading-normal',
         // Hover — underline is the non-color-dependent cue (WCAG "don't rely on color alone");
         // paired with a full-row background wash so the entire clickable header shows affordance,
@@ -94,6 +118,7 @@ const AccordionContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
 >(({ className, children, ...props }, ref) => {
   const zero = usePreset() === 'zero';
+  const inset = React.useContext(AccordionInsetContext) ?? true;
   return (
   <AccordionPrimitive.Content
     ref={ref}
@@ -109,7 +134,7 @@ const AccordionContent = React.forwardRef<
     {...props}
   >
     {/* Same horizontal padding as the trigger so the content text stays aligned with the header label. */}
-    <div className={cn('px-3 pb-4 pt-0', className)}>{children}</div>
+    <div className={cn(inset && 'px-3', 'pb-4 pt-0', className)}>{children}</div>
   </AccordionPrimitive.Content>
   );
 });

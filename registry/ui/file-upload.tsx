@@ -1,10 +1,11 @@
 'use client';
 
-import { CheckCircle2, File as FileIcon, FileText, Film, Image as ImageIcon, RotateCcw, Trash2, UploadCloud } from 'lucide-react';
+import { CheckCircle2, RotateCcw, Trash2, UploadCloud } from 'lucide-react';
 import * as React from 'react';
 
 import { focusRing } from '@/lib/recipes';
 import { cn } from '@/lib/utils';
+import { FileIcon } from '@/components/ui/file-icon';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { Progress } from '@/components/ui/progress';
 import { useLabels, useLocale, usePreset, type DesignSystemLocale } from '@/components/ui/labels-context';
@@ -226,7 +227,6 @@ FileUpload.displayName = 'FileUpload';
 export type FileUploadItemKind = 'document' | 'image' | 'video' | 'other';
 export type FileUploadItemStatus = 'selected' | 'uploading' | 'complete' | 'error';
 
-const kindIcon = { document: FileText, image: ImageIcon, video: Film, other: FileIcon } as const;
 
 const formatBytes = (bytes: number, locale: DesignSystemLocale) => {
   if (bytes < 1024) return `${bytes} B`;
@@ -239,6 +239,7 @@ export interface FileUploadItemProps extends Omit<React.HTMLAttributes<HTMLLIEle
   name: string;
   // Bytes (formatted for you) or a ready string such as "4.2 MB".
   size?: number | string;
+  // Overrides the file type shown in the tile. Without it the type comes from the file name extension.
   kind?: FileUploadItemKind;
   status?: FileUploadItemStatus;
   // Upload progress 0..100 while `status` is uploading.
@@ -267,7 +268,7 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
       className,
       name,
       size,
-      kind = 'document',
+      kind,
       status = 'uploading',
       progress = 0,
       variant = 'bar',
@@ -296,7 +297,6 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
     });
     const locale = useLocale();
     const zero = usePreset() === 'zero';
-    const Icon = kindIcon[kind];
     const percent = Math.round(Math.min(Math.max(progress, 0), 100));
     const sizeText = typeof size === 'number' ? formatBytes(size, locale) : size;
     const uploading = status === 'uploading';
@@ -336,12 +336,7 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
             className="absolute inset-y-0 left-0 bg-muted transition-[width] duration-150 motion-reduce:transition-none"
           />
         ) : null}
-        <span
-          aria-hidden="true"
-          className="relative inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-icon-subtle"
-        >
-          <Icon className="h-icon-xs w-icon-xs" />
-        </span>
+        <FileIcon name={name} kind={kind} error={status === 'error'} size="xs" className="relative" />
         <div className="relative flex min-w-0 flex-1 flex-col gap-1">
           <span className="truncate typography-ui-medium text-foreground" title={name}>
             {name}

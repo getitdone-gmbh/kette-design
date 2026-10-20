@@ -3,6 +3,7 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 
+import { DesignSystemProvider } from './design-system-provider';
 import { MultiSelect, MultiSelectProps, MultiSelectProvider } from './multiselect';
 
 // The outer trigger surface and cmdk's own internal search `<input>` both carry
@@ -155,5 +156,75 @@ describe('MultiSelect readOnly', () => {
     unmount();
     renderMultiSelect();
     expect(getTrigger()).not.toHaveAttribute('aria-readonly');
+  });
+
+  // --- invalid values (chip level) ---
+  describe('invalid values', () => {
+    const renderValues = (props: Partial<MultiSelectProps> & { locale?: 'en' | 'de' }) => {
+      const { locale = 'en', ...rest } = props;
+      return render(
+        <DesignSystemProvider locale={locale}>
+          <MultiSelectProvider>
+            <MultiSelect id="job-type" label="Job Type" options={options} selected={['design']} onChange={() => {}} onUpdateOrder={() => {}} {...rest} />
+          </MultiSelectProvider>
+        </DesignSystemProvider>,
+      );
+    };
+
+    it('keeps valid chips normal and does not flag the field', () => {
+      renderValues({});
+      expect(document.querySelector('[data-invalid]')).toBeNull();
+      expect(getTrigger()).not.toHaveAttribute('aria-invalid');
+    });
+
+    it('marks a chip invalid via the option, with the destructive look and a screen reader text', () => {
+      renderValues({ options: [{ label: 'Design', id: 'design', invalid: true }, options[1]] });
+      const chip = document.querySelector('[data-invalid]') as HTMLElement;
+      expect(chip).toHaveAttribute('aria-invalid', 'true');
+      expect(chip).toHaveTextContent('Design (invalid)');
+      expect(chip).toHaveClass('border-error', 'bg-general-error-container');
+      expect(getTrigger()).toHaveAttribute('aria-invalid', 'true');
+    });
+
+    it('marks a chip invalid via invalidValues', () => {
+      renderValues({ selected: ['design', 'development'], invalidValues: ['development'] });
+      const flagged = document.querySelectorAll('[data-invalid]');
+      expect(flagged).toHaveLength(1);
+      expect(flagged[0]).toHaveTextContent('Development');
+    });
+
+    it('marks a chip invalid via isValueInvalid', () => {
+      renderValues({ isValueInvalid: (id) => id === 'design' });
+      expect(document.querySelectorAll('[data-invalid]')).toHaveLength(1);
+    });
+
+    it('shows an unknown selected value as an invalid chip with its id as label', () => {
+      renderValues({ selected: ['gone'] });
+      const chip = document.querySelector('[data-invalid]') as HTMLElement;
+      expect(chip).toHaveTextContent('gone (invalid)');
+    });
+
+    it('does not flag an unknown value while options are loading', () => {
+      renderValues({ selected: ['gone'], loading: true });
+      expect(document.querySelector('[data-invalid]')).toBeNull();
+    });
+
+    it('uses the German screen reader text from the provider', () => {
+      renderValues({ locale: 'de', invalidValues: ['design'] });
+      expect(document.querySelector('[data-invalid]')).toHaveTextContent('Design (ungültig)');
+    });
+
+    it('marks the text form invalid with the destructive text colour', () => {
+      renderValues({ selectedOptionsAsText: true, invalidValues: ['design'] });
+      const item = document.querySelector('[data-invalid]') as HTMLElement;
+      expect(item).toHaveClass('text-text-destructive');
+      expect(item).toHaveTextContent('Design (invalid)');
+    });
+
+    it('marks an invalid chip in read-only mode', () => {
+      renderValues({ readOnly: true, invalidValues: ['design'] });
+      expect(document.querySelector('[data-invalid]')).toHaveTextContent('Design (invalid)');
+      expect(getTrigger()).toHaveAttribute('aria-invalid', 'true');
+    });
   });
 });

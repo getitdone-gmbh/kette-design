@@ -94,7 +94,7 @@ const TooltipContent = React.forwardRef<
       {supportingText ? (
         <div className="flex flex-col gap-1">
           <span>{children}</span>
-          <span className={cn('font-normal', tone === 'light' ? 'text-text-subtle' : 'opacity-80')}>{supportingText}</span>
+          <span className={cn('font-normal', tone === 'light' && 'text-text-subtle')}>{supportingText}</span>
         </div>
       ) : (
         children

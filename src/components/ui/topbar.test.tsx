@@ -431,9 +431,24 @@ describe('TopBar 0.10 additions', () => {
     expect(screen.queryByRole('dialog')).toBeNull();
   });
 
-  it('TopBarMobileMenu menu button is 40x40 in the default scale and in zero', () => {
+  it('TopBarMobileMenu indents the items of a non-collapsible group like those of an expanded group', async () => {
+    const user = userEvent.setup();
+    render(
+      <TopBarMobileMenu
+        items={[
+          { group: 'Flat', collapsible: false, items: [{ label: 'One', href: '#one' }] },
+          { group: 'Open', defaultOpen: true, items: [{ label: 'Two', href: '#two' }] },
+        ]}
+      />,
+    );
+    await user.click(screen.getByRole('button', { name: 'Menu' }));
+    expect(screen.getByRole('link', { name: 'One' }).parentElement).toHaveClass('pl-3');
+    expect(screen.getByRole('link', { name: 'Two' }).parentElement).toHaveClass('pl-3');
+  });
+
+  it('TopBarMobileMenu menu button is a fixed 40x40 with and without preset zero', () => {
     const { unmount } = render(<TopBarMobileMenu items={[{ label: 'Pricing', href: '#p' }]} />);
-    expect(screen.getByRole('button', { name: 'Menu' })).toHaveClass('h-control-md', 'w-control-md');
+    expect(screen.getByRole('button', { name: 'Menu' })).toHaveClass('h-10', 'w-10');
     expect(screen.getByRole('button', { name: 'Menu' })).not.toHaveClass('h-control-lg');
     unmount();
     render(
@@ -441,7 +456,7 @@ describe('TopBar 0.10 additions', () => {
         <TopBarMobileMenu items={[{ label: 'Pricing', href: '#p' }]} />
       </DesignSystemProvider>,
     );
-    expect(screen.getByRole('button', { name: 'Menu' })).toHaveClass('h-control-xl', 'w-control-xl');
+    expect(screen.getByRole('button', { name: 'Menu' })).toHaveClass('h-10', 'w-10');
   });
 
   it('TopBarMobileMenu keeps the footer outside the scrolling list', async () => {

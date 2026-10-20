@@ -328,6 +328,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-archive-on))`
                         : `rgb(var(--colors-data-file-archive-on) / ${opacityValue})`,
+                'data-file-archive-on-default': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--colors-data-file-archive-on-default))`
+                        : `rgb(var(--colors-data-file-archive-on-default) / ${opacityValue})`,
                 'data-file-archive-subtle': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-archive-subtle))`
@@ -340,6 +344,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-code-on))`
                         : `rgb(var(--colors-data-file-code-on) / ${opacityValue})`,
+                'data-file-code-on-default': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--colors-data-file-code-on-default))`
+                        : `rgb(var(--colors-data-file-code-on-default) / ${opacityValue})`,
                 'data-file-code-subtle': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-code-subtle))`
@@ -352,6 +360,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-doc-on))`
                         : `rgb(var(--colors-data-file-doc-on) / ${opacityValue})`,
+                'data-file-doc-on-default': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--colors-data-file-doc-on-default))`
+                        : `rgb(var(--colors-data-file-doc-on-default) / ${opacityValue})`,
                 'data-file-doc-subtle': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-doc-subtle))`
@@ -364,6 +376,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-generic-on))`
                         : `rgb(var(--colors-data-file-generic-on) / ${opacityValue})`,
+                'data-file-generic-on-default': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--colors-data-file-generic-on-default))`
+                        : `rgb(var(--colors-data-file-generic-on-default) / ${opacityValue})`,
                 'data-file-generic-subtle': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-generic-subtle))`
@@ -376,6 +392,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-image-on))`
                         : `rgb(var(--colors-data-file-image-on) / ${opacityValue})`,
+                'data-file-image-on-default': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--colors-data-file-image-on-default))`
+                        : `rgb(var(--colors-data-file-image-on-default) / ${opacityValue})`,
                 'data-file-image-subtle': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-image-subtle))`
@@ -388,6 +408,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-pdf-on))`
                         : `rgb(var(--colors-data-file-pdf-on) / ${opacityValue})`,
+                'data-file-pdf-on-default': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--colors-data-file-pdf-on-default))`
+                        : `rgb(var(--colors-data-file-pdf-on-default) / ${opacityValue})`,
                 'data-file-pdf-subtle': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-pdf-subtle))`
@@ -400,6 +424,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-sheet-on))`
                         : `rgb(var(--colors-data-file-sheet-on) / ${opacityValue})`,
+                'data-file-sheet-on-default': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--colors-data-file-sheet-on-default))`
+                        : `rgb(var(--colors-data-file-sheet-on-default) / ${opacityValue})`,
                 'data-file-sheet-subtle': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-sheet-subtle))`
@@ -412,6 +440,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-slide-on))`
                         : `rgb(var(--colors-data-file-slide-on) / ${opacityValue})`,
+                'data-file-slide-on-default': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--colors-data-file-slide-on-default))`
+                        : `rgb(var(--colors-data-file-slide-on-default) / ${opacityValue})`,
                 'data-file-slide-subtle': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-slide-subtle))`
@@ -424,6 +456,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-video-on))`
                         : `rgb(var(--colors-data-file-video-on) / ${opacityValue})`,
+                'data-file-video-on-default': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--colors-data-file-video-on-default))`
+                        : `rgb(var(--colors-data-file-video-on-default) / ${opacityValue})`,
                 'data-file-video-subtle': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--colors-data-file-video-subtle))`
@@ -2506,6 +2542,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--semantic-surface-raised))`
                         : `rgb(var(--semantic-surface-raised) / ${opacityValue})`,
+                'surface-strip-raised': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--semantic-surface-strip-raised))`
+                        : `rgb(var(--semantic-surface-strip-raised) / ${opacityValue})`,
                 'surface-sunken': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--semantic-surface-sunken))`
@@ -2897,6 +2937,7 @@ module.exports = {
                 'action-bar-row': 'var(--size-action-bar-row)',
                 'sheet-footer': 'var(--size-sheet-footer)',
                 'month-cell': 'var(--size-month-cell)',
+                'textarea-compact': 'var(--size-textarea-compact)',
                 content: 'calc(100dvh - var(--size-topbar))',
                 target: 'var(--size-touch-target)',
                 'target-lg': 'var(--size-touch-target-lg)',

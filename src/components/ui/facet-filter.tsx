@@ -5,6 +5,7 @@ import { Children, createContext, forwardRef, useContext, useId, useState, type 
 
 import { focusRing } from '../../lib/recipes';
 import { cn } from '../../lib/utils';
+import type { HeadingTag } from './heading-tag';
 import { Checkbox } from './checkbox';
 import { Input } from './input';
 import { ToggleGroup, ToggleGroupItem } from './toggle-group';
@@ -32,6 +33,8 @@ export interface FacetOperator {
 
 export interface FacetFilterProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
   title?: ReactNode;
+  // Heading element of the title, so the filter fits the document outline. Default h2.
+  titleAs?: HeadingTag;
   description?: ReactNode;
   // Match operator switch, e.g. Partial and Exact. Omit for no switch.
   operators?: FacetOperator[];
@@ -53,7 +56,7 @@ export interface FacetFilterProps extends Omit<HTMLAttributes<HTMLElement>, 'tit
 // Filter column with a header, match operator and facet groups. No overlay chrome: it sits in a split view.
 const FacetFilter = forwardRef<HTMLElement, FacetFilterProps>(
   (
-    { className, title: titleProp, description, operators, operator, defaultOperator, onOperatorChange, operatorLabel: operatorLabelProp, saved, onReset, resetLabel: resetLabelProp, selectionMode = 'checkbox', children, ...props },
+    { className, title: titleProp, titleAs: Title = 'h2', description, operators, operator, defaultOperator, onOperatorChange, operatorLabel: operatorLabelProp, saved, onReset, resetLabel: resetLabelProp, selectionMode = 'checkbox', children, ...props },
     ref,
   ) => {
     const l = useLabels();
@@ -72,7 +75,7 @@ const FacetFilter = forwardRef<HTMLElement, FacetFilterProps>(
       >
         <header className="flex flex-col gap-1">
           <div className="flex items-center justify-between gap-2">
-            <h2 className={zero ? 'typography-ui-semibold' : 'typography-ui-lg-semibold'}>{title}</h2>
+            <Title className={zero ? 'typography-ui-semibold' : 'typography-ui-lg-semibold'}>{title}</Title>
             {onReset ? (
               <button
                 type="button"
@@ -116,6 +119,8 @@ FacetFilter.displayName = 'FacetFilter';
 
 export interface FacetGroupProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
   label: string;
+  // Heading element of the group label, so the filter fits the document outline. Default h3.
+  titleAs?: HeadingTag;
   // Leading colour dot before the group label, e.g. a project colour. A `bg-*` token class or a CSS colour.
   dotColor?: string;
   // Result count after the group label. A number, or text such as "99+".
@@ -144,7 +149,7 @@ export interface FacetGroupProps extends Omit<HTMLAttributes<HTMLElement>, 'titl
 
 const FacetGroup = forwardRef<HTMLElement, FacetGroupProps>(
   (
-    { className, label, dotColor, count, searchable = false, query, onQueryChange, searchPlaceholder: searchPlaceholderProp, limit, moreLabel: moreLabelProp, lessLabel: lessLabelProp, collapsible = false, defaultCollapsed = false, collapsed: collapsedProp, onCollapsedChange, selectionMode: selectionModeProp, children, ...props },
+    { className, label, titleAs: Title = 'h3', dotColor, count, searchable = false, query, onQueryChange, searchPlaceholder: searchPlaceholderProp, limit, moreLabel: moreLabelProp, lessLabel: lessLabelProp, collapsible = false, defaultCollapsed = false, collapsed: collapsedProp, onCollapsedChange, selectionMode: selectionModeProp, children, ...props },
     ref,
   ) => {
     const l = useLabels();
@@ -179,7 +184,7 @@ const FacetGroup = forwardRef<HTMLElement, FacetGroupProps>(
       );
     return (
       <section ref={ref} aria-label={label} className={cn('flex flex-col gap-2', className)} {...props}>
-        <h3 className="typography-ui-medium">
+        <Title className="typography-ui-medium">
           {collapsible ? (
             <button
               type="button"
@@ -194,7 +199,7 @@ const FacetGroup = forwardRef<HTMLElement, FacetGroupProps>(
           ) : (
             headingContent
           )}
-        </h3>
+        </Title>
         <div id={bodyId} data-collapsed={collapsed || undefined} className={cn('flex-col gap-2', collapsed ? 'hidden' : 'flex')}>
         {searchable ? (
           <Input variant="search" aria-label={l.searchIn(label)} placeholder={searchPlaceholder} value={query} onChange={(e) => onQueryChange?.(e.target.value)} />

@@ -8,6 +8,7 @@ import * as React from 'react';
 
 import { EscapeGuardContext, guardNestedEscape, useGuardedOpen } from './../../lib/nested-layer';
 import { cn } from './../../lib/utils';
+import type { HeadingTag } from './heading-tag';
 import { AutosaveStatus } from './autosave-status';
 import { Button } from './button';
 import { CodeSnippet, type CodeSnippetProps } from './code-snippet';
@@ -242,7 +243,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
         >
           <OpenerCapture onCapture={returnFocus.remember} />
           <SheetStateContext.Provider value={state}>{children}</SheetStateContext.Provider>
-          <SheetPrimitive.Close data-slot="sheet-close" className={cn('absolute right-3 top-3 inline-flex items-center justify-center rounded-control text-icon-subtle transition-colors hover:bg-muted hover:text-icon-default active:bg-muted-strong focus:outline-none focus-visible:ring-focus focus-visible:ring-offset-focus focus-visible:ring-offset-background focus-visible:ring-ring-default disabled:pointer-events-none data-[state=open]:bg-secondary', zero ? 'h-control-xl w-control-xl' : 'h-control-md w-control-md')}>
+          <SheetPrimitive.Close data-slot="sheet-close" className={cn('absolute right-3 top-3 inline-flex items-center justify-center rounded-control text-icon-subtle transition-colors hover:bg-muted hover:text-icon-default active:bg-muted-strong focus:outline-none focus-visible:ring-focus focus-visible:ring-offset-focus focus-visible:ring-offset-background focus-visible:ring-ring-default disabled:pointer-events-none data-[state=open]:bg-secondary', 'h-10 w-10')}>
             <X className="h-icon-md w-icon-md" aria-hidden="true" />
             <span className="sr-only">{l.close}</span>
           </SheetPrimitive.Close>
@@ -433,18 +434,20 @@ SheetBody.displayName = 'SheetBody';
 
 interface SheetSectionProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   title?: React.ReactNode;
+  // Heading element of the title, so the sheet fits the document outline. Default h3.
+  titleAs?: HeadingTag;
   description?: React.ReactNode;
 }
 
 // Content slot section: label, helper text and a field area. Sections are separated by a hairline.
 const SheetSection = React.forwardRef<HTMLElement, SheetSectionProps>(
-  ({ className, title, description, children, ...props }, ref) => (
+  ({ className, title, titleAs: Title = 'h3', description, children, ...props }, ref) => (
     <section
       ref={ref}
       className={cn('flex flex-col gap-2 border-0 border-b border-solid border-hairline px-5 py-4 last:border-b-0', className)}
       {...props}
     >
-      {title && <h3 className="typography-ui-medium m-0 text-text-default">{title}</h3>}
+      {title && <Title className="typography-ui-medium m-0 text-text-default">{title}</Title>}
       {description && <p className="typography-ui m-0 text-text-subtle-on-muted">{description}</p>}
       {children}
     </section>

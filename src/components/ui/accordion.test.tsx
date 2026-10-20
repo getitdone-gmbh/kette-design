@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { Card, CardContent } from './card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './accordion';
 
 const rawPaletteClass =
@@ -185,5 +186,61 @@ describe('Accordion component', () => {
       </Accordion>,
     );
     expect(triggerEl).toBeInstanceOf(HTMLButtonElement);
+  });
+});
+
+describe('Accordion inset', () => {
+  const build = (rootInset?: boolean, itemInset?: boolean) =>
+    render(
+      <Accordion type="single" collapsible defaultValue="a" inset={rootInset}>
+        <AccordionItem value="a" inset={itemInset}>
+          <AccordionTrigger>Heading</AccordionTrigger>
+          <AccordionContent data-testid="content">Body</AccordionContent>
+        </AccordionItem>
+      </Accordion>,
+    );
+
+  it('keeps the px-3 inset on trigger and content by default', () => {
+    build();
+    expect(screen.getByRole('button', { name: 'Heading' })).toHaveClass('px-3');
+    expect(screen.getByText('Body')).toHaveClass('px-3');
+  });
+
+  it('drops the horizontal inset with inset={false} on the root', () => {
+    build(false);
+    expect(screen.getByRole('button', { name: 'Heading' })).not.toHaveClass('px-3');
+    expect(screen.getByText('Body')).not.toHaveClass('px-3');
+  });
+
+  it('lets the item override the root', () => {
+    build(true, false);
+    expect(screen.getByRole('button', { name: 'Heading' })).not.toHaveClass('px-3');
+  });
+});
+
+describe('Accordion inset follows the Card', () => {
+  const inCard = (inset?: boolean) =>
+    render(
+      <Card>
+        <CardContent>
+          <Accordion type="single" collapsible defaultValue="a" inset={inset}>
+            <AccordionItem value="a">
+              <AccordionTrigger>Heading</AccordionTrigger>
+              <AccordionContent>Body</AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </CardContent>
+      </Card>,
+    );
+
+  it('has no inset inside a Card by default', () => {
+    inCard();
+    expect(screen.getByRole('button', { name: 'Heading' })).not.toHaveClass('px-3');
+    expect(screen.getByText('Body')).not.toHaveClass('px-3');
+  });
+
+  it('keeps inset={true} as an opt-in inside a Card', () => {
+    inCard(true);
+    expect(screen.getByRole('button', { name: 'Heading' })).toHaveClass('px-3');
   });
 });

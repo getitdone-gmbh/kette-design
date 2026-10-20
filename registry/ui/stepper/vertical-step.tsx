@@ -73,7 +73,6 @@ const VerticalStep = forwardRef<HTMLDivElement, VerticalStepProps>((props, ref) 
     previousActiveStep,
   } = useStepper();
 
-  const opacity = hasVisited ? 1 : 0.8;
   const localIsLoading = isLoading || state === 'loading';
   const localIsError = isError || state === 'error';
 
@@ -155,7 +154,7 @@ const VerticalStep = forwardRef<HTMLDivElement, VerticalStepProps>((props, ref) 
             errorIcon={errorIcon}
           />
         </StepButtonContainer>
-        <StepLabel label={label} description={description} {...{ isCurrentStep, opacity }} />
+        <StepLabel label={label} description={description} {...{ isCurrentStep, hasVisited }} />
       </div>
       <div
         className={cn(

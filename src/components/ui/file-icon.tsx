@@ -41,18 +41,20 @@ const kindStyle: Record<FileKind, { icon: LucideIcon; tile: string }> = {
 // PDF has its own colour within the document kind.
 const pdfTile = 'bg-data-file-pdf-subtle text-data-file-pdf-on';
 
-// Document variant: the extension tag is filled with the kind colour (the `-on` token) and carries inverse text.
+// Document variant: the extension tag is a solid fill (`colors.data.file.<type>.default`) with the matching `on-default` text, in light and dark (tokens 5.8).
 const documentTag: Record<FileKind, string> = {
-  document: 'bg-data-file-doc-on',
-  spreadsheet: 'bg-data-file-sheet-on',
-  presentation: 'bg-data-file-slide-on',
-  image: 'bg-data-file-image-on',
-  video: 'bg-data-file-video-on',
-  archive: 'bg-data-file-archive-on',
-  code: 'bg-data-file-code-on',
-  folder: 'bg-data-file-generic-on',
-  other: 'bg-data-file-generic-on',
+  document: 'bg-data-file-doc-default text-data-file-doc-on-default',
+  spreadsheet: 'bg-data-file-sheet-default text-data-file-sheet-on-default',
+  presentation: 'bg-data-file-slide-default text-data-file-slide-on-default',
+  image: 'bg-data-file-image-default text-data-file-image-on-default',
+  video: 'bg-data-file-video-default text-data-file-video-on-default',
+  archive: 'bg-data-file-archive-default text-data-file-archive-on-default',
+  code: 'bg-data-file-code-default text-data-file-code-on-default',
+  folder: 'bg-data-file-generic-default text-data-file-generic-on-default',
+  other: 'bg-data-file-generic-default text-data-file-generic-on-default',
 };
+// Static strings so Tailwind finds the classes.
+const pdfTag = 'bg-data-file-pdf-default text-data-file-pdf-on-default';
 
 const sizeStyle = {
   xs: { box: 'h-8 w-8 rounded-item', icon: 'h-icon-sm w-icon-sm', label: 'hidden' },
@@ -114,7 +116,7 @@ const FileIcon = React.forwardRef<HTMLSpanElement, FileIconProps>(
           data-error={error || undefined}
           {...(decorative ? { 'aria-hidden': true } : { role: 'img', 'aria-label': accessibleName })}
           className={cn(
-            'relative inline-flex h-8 w-7 shrink-0 items-center justify-center rounded-tight rounded-tr-control border border-solid bg-background-default text-icon-subtle',
+            'relative inline-flex h-8 w-7 shrink-0 items-start justify-center pt-1 rounded-tight rounded-tr-control border border-solid bg-background-default text-icon-subtle',
             error ? 'border-border-destructive text-text-destructive' : 'border-input',
             className,
           )}
@@ -124,8 +126,8 @@ const FileIcon = React.forwardRef<HTMLSpanElement, FileIconProps>(
           {extension ? (
             <b
               className={cn(
-                'typography-avatar-xs absolute -bottom-1 left-1/2 max-w-[calc(100%+4px)] -translate-x-1/2 truncate rounded-hairline px-micro uppercase text-text-inverse',
-                error ? 'bg-background-destructive-bold-default' : documentTag[resolved],
+                'typography-file-tag absolute -left-1 bottom-1 max-w-8 truncate rounded-hairline px-micro',
+                error ? 'bg-background-destructive-bold-default text-text-inverse' : extension === 'pdf' ? pdfTag : documentTag[resolved],
               )}
             >
               {extension.slice(0, 4)}

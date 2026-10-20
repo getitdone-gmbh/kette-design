@@ -5,6 +5,7 @@ import { X } from 'lucide-react';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+import type { HeadingTag } from '@/components/ui/heading-tag';
 import { useLabels, usePreset } from '@/components/ui/labels-context';
 
 // Every severity variant is built exclusively from the `general-{severity}-*` tokens (already
@@ -169,12 +170,17 @@ const Alert = React.forwardRef<
 });
 Alert.displayName = 'Alert';
 
-const AlertTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, ...props }, ref) => (
+export interface AlertTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  // Heading element, so the alert fits the document outline. Default h5.
+  titleAs?: HeadingTag;
+}
+
+const AlertTitle = React.forwardRef<HTMLHeadingElement, AlertTitleProps>(
+  ({ className, titleAs: Title = 'h5', ...props }, ref) => (
     // The rule can't see through the `{...props}` spread; every consumer passes visible title text
     // as children (see stories/tests).
     // eslint-disable-next-line jsx-a11y/heading-has-content
-    <h5 ref={ref} className={cn('font-semibold leading-none', className)} {...props} />
+    <Title ref={ref} className={cn('font-semibold leading-none', className)} {...props} />
   ),
 );
 AlertTitle.displayName = 'AlertTitle';

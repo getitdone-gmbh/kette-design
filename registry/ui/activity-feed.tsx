@@ -5,6 +5,7 @@ import { createContext, forwardRef, useContext, type HTMLAttributes, type LiHTML
 
 import { focusRing, transitionBase } from '@/lib/recipes';
 import { cn } from '@/lib/utils';
+import type { HeadingTag } from '@/components/ui/heading-tag';
 import { DataStatePanel, SkeletonBar } from '@/components/ui/data-state-panel';
 import { intlLocaleOf, useLabels, useLocale, usePreset } from '@/components/ui/labels-context';
 
@@ -267,6 +268,8 @@ MilestoneTimeline.displayName = 'MilestoneTimeline';
 
 export interface NotificationListProps extends Omit<HTMLAttributes<HTMLElement>, 'title'>, FeedStateProps {
   title?: ReactNode;
+  // Heading element of the title, so the list fits the document outline. Default h2.
+  titleAs?: HeadingTag;
   // Popover is a floating surface, inbox is flat.
   variant?: 'popover' | 'inbox';
   // Shows the "Mark all read" action when set.
@@ -279,6 +282,7 @@ const NotificationList = forwardRef<HTMLElement, NotificationListProps>(
     {
       className,
       title: titleProp,
+      titleAs: Title = 'h2',
       variant = 'popover',
       state = 'default',
       onMarkAllRead,
@@ -317,7 +321,7 @@ const NotificationList = forwardRef<HTMLElement, NotificationListProps>(
       {...props}
     >
       <header className="flex items-center justify-between gap-2 px-3 py-2">
-        <h2 className="typography-ui-semibold">{title}</h2>
+        <Title className="typography-ui-semibold">{title}</Title>
         {onMarkAllRead && state === 'default' ? (
           <button
             type="button"

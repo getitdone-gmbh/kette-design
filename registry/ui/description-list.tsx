@@ -4,6 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+import type { HeadingTag } from '@/components/ui/heading-tag';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Chip } from '@/components/ui/chip';
 import { EmptyState } from '@/components/ui/empty-state';
@@ -90,6 +91,8 @@ export interface AttributesProps
     StateProps {
   // Section heading such as "Details".
   title?: React.ReactNode;
+  // Heading element of the title, so the section fits the document outline. Default h3.
+  titleAs?: HeadingTag;
   // Hairlines between rows (read-only description list).
   divided?: boolean;
   // Used in the loading and default empty/error copy, e.g. "details".
@@ -97,7 +100,7 @@ export interface AttributesProps
 }
 
 const Attributes = React.forwardRef<HTMLElement, AttributesProps>(
-  ({ className, variant = 'aside', title, divided = false, state = 'ready', noun = 'details', emptyState, errorState, loadingRows, children, ...props }, ref) => {
+  ({ className, variant = 'aside', title, titleAs: Title = 'h3', divided = false, state = 'ready', noun = 'details', emptyState, errorState, loadingRows, children, ...props }, ref) => {
     const resolved = variant ?? 'aside';
     const headingId = React.useId();
     return (
@@ -108,9 +111,9 @@ const Attributes = React.forwardRef<HTMLElement, AttributesProps>(
         {...props}
       >
         {title ? (
-          <h3 id={headingId} className="typography-ui-medium text-text-subtle">
+          <Title id={headingId} className="typography-ui-medium text-text-subtle">
             {title}
-          </h3>
+          </Title>
         ) : null}
         {state === 'ready' ? (
           <AttributesContext.Provider value={{ variant: resolved, divided }}>

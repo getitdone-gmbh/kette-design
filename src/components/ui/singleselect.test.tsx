@@ -2,7 +2,8 @@ import { vi } from 'vitest';
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { SingleSelect, SingleSelectProvider } from './singleselect';
+import { DesignSystemProvider } from './design-system-provider';
+import { SingleSelect, SingleSelectProps, SingleSelectProvider } from './singleselect';
 
 // jsdom has no ResizeObserver / pointer-capture / scrollIntoView, all of which the
 // combobox's resize-tracking effect and cmdk touch while positioning the dropdown.
@@ -151,5 +152,59 @@ describe('SingleSelect useSheet', () => {
     expect(within(dialog).getAllByRole('combobox').length).toBeGreaterThan(0);
     await userEvent.click(await within(dialog).findByText('Design'));
     expect(onChange).toHaveBeenCalledWith('design');
+  });
+
+  // --- invalid value (value level) ---
+  describe('invalid value', () => {
+    const renderValue = (props: Partial<SingleSelectProps> & { locale?: 'en' | 'de' }) => {
+      const { locale = 'en', ...rest } = props;
+      return render(
+        <DesignSystemProvider locale={locale}>
+          <SingleSelectProvider>
+            <SingleSelect id="job-type" label="Job Type" options={options} selected="design" onChange={() => {}} {...rest} />
+          </SingleSelectProvider>
+        </DesignSystemProvider>,
+      );
+    };
+
+    it('shows a valid value normally', () => {
+      renderValue({});
+      expect(document.querySelector('[data-invalid]')).toBeNull();
+      expect(screen.getByRole('combobox')).not.toHaveAttribute('aria-invalid');
+    });
+
+    it('shows an unknown value in the destructive style with the id as text', () => {
+      renderValue({ selected: 'gone' });
+      const value = document.querySelector('[data-invalid]') as HTMLElement;
+      expect(value).toHaveClass('text-text-destructive');
+      expect(value).toHaveTextContent('gone (invalid)');
+      expect(screen.getByRole('combobox')).toHaveAttribute('aria-invalid', 'true');
+    });
+
+    it('does not flag an unknown value while loading', () => {
+      renderValue({ selected: 'gone', loading: true });
+      expect(document.querySelector('[data-invalid]')).toBeNull();
+    });
+
+    it('marks the value invalid via the option, invalidValues or isValueInvalid', () => {
+      const { unmount } = renderValue({ options: [{ label: 'Design', id: 'design', invalid: true }] });
+      expect(document.querySelector('[data-invalid]')).toBeInTheDocument();
+      unmount();
+      const second = renderValue({ invalidValues: ['design'] });
+      expect(document.querySelector('[data-invalid]')).toBeInTheDocument();
+      second.unmount();
+      renderValue({ isValueInvalid: (id) => id === 'design' });
+      expect(document.querySelector('[data-invalid]')).toBeInTheDocument();
+    });
+
+    it('uses the German screen reader text from the provider', () => {
+      renderValue({ locale: 'de', invalidValues: ['design'] });
+      expect(document.querySelector('[data-invalid]')).toHaveTextContent('Design (ungültig)');
+    });
+
+    it('marks the read-only value invalid', () => {
+      renderValue({ readOnly: true, invalidValues: ['design'] });
+      expect(document.querySelector('[data-invalid]')).toHaveTextContent('Design (invalid)');
+    });
   });
 });

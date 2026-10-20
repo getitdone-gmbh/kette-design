@@ -26,6 +26,19 @@ describe('KanbanMoveToMenu', () => {
     expect(onMove).toHaveBeenCalledWith('won');
   });
 
+  it('does not hide the page around the open menu from assistive technology', () => {
+    render(
+      <div>
+        <button type="button">Elsewhere</button>
+        <KanbanMoveToMenu title="Pilot" targets={targets} currentId="lead" onMove={() => undefined} />
+      </div>,
+    );
+    openMenu('Actions for Pilot');
+    expect(screen.getByRole('menuitem', { name: 'Won' })).toBeInTheDocument();
+    expect(document.querySelectorAll('[aria-hidden="true"] button:not([disabled])')).toHaveLength(0);
+    expect(screen.getByRole('button', { name: 'Elsewhere' }).closest('[aria-hidden="true"]')).toBeNull();
+  });
+
   it('follows the provider locale', () => {
     render(
       <DesignSystemProvider locale="de">

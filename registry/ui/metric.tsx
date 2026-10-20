@@ -204,7 +204,7 @@ MetricItem.displayName = 'MetricItem';
 
 // KPI strip: one bordered bar holding several strip metric items separated by dividers. Below md the items wrap into two columns.
 export interface KpiStripProps extends React.HTMLAttributes<HTMLDivElement> {
-  // Fill of the strip. `card` (default) is the card surface. `raised` is for a strip on a `background-subtle` section: in dark the card fill can be darker than that section (zero theme), so `raised` lifts it to the muted surface and it never sinks below its surroundings. Light mode is unchanged.
+  // Fill of the strip. `card` (default) is the card surface. `raised` is for a strip on a `background-subtle` section: in dark the card fill can be darker than that section (zero theme), so `raised` uses the `surface-strip-raised` role (card in light, muted in dark) and never sinks below its surroundings.
   surface?: 'card' | 'raised';
 }
 
@@ -215,8 +215,8 @@ const KpiStrip = React.forwardRef<HTMLDivElement, KpiStripProps>(({ className, s
     ref={ref}
     role="group"
     className={cn(
-      'grid w-full grid-cols-2 items-stretch overflow-hidden rounded-surface border border-solid border-border bg-card md:flex',
-      surface === 'raised' && 'dark:bg-muted',
+      'grid w-full grid-cols-2 items-stretch overflow-hidden rounded-surface border border-solid border-border md:flex',
+      surface === 'raised' ? 'bg-surface-strip-raised' : 'bg-card',
       zero && 'md:min-h-[var(--size-kpi-strip)]',
       '[&>:first-child_[data-kpi-divider]]:hidden',
       // Below md the grid wraps: rows get a top rule, the first item of a row has no left divider.

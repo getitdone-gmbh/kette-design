@@ -5,6 +5,7 @@ import * as React from 'react';
 
 import { focusRing } from '@/lib/recipes';
 import { cn } from '@/lib/utils';
+import type { HeadingTag } from '@/components/ui/heading-tag';
 import type { LabelOverrides } from '@/components/ui/labels';
 import { useLabels } from '@/components/ui/labels-context';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -28,6 +29,8 @@ export interface ChatWindowProps extends Omit<React.HTMLAttributes<HTMLElement>,
   open: boolean;
   onOpenChange?: (open: boolean) => void;
   title: React.ReactNode;
+  // Heading element of the title, so the window fits the document outline. Default h2.
+  titleAs?: HeadingTag;
   // Collapses the body to the header bar. Controlled by the consumer.
   minimized?: boolean;
   onMinimizedChange?: (minimized: boolean) => void;
@@ -69,6 +72,7 @@ const ChatWindow = React.forwardRef<HTMLElement, ChatWindowProps>(
       open,
       onOpenChange,
       title,
+      titleAs: Title = 'h2',
       subtitle,
       height = 'md',
       padding = 'md',
@@ -148,9 +152,9 @@ const ChatWindow = React.forwardRef<HTMLElement, ChatWindowProps>(
       >
         <header className="flex shrink-0 items-center gap-2 border-0 border-b border-solid border-hairline px-4 py-2">
           <div className="flex min-w-0 flex-1 flex-col">
-            <h2 id={titleId} className="typography-ui-semibold m-0 truncate">
+            <Title id={titleId} className="typography-ui-semibold m-0 truncate">
               {title}
-            </h2>
+            </Title>
             {subtitle ? (
               <p id={subtitleId} className="typography-caption m-0 truncate text-text-subtle">
                 {subtitle}

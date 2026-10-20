@@ -20,6 +20,28 @@ export type MultiSelectOptionId = string;
 export type MultiSelectOption = {
   label: string;
   id: MultiSelectOptionId;
+  // Marks this value as invalid. The shown value uses the destructive look and is announced as invalid.
+  invalid?: boolean;
+};
+
+// The current value is invalid when the option says so, the consumer marks it, or it is not in the options (unless options are still loading).
+const isCurrentValueInvalid = ({
+  options,
+  selected,
+  invalidValues,
+  isValueInvalid,
+  loading,
+}: {
+  options: MultiSelectOption[];
+  selected: MultiSelectOptionId | null;
+  invalidValues?: MultiSelectOptionId[];
+  isValueInvalid?: (id: MultiSelectOptionId) => boolean;
+  loading?: boolean;
+}) => {
+  if (!selected) return false;
+  const option = options.find((o) => o.id === selected);
+  if (!option) return !loading;
+  return Boolean(option.invalid) || Boolean(invalidValues?.includes(selected)) || isValueInvalid?.(selected) === true;
 };
 
 // Create a context for managing the currently open SingleSelect
@@ -100,6 +122,10 @@ export interface SingleSelectProps {
   invalid?: boolean;
   /** Points to the id of an external error message, announced via `aria-describedby`. */
   ariaDescribedBy?: string;
+  // Ids to show as invalid when selected. Same as `invalid: true` on the option.
+  invalidValues?: MultiSelectOptionId[];
+  // Decides whether the current value is invalid. A `selected` id that is missing from `options` is always invalid (unless `loading`).
+  isValueInvalid?: (id: MultiSelectOptionId) => boolean;
   // Accessible name of the field when there is no visible `label`. Falls back to the placeholder.
   ariaLabel?: string;
   // Shows the value on the muted read-only surface. Stays focusable (`aria-readonly`), cannot be opened or changed.
@@ -129,8 +155,12 @@ const SingleSelectField: FC<SingleSelectProps> = ({
   invalid = false,
   ariaDescribedBy,
   ariaLabel,
+  invalidValues,
+  isValueInvalid,
 }: SingleSelectProps) => {
   const l = useLabels();
+  const valueInvalid = isCurrentValueInvalid({ options, selected, invalidValues, isValueInvalid, loading });
+  const selectedLabel = options.find((option) => option.id === selected)?.label ?? selected;
   const zero = usePreset() === 'zero';
   const placeholder = placeholderProp ?? l.searchEllipsis;
   const { openId, setOpenId } = useContext(SingleSelectContext);
@@ -308,6 +338,7 @@ const SingleSelectField: FC<SingleSelectProps> = ({
   };
 
   const multiSelectInputProps = {
+    valueInvalid,
     setSearch,
     onChange,
     comboboxRef,
@@ -376,7 +407,7 @@ const SingleSelectField: FC<SingleSelectProps> = ({
                 aria-labelledby={label ? singleSelectLabelId(id) : undefined}
                 aria-disabled={disabled || undefined}
                 aria-label={label ? undefined : (ariaLabel ?? placeholder ?? l.selectOptions)}
-                aria-invalid={invalid || undefined}
+                aria-invalid={invalid || valueInvalid || undefined}
                 aria-describedby={ariaDescribedBy}
                 data-id={id}
                 className={cn(
@@ -403,10 +434,11 @@ const SingleSelectField: FC<SingleSelectProps> = ({
                   onClick={() => setOpenId(id)}
                 >
                   {selected ? (
-                    <div className="flex items-center text-sm">
-                      {options.find((option) => option.id === selected)?.label}
+                    <div className={cn('flex items-center text-sm', valueInvalid && 'text-text-destructive')} data-invalid={valueInvalid || undefined}>
+                      {selectedLabel}
+                      {valueInvalid && <span className="sr-only">{l.invalidSuffix}</span>}
                       {!disableRemove && (
-                        <RemoveSelected label={options.find((option) => option.id === selected)?.label} disabled={disabled} onRemove={handleUnselect} />
+                        <RemoveSelected label={selectedLabel ?? undefined} disabled={disabled} onRemove={handleUnselect} />
                       )}
                     </div>
                   ) : (
@@ -475,7 +507,7 @@ const SingleSelectField: FC<SingleSelectProps> = ({
               aria-labelledby={label ? singleSelectLabelId(id) : undefined}
               aria-disabled={disabled || undefined}
               aria-label={label ? undefined : (ariaLabel ?? placeholder ?? l.selectOptions)}
-              aria-invalid={invalid || undefined}
+              aria-invalid={invalid || valueInvalid || undefined}
               aria-describedby={ariaDescribedBy}
               data-id={id}
               className={cn(
@@ -501,10 +533,11 @@ const SingleSelectField: FC<SingleSelectProps> = ({
                 onClick={() => setOpenId(id)}
               >
                 {selected ? (
-                  <div className="flex items-center text-sm">
-                    {options.find((option) => option.id === selected)?.label}
+                  <div className={cn('flex items-center text-sm', valueInvalid && 'text-text-destructive')} data-invalid={valueInvalid || undefined}>
+                    {selectedLabel}
+                    {valueInvalid && <span className="sr-only">{l.invalidSuffix}</span>}
                     {!disableRemove && (
-                      <RemoveSelected label={options.find((option) => option.id === selected)?.label} disabled={disabled} onRemove={handleUnselect} />
+                      <RemoveSelected label={selectedLabel ?? undefined} disabled={disabled} onRemove={handleUnselect} />
                     )}
                   </div>
                 ) : (
@@ -701,8 +734,9 @@ interface SingleSelectInputProps {
   id: string;
   disabled?: boolean;
   placeholder?: string;
-  options: { label: string; id: string }[];
+  options: MultiSelectOption[];
   selected: string | null;
+  valueInvalid?: boolean;
   handleUnselect: () => void;
   inputRef: RefObject<HTMLInputElement>;
   search: string;
@@ -737,8 +771,10 @@ const SingleSelectInput: FC<SingleSelectInputProps> = ({
   noButton = false,
   label,
   ariaLabel,
+  valueInvalid = false,
 }) => {
   const l = useLabels();
+  const selectedLabel = options.find((option) => option.id === selected)?.label ?? selected;
   const zero = usePreset() === 'zero';
   return (
   <div
@@ -773,10 +809,11 @@ const SingleSelectInput: FC<SingleSelectInputProps> = ({
       onClick={() => setOpenId(id)}
     >
       {selected ? (
-        <div className="flex items-center text-sm">
-          {options.find((option) => option.id === selected)?.label}
+        <div className={cn('flex items-center text-sm', valueInvalid && 'text-text-destructive')} data-invalid={valueInvalid || undefined}>
+          {selectedLabel}
+          {valueInvalid && <span className="sr-only">{l.invalidSuffix}</span>}
           {!disabled && (
-            <RemoveSelected label={options.find((option) => option.id === selected)?.label} disabled={disabled} onRemove={handleUnselect} />
+            <RemoveSelected label={selectedLabel ?? undefined} disabled={disabled} onRemove={handleUnselect} />
           )}
         </div>
       ) : (
@@ -1006,7 +1043,8 @@ const SingleSelect: FC<SingleSelectProps> = ({ readOnly = false, ...props }) => 
     );
   }
   const { id, label, options = [], selected = null, placeholder = l.searchEllipsis, className, invalid = false, ariaDescribedBy } = props;
-  const text = options.find((option) => option.id === selected)?.label;
+  const text = options.find((option) => option.id === selected)?.label ?? selected;
+  const valueInvalid = isCurrentValueInvalid({ options, selected, invalidValues: props.invalidValues, isValueInvalid: props.isValueInvalid, loading: props.loading });
   return (
     <Spacing direction="column" gap="2" wrap="nowrap">
       {label && (
@@ -1024,7 +1062,7 @@ const SingleSelect: FC<SingleSelectProps> = ({ readOnly = false, ...props }) => 
         aria-haspopup="listbox"
         aria-labelledby={label ? singleSelectLabelId(id) : undefined}
         aria-label={label ? undefined : (props.ariaLabel ?? placeholder)}
-        aria-invalid={invalid || undefined}
+        aria-invalid={invalid || valueInvalid || undefined}
         aria-describedby={ariaDescribedBy}
         data-readonly=""
         className={cn(
@@ -1035,7 +1073,14 @@ const SingleSelect: FC<SingleSelectProps> = ({ readOnly = false, ...props }) => 
           className,
         )}
       >
-        {text ?? <span className="text-text-subtle">{placeholder}</span>}
+        {text ? (
+          <span className={cn(valueInvalid && 'text-text-destructive')} data-invalid={valueInvalid || undefined}>
+            {text}
+            {valueInvalid && <span className="sr-only">{l.invalidSuffix}</span>}
+          </span>
+        ) : (
+          <span className="text-text-subtle">{placeholder}</span>
+        )}
       </div>
     </Spacing>
   );

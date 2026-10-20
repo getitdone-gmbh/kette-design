@@ -37,6 +37,7 @@ import {
 
 import { focusRing, transitionBase } from '@/lib/recipes';
 import { cn } from '@/lib/utils';
+import type { HeadingTag } from '@/components/ui/heading-tag';
 import { DataStatePanel, SkeletonBar } from '@/components/ui/data-state-panel';
 import { useLabels, usePreset } from '@/components/ui/labels-context';
 
@@ -704,6 +705,8 @@ const stageDot = {
 export interface KanbanColumnProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
   id: string;
   title: ReactNode;
+  // Heading element of the column title, so the board fits the document outline. Default h3.
+  titleAs?: HeadingTag;
   // Accessible name of the column. Defaults to the title when it is a string.
   label?: string;
   count?: number;
@@ -730,7 +733,7 @@ export interface KanbanColumnProps extends Omit<HTMLAttributes<HTMLElement>, 'ti
 }
 
 const KanbanColumn = forwardRef<HTMLElement, KanbanColumnProps>(
-  ({ className, id, title, label, count, meta, headerExtra, emptyLabel: emptyLabelProp, emptyText, addLabel, addText, onAdd, selected, stage, dotColor, getItemId, children, ...props }, ref) => {
+  ({ className, id, title, titleAs: Title = 'h3', label, count, meta, headerExtra, emptyLabel: emptyLabelProp, emptyText, addLabel, addText, onAdd, selected, stage, dotColor, getItemId, children, ...props }, ref) => {
     const l = useLabels();
     const zero = usePreset() === 'zero';
     const emptyLabel = emptyText ?? emptyLabelProp ?? l.kanbanEmptyColumn;
@@ -801,7 +804,7 @@ const KanbanColumn = forwardRef<HTMLElement, KanbanColumnProps>(
             ) : stage ? (
               <span aria-hidden="true" data-column-dot="" className={cn('h-2 w-2 shrink-0 rounded-full', stageDot[stage])} />
             ) : null}
-            <h3 className="typography-ui-semibold">{title}</h3>
+            <Title className="typography-ui-semibold">{title}</Title>
             {count != null ? <span className={cn('tabular-nums', headerMeta)}>{count}</span> : null}
             {meta != null ? <span className={cn('ml-auto tabular-nums', headerMeta)}>{meta}</span> : null}
           </div>
@@ -992,7 +995,7 @@ const KanbanCard = forwardRef<HTMLDivElement, KanbanCardProps>(
             ctx.movable && 'select-none',
             'hover:border-border-bold data-[selected=true]:border-border-focus aria-[pressed=true]:border-border-focus aria-[pressed=true]:shadow-elevation-raised',
             zero && 'data-[selected=true]:ring-[3px] data-[selected=true]:ring-ring/30',
-            ctx.grabbedId === id && 'opacity-muted',
+            grabbed && 'border-dashed border-border-focus',
             transitionBase,
             focusRing,
             className,

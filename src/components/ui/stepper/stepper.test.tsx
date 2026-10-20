@@ -196,3 +196,15 @@ describe('Numbered five steps', () => {
     expect(container.querySelectorAll('.stepper__step-button-container')[3]).toHaveAttribute('data-invalid', 'true');
   });
 });
+
+describe('Stepper upcoming label', () => {
+  it('uses the subtle text role at full opacity instead of an opacity on the label', () => {
+    const { container } = renderStepper();
+    const labels = container.querySelectorAll<HTMLElement>('.stepper__step-label-container');
+    expect(labels.length).toBe(3);
+    labels.forEach((label) => expect(label.style.opacity).toBe(''));
+    expect(labels[0]).not.toHaveClass('text-text-subtle');
+    expect(labels[1]).not.toHaveClass('text-text-subtle');
+    expect(labels[2]).toHaveClass('text-text-subtle');
+  });
+});

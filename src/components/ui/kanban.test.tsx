@@ -70,6 +70,9 @@ describe('Kanban', () => {
     card.focus();
     await userEvent.keyboard(' ');
     expect(card).toHaveAttribute('aria-pressed', 'true');
+    // A grabbed card keeps full opacity (text contrast) and is marked by a dashed focus border.
+    expect(card).toHaveClass('border-dashed', 'border-border-focus');
+    expect(card.className).not.toMatch(/opacity/);
     await userEvent.keyboard('{ArrowRight}');
     expect(screen.getByRole('region', { name: 'Won' })).toHaveAttribute('data-drop-target', 'true');
     await userEvent.keyboard(' ');

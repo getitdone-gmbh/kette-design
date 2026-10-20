@@ -126,6 +126,6 @@ describe('0.26 data and navigation fixes', () => {
         <MetricItem label="a" value="1" />
       </KpiStrip>,
     );
-    expect(screen.getByRole('group')).toHaveClass('bg-card', 'dark:bg-muted');
+    expect(screen.getByRole('group')).toHaveClass('bg-surface-strip-raised');
   });
 });

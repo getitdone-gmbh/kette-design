@@ -1310,3 +1310,30 @@ export const Localized: Story = {
     </DesignSystemProvider>
   ),
 };
+
+const InvalidValuesDemo = () => {
+    const [selected, setSelected] = useState<string[]>(['design', 'retired', 'legacy']);
+    return (
+      <MultiSelectProvider>
+        <MultiSelect
+          id="invalid-values"
+          label="Job Type"
+          options={[
+            { id: 'design', label: 'Design' },
+            { id: 'development', label: 'Development' },
+            { id: 'legacy', label: 'Legacy', invalid: true },
+          ]}
+          selected={selected}
+          onChange={setSelected}
+          onUpdateOrder={() => {}}
+          disableAddNew
+        />
+      </MultiSelectProvider>
+    );
+};
+
+export const InvalidValues: Story = {
+  args: {} as any,
+  parameters: { docs: { description: { story: 'A single value can be invalid without the whole field being invalid. Mark it with `invalid: true` on the option, `invalidValues` or `isValueInvalid(id)`. A selected id that is not in the options is shown as invalid with its id as label. The chip uses the destructive role and is announced as invalid.' } } },
+  render: () => <InvalidValuesDemo />,
+};

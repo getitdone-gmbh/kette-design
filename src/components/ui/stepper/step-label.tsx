@@ -7,7 +7,8 @@ import { useStepper } from './use-stepper';
 
 interface StepLabelProps {
   isCurrentStep?: boolean;
-  opacity: number;
+  // false for a step that is still ahead: the label uses the subtle text role at full opacity
+  hasVisited?: boolean;
   label?: string | React.ReactNode;
   description?: string | null;
 }
@@ -38,7 +39,7 @@ const descriptionVariants = cva('', {
   },
 });
 
-const StepLabel = ({ isCurrentStep, opacity, label, description }: StepLabelProps) => {
+const StepLabel = ({ isCurrentStep, hasVisited = true, label, description }: StepLabelProps) => {
   const { variant, styles, size, orientation } = useStepper();
   const zero = usePreset() === 'zero';
   const shouldRender = !!label || !!description;
@@ -53,11 +54,9 @@ const StepLabel = ({ isCurrentStep, opacity, label, description }: StepLabelProp
         variant === 'circle-alt' && 'text-center',
         variant === 'circle-alt' && orientation === 'horizontal' && 'ms-0',
         variant === 'circle-alt' && orientation === 'vertical' && 'text-start',
+        !hasVisited && 'text-text-subtle',
         styles?.['step-label-container'],
       )}
-      style={{
-        opacity,
-      }}
     >
       {!!label && (
         <span className={cn('stepper__step-label', zero ? (isCurrentStep ? 'typography-ui-medium' : 'typography-ui') : labelVariants({ size }), styles?.['step-label'])}>{label}</span>
