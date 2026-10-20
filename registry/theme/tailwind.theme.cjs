@@ -1886,6 +1886,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--semantic-background-neutral-subtle))`
                         : `rgb(var(--semantic-background-neutral-subtle) / ${opacityValue})`,
+                'background-selected-row': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--semantic-background-selected-row))`
+                        : `rgb(var(--semantic-background-selected-row) / ${opacityValue})`,
                 'background-selected-default': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--semantic-background-selected-default))`
@@ -2662,6 +2666,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--semantic-text-subtle-on-muted))`
                         : `rgb(var(--semantic-text-subtle-on-muted) / ${opacityValue})`,
+                'text-subtle-on-selected': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--semantic-text-subtle-on-selected))`
+                        : `rgb(var(--semantic-text-subtle-on-selected) / ${opacityValue})`,
                 'text-subtlest': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--semantic-text-subtlest))`

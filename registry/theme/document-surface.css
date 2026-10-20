@@ -295,6 +295,7 @@
   --semantic-background-neutral-default: 241 245 249;
   --semantic-background-neutral-hover: 226 232 240;
   --semantic-background-neutral-subtle: 248 250 252;
+  --semantic-background-selected-row: 239 246 255;
   --semantic-background-selected-default: 239 246 255;
   --semantic-background-selected-hover: 219 234 254;
   --semantic-background-subtle: 248 250 252;
@@ -400,6 +401,7 @@
   --semantic-text-subtle: 100 116 139;
   --semantic-text-subtle-on-canvas: 97 113 136;
   --semantic-text-subtle-on-muted: 71 85 105;
+  --semantic-text-subtle-on-selected: 71 85 105;
   --semantic-text-subtlest: 148 163 184;
   --semantic-text-success: 4 120 87;
   --semantic-text-warning: 194 65 12;

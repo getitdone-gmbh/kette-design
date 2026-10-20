@@ -17,6 +17,10 @@ export interface NotificationMatrixProps extends HTMLAttributes<HTMLTableElement
   children?: ReactNode;
 }
 
+// The selected state uses the prototype row tint instead of the neutral table selection.
+const selectedRow = 'bg-background-selected-row hover:bg-background-selected-row active:bg-background-selected-row [--table-pin-tint:theme(colors.background-selected-row)]';
+const selectedCell = 'bg-background-selected-row';
+
 // Notification preferences: events as rows, channels as columns, one switch per cell.
 const NotificationMatrix = forwardRef<HTMLTableElement, NotificationMatrixProps>(
   ({ className, columns, rowHeaderLabel: rowHeaderLabelProp, children, ...props }, ref) => {
@@ -49,21 +53,23 @@ export interface NotificationMatrixRowProps extends Omit<HTMLAttributes<HTMLTabl
   // Adds a "Required" chip. Combine with readOnly cells for always on events.
   required?: boolean;
   requiredLabel?: string;
+  // Selected row: brand container tint (bg-background-selected-row) with AA secondary text.
+  selected?: boolean;
   // NotificationMatrixCell elements, one per column.
   children?: ReactNode;
 }
 
 const NotificationMatrixRow = forwardRef<HTMLTableRowElement, NotificationMatrixRowProps>(
-  ({ className, label, description, required, requiredLabel: requiredLabelProp, children, ...props }, ref) => {
+  ({ className, label, description, required, requiredLabel: requiredLabelProp, selected, children, ...props }, ref) => {
     const l = useLabels();
     const requiredLabel = requiredLabelProp ?? l.required;
     return (
-    <TableRow ref={ref} className={className} {...props}>
+    <TableRow ref={ref} selected={selected} className={cn(selected && selectedRow, className)} {...props}>
       <TableCell role="rowheader" className="font-normal">
         <div className="flex items-center gap-2">
           <div className="flex min-w-0 flex-col">
             <span className="typography-ui-medium truncate">{label}</span>
-            {description ? <span className="typography-text-extra-small truncate text-muted-foreground">{description}</span> : null}
+            {description ? <span className="typography-text-extra-small truncate text-muted-foreground [[data-state=selected]_&]:text-text-subtle-on-selected">{description}</span> : null}
           </div>
           {required ? <Chip variant="warning" size="small" label={requiredLabel} /> : null}
         </div>
@@ -84,12 +90,14 @@ export interface NotificationMatrixCellProps {
   // Fixed value that the user cannot change (required events). Stays focusable and announced.
   readOnly?: boolean;
   disabled?: boolean;
+  // Standalone selected wash for the cell, same role as a selected row.
+  selected?: boolean;
   className?: string;
 }
 
 const NotificationMatrixCell = forwardRef<HTMLButtonElement, NotificationMatrixCellProps>(
-  ({ label, checked, defaultChecked, onCheckedChange, readOnly, disabled, className }, ref) => (
-    <TableCell className={cn('text-center', className)}>
+  ({ label, checked, defaultChecked, onCheckedChange, readOnly, disabled, selected, className }, ref) => (
+    <TableCell selected={selected} className={cn('text-center', selected && selectedCell, className)}>
       <Switch
         ref={ref}
         size="sm"
