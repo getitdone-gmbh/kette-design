@@ -6,6 +6,13 @@ Free React components from the Get IT Done design system: the primitives plus th
 
 We build business software with many screens, tables, forms and states. These components are the base layer of that system. We are sharing them in case they are useful to others working on similar products.
 
+## Editions
+
+| Edition | What you get | Licence | Where |
+| --- | --- | --- | --- |
+| **Community** | This package: 127 components, the zero theme and a Tailwind preset | MIT, free | [npm](https://www.npmjs.com/package/@getitdone-gmbh/kette-design) |
+| **Enterprise (Die Kette)** | The complete chain: all components, design tokens, domain components, page templates, Figma files, agents and the rule set | Commercial, with every Die Kette licence | [kette.itdone.de](https://kette.itdone.de) |
+
 ## What is included
 
 127 components: 40 primitives and 87 general components, plus the `useToast` hook, German and English labels and their helpers.
@@ -97,7 +104,7 @@ This package is one layer. The full design system goes further, from single comp
 | Complex application components | Domain components built on the primitives: task boards, time grids, goal and capacity cards, pipelines, file views | [zero.itdone.de](https://zero.itdone.de) |
 | Page templates | Complete pages: app frame, dashboard, data grid, guided processes, settings, calendar, mobile, with a build guide per page | [zero-pages.itdone.de](https://zero-pages.itdone.de) |
 
-Licences for the complete chain (tokens, primitives, domain components, page templates, Figma files and the rule set) are available through [Die Kette](https://kette.itdone.de).
+The complete chain (tokens, primitives, domain components, page templates, Figma files and the rule set) is the Enterprise edition, available through [Die Kette](https://kette.itdone.de).
 
 ## Storybook
 
