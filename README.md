@@ -23,9 +23,9 @@ We build business software with many screens, tables, forms and states. These co
 
 Plus the zero theme as CSS variables (typography, colours, radii, elevation, light and dark) and a Tailwind CSS 3 preset.
 
-Every component with a story in the library comes with it: 128 story files with 1020 stories, see [Storybook](#storybook).
+Every component with a story in the library comes with it: 128 story files with 1021 stories, see [Storybook](#storybook).
 
-Synced from component-library-react 0.26.12 and figma-design-tokens 5.8.0 (release 0.3.1). See [CHANGELOG.md](CHANGELOG.md) and [docs/MAINTAINING.md](docs/MAINTAINING.md).
+The library and token versions each release is synced from are listed in one place, the [sync history](docs/MAINTAINING.md#sync-history). What changed per release is in [CHANGELOG.md](CHANGELOG.md).
 
 ## Install
 

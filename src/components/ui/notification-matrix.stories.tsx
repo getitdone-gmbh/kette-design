@@ -35,6 +35,23 @@ export const Default: Story = {
   ),
 };
 
+export const SelectedRow: Story = {
+  render: (args) => (
+    <NotificationMatrix {...args}>
+      <NotificationMatrixRow label="Quote accepted" description="When a client accepts a quote" selected>
+        <NotificationMatrixCell label="Quote accepted, In-app" defaultChecked />
+        <NotificationMatrixCell label="Quote accepted, Email" defaultChecked />
+        <NotificationMatrixCell label="Quote accepted, Push" />
+      </NotificationMatrixRow>
+      <NotificationMatrixRow label="Timesheet approved" description="When a timesheet is approved">
+        <NotificationMatrixCell label="Timesheet approved, In-app" defaultChecked />
+        <NotificationMatrixCell label="Timesheet approved, Email" />
+        <NotificationMatrixCell label="Timesheet approved, Push" />
+      </NotificationMatrixRow>
+    </NotificationMatrix>
+  ),
+};
+
 // Product look of the workload.zero apps: the preset switches the component defaults (set it once at the app root).
 export const ZeroPreset: Story = {
   decorators: [

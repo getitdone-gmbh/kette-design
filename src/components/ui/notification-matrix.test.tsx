@@ -51,4 +51,24 @@ describe('NotificationMatrix', () => {
     render(<Matrix />);
     expect(screen.getByText('Required')).toBeInTheDocument();
   });
+
+  it('tints a selected row with the selected-row role and subtle text on selected', () => {
+    render(
+      <NotificationMatrix aria-label="Prefs" columns={['Email']}>
+        <NotificationMatrixRow label="Quote accepted" description="When a client accepts" selected>
+          <NotificationMatrixCell label="Quote accepted, Email" />
+        </NotificationMatrixRow>
+        <NotificationMatrixRow label="Timesheet" description="Plain row">
+          <NotificationMatrixCell label="Timesheet, Email" />
+        </NotificationMatrixRow>
+      </NotificationMatrix>,
+    );
+    const rows = screen.getAllByRole('row');
+    expect(rows[1]).toHaveClass('bg-background-selected-row');
+    expect(rows[1]).not.toHaveClass('bg-table-background-selected');
+    expect(rows[1]).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByText('When a client accepts')).toHaveClass('[[data-state=selected]_&]:text-text-subtle-on-selected');
+    expect(rows[2]).not.toHaveClass('bg-background-selected-row');
+    expect(rows[2]).not.toHaveAttribute('aria-selected');
+  });
 });
