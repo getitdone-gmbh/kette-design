@@ -5,7 +5,12 @@ import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+import type { HeadingTag } from '@/components/ui/heading-tag';
 import { useLabels, usePreset } from '@/components/ui/labels-context';
+
+// True below a Card. Children that pad themselves (Accordion) read it to align with the card padding instead of adding their own inset.
+export const InsideCardContext = React.createContext(false);
+
 
 // Every resting-state color here is the dedicated `card/*` token family (Design Tokens library,
 // already bound in Figma as `colors/card/background/default`, `colors/card/foreground/default`,
@@ -181,6 +186,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     );
 
     return (
+      <InsideCardContext.Provider value={true}>
       <Comp
         ref={ref}
         role={asButton ? 'button' : undefined}
@@ -208,6 +214,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
           </>
         )}
       </Comp>
+      </InsideCardContext.Provider>
     );
   },
 );
@@ -250,15 +257,20 @@ const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
 );
 CardHeader.displayName = 'CardHeader';
 
-const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, ...props }, ref) => {
+export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  // Heading element, so the card fits the document outline. Default h3.
+  titleAs?: HeadingTag;
+}
+
+const CardTitle = React.forwardRef<HTMLParagraphElement, CardTitleProps>(
+  ({ className, titleAs: Title = 'h3', ...props }, ref) => {
     const zero = usePreset() === 'zero';
     return (
       // The rule can't see through the `{...props}` spread; every consumer passes visible title text
       // as children (see stories/tests) — same pre-existing false positive already suppressed on
       // AlertTitle (alert.tsx).
       // eslint-disable-next-line jsx-a11y/heading-has-content
-      <h3 ref={ref} className={cn(zero ? 'typography-ui-lg-semibold tracking-[-0.01em]' : 'font-semibold leading-none tracking-[-0.01em]', 'text-card-foreground', className)} {...props} />
+      <Title ref={ref} className={cn(zero ? 'typography-ui-lg-semibold tracking-[-0.01em]' : 'font-semibold leading-none tracking-[-0.01em]', 'text-card-foreground', className)} {...props} />
     );
   },
 );

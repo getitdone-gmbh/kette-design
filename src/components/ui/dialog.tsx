@@ -179,8 +179,8 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
       {children}
       {hideClose ? null : (
         <DialogPrimitive.Close data-slot="dialog-close" className={cn('absolute right-3 top-3 inline-flex items-center justify-center rounded-control text-icon-subtle transition-colors hover:bg-muted hover:text-icon-default active:bg-muted-strong focus:outline-none focus-visible:ring-focus focus-visible:ring-offset-focus focus-visible:ring-offset-background focus-visible:ring-ring-default disabled:pointer-events-none data-[state=open]:bg-secondary',
-          // Same 40px square as the Sheet close: control-md in the default scale, control-xl in zero.
-          zero ? 'h-control-xl w-control-xl' : 'h-control-md w-control-md',
+          // Same fixed 40px square as the Sheet close, independent of theme and preset.
+          'h-10 w-10',
         )}>
           <X className="h-icon-md w-icon-md" aria-hidden="true" />
           <span className="sr-only">{l.close}</span>

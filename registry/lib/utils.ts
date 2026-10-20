@@ -28,6 +28,7 @@ export const TOKEN_FONT_SIZES = [
   'display',
   'title-lg',
   'display-md',
+  'file-tag',
 ];
 
 // Named spacing tokens of the preset, so size, padding and gap overrides (`px-0` over `px-control-px-sm`) win over the token utilities.

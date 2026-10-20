@@ -15,7 +15,19 @@ describe('BottomNavigation', () => {
     );
     expect(screen.getByRole('navigation', { name: 'Primary' })).toHaveClass('h-16');
     expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('aria-current', 'page');
-    expect(screen.getByRole('link', { name: 'Inbox, 6' })).not.toHaveAttribute('aria-current');
+    expect(screen.getByRole('link', { name: /^Inbox\s*,\s*6$/ })).not.toHaveAttribute('aria-current');
+  });
+
+  it('starts the accessible name with the visible label and keeps the count visible (2.5.3)', () => {
+    render(
+      <BottomNavigation>
+        <BottomNavigationItem href="#i" icon={<Inbox />} label="Inbox" count={6} />
+      </BottomNavigation>,
+    );
+    const link = screen.getByRole('link', { name: /^Inbox/ });
+    expect(link).not.toHaveAttribute('aria-label');
+    expect(link.querySelector('[aria-hidden]')).toBeNull();
+    expect(link.textContent?.startsWith('Inbox')).toBe(true);
   });
 
   it('renders a centered action as a named button', async () => {

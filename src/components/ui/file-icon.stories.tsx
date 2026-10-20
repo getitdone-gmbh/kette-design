@@ -59,3 +59,15 @@ export const ZeroPreset: Story = {
     ),
   ],
 };
+
+// The document variant (Figma File icon Variant=Document, prototype k-file-icon): sheet, glyph on top, extension tag across the lower left edge.
+export const DocumentVariant: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-center gap-6">
+      {['report.pdf', 'budget.xlsx', 'pitch.pptx', 'photo.png', 'demo.mp4', 'backup.zip', 'config.json', 'notes.fig'].map((file) => (
+        <FileIcon key={file} name={file} variant="document" />
+      ))}
+      <FileIcon name="report.pdf" variant="document" error />
+    </div>
+  ),
+};

@@ -1,11 +1,11 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { File as FileIcon } from 'lucide-react';
 import * as React from 'react';
 
 import { focusRing } from '../../lib/recipes';
 import { cn } from '../../lib/utils';
+import { FileIcon } from './file-icon';
 import { useLabels, usePreset } from './labels-context';
 
 // Figma: Message 1242:996 (chat message: incoming/outgoing text, attachment, reactions, typing). Avatar is an exposed slot.
@@ -167,7 +167,7 @@ Message.displayName = 'Message';
 export interface MessageAttachmentProps extends React.HTMLAttributes<HTMLDivElement> {
   name: React.ReactNode;
   size?: React.ReactNode;
-  // Glyph in the round tile. Defaults to a file icon.
+  // Glyph in a round tile. Without it a FileIcon shows the type of a string `name`.
   icon?: React.ReactNode;
 }
 
@@ -177,9 +177,11 @@ const MessageAttachment = React.forwardRef<HTMLDivElement, MessageAttachmentProp
     className={cn('flex w-full items-center gap-3 rounded-control border border-solid border-border bg-card p-3', className)}
     {...props}
   >
-    <span className="flex h-avatar-md w-avatar-md shrink-0 items-center justify-center rounded-full bg-muted text-icon-default">
-      {icon ?? <FileIcon className="h-icon-md w-icon-md" aria-hidden="true" />}
-    </span>
+    {icon ? (
+      <span className="flex h-avatar-md w-avatar-md shrink-0 items-center justify-center rounded-full bg-muted text-icon-default">{icon}</span>
+    ) : (
+      <FileIcon name={typeof name === 'string' ? name : undefined} size="xs" />
+    )}
     <span className="flex min-w-0 flex-col">
       <span className="typography-p-ui truncate text-text-default">{name}</span>
       {size ? <span className="typography-ui text-text-subtle">{size}</span> : null}

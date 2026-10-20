@@ -320,7 +320,7 @@ describe('Docked non-modal Sheet focus and Escape (0.15)', () => {
 });
 
 describe('Sheet close button size', () => {
-  it('is control-md (40px) by default and control-xl (40px) in the zero preset', () => {
+  it('is a fixed 40px square (h-10 w-10) with and without the zero preset', () => {
     const { unmount } = render(
       <Sheet open>
         <SheetContent>
@@ -329,7 +329,7 @@ describe('Sheet close button size', () => {
         </SheetContent>
       </Sheet>,
     );
-    expect(screen.getByRole('button', { name: 'Close' })).toHaveClass('h-control-md', 'w-control-md');
+    expect(screen.getByRole('button', { name: 'Close' })).toHaveClass('h-10', 'w-10');
     unmount();
     render(
       <DesignSystemProvider preset="zero">
@@ -341,6 +341,6 @@ describe('Sheet close button size', () => {
         </Sheet>
       </DesignSystemProvider>,
     );
-    expect(screen.getByRole('button', { name: 'Close' })).toHaveClass('h-control-xl', 'w-control-xl');
+    expect(screen.getByRole('button', { name: 'Close' })).toHaveClass('h-10', 'w-10');
   });
 });

@@ -1,6 +1,6 @@
 {
   "name": "@getitdone-gmbh/kette-design",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Free React components of the Get IT Done design system for complex software: primitives plus general components such as sidebar, data grid, date picker, multiselect, file upload, charts and kanban. shadcn/ui and Radix UI based, Tailwind CSS, TypeScript, light and dark theme included.",
   "license": "MIT",
   "author": "Get IT Done GmbH",
@@ -51,6 +51,7 @@
     "flags",
     "LICENSE",
     "THIRD_PARTY_NOTICES.md",
+    "CHANGELOG.md",
     "README.md"
   ],
   "publishConfig": {

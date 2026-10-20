@@ -39,7 +39,6 @@ const HorizontalStep = forwardRef<HTMLDivElement, StepSharedProps>((props, ref) 
   const localIsLoading = isLoading || state === 'loading';
   const localIsError = isError || state === 'error';
 
-  const opacity = hasVisited ? 1 : 0.8;
 
   const active = variant === 'line' ? isCompletedStep || isCurrentStep : isCompletedStep;
 
@@ -96,7 +95,7 @@ const HorizontalStep = forwardRef<HTMLDivElement, StepSharedProps>((props, ref) 
             errorIcon={errorIcon}
           />
         </StepButtonContainer>
-        <StepLabel label={label} description={description} {...{ isCurrentStep, opacity }} />
+        <StepLabel label={label} description={description} {...{ isCurrentStep, hasVisited }} />
       </div>
     </div>
   );

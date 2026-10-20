@@ -328,7 +328,6 @@ const TopBarMenuButton = React.forwardRef<HTMLButtonElement, TopBarMenuButtonPro
   ({ className, open = false, tone = 'default', 'aria-label': ariaLabelProp, children, ...props }, ref) => {
     const l = useLabels();
     const ariaLabel = ariaLabelProp ?? l.menu;
-    const zero = usePreset() === 'zero';
     return (
     <button
       ref={ref}
@@ -337,8 +336,8 @@ const TopBarMenuButton = React.forwardRef<HTMLButtonElement, TopBarMenuButtonPro
       aria-expanded={open}
       className={cn(
         'inline-flex shrink-0 items-center justify-center rounded-control',
-        // 40x40 in every theme: control-md in the default scale, control-xl in zero.
-        zero ? 'h-control-xl w-control-xl' : 'h-control-md w-control-md',
+        // Exactly 40x40 in every theme and preset: a fixed scale size, not a control token (control-md is 32px without preset zero).
+        'h-10 w-10',
         transitionBase,
         tone === 'inverse'
           ? ['text-text-inverse hover:bg-text-inverse/10 active:bg-text-inverse/20', focusRingInverse]
@@ -669,7 +668,8 @@ const TopBarMobileMenu = ({
                 return (
                   <div key={index} role="group" aria-labelledby={headingId} className="flex flex-col gap-1">
                     <p id={headingId} className="typography-ui-medium px-3 pb-1 pt-3 text-text-subtle">{item.group}</p>
-                    {item.items.map((child, childIndex) => renderLink(child, childIndex))}
+                    {/* Same 12px indent as the items of an expanded accordion group. */}
+                    <div className="flex flex-col gap-1 pl-3">{item.items.map((child, childIndex) => renderLink(child, childIndex))}</div>
                   </div>
                 );
               }

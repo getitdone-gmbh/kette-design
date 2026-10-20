@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import { cn } from '../../lib/utils';
+import type { HeadingTag } from './heading-tag';
 import { Button } from './button';
 import { ButtonClose } from './button-close';
 import type { LabelOverrides } from './labels';
@@ -25,6 +26,8 @@ export interface CookieConsentProps extends Omit<React.HTMLAttributes<HTMLElemen
   // Visibility is owned by the consumer, who also persists the decision.
   open?: boolean;
   title?: React.ReactNode;
+  // Heading element of the title, so the banner fits the document outline. Default h2.
+  titleAs?: HeadingTag;
   // What is stored and why. Link the privacy policy inside the text.
   description: React.ReactNode;
   onAccept: () => void;
@@ -106,6 +109,7 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
       className,
       open = true,
       title,
+      titleAs: Title = 'h2',
       description,
       onAccept,
       onDecline,
@@ -264,9 +268,9 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
         ) : null}
         <div className={cn('flex min-w-0 flex-1 flex-col gap-2', closable && 'pr-8')}>
           {heading ? (
-            <h2 ref={headingRef} id={titleId} tabIndex={-1} className="typography-ui-semibold m-0 focus-visible:outline-none">
+            <Title ref={headingRef} id={titleId} tabIndex={-1} className="typography-ui-semibold m-0 focus-visible:outline-none">
               {heading}
-            </h2>
+            </Title>
           ) : null}
           {inSettings ? (
             <ul className="m-0 flex list-none flex-col gap-4 p-0">

@@ -47,12 +47,12 @@ const BottomNavigationItem = React.forwardRef<HTMLAnchorElement, BottomNavigatio
     const Tag = (isButton ? 'button' : 'a') as 'a';
     // Zero: brand pill and icon for the current item, 11/500 label, 20px icons, brand count badge.
     const zero = usePreset() === 'zero';
+    // The label comes first in the DOM, so the accessible name starts with the visible label and continues with the count (2.5.3). The icon wrapper is moved above it visually.
     return (
     <Tag
       ref={ref}
       {...(isButton ? { type: 'button' as never } : null)}
       aria-current={current && !isButton ? 'page' : undefined}
-      aria-label={count ? `${label}, ${count}` : undefined}
       data-current={current || undefined}
       className={cn(
         'group/item flex h-12 flex-1 flex-col items-center justify-center gap-1 rounded-control border-0 bg-transparent p-0 no-underline',
@@ -65,18 +65,19 @@ const BottomNavigationItem = React.forwardRef<HTMLAnchorElement, BottomNavigatio
       )}
       {...props}
     >
+      <span>{label}</span>
       <span
         className={cn(
-          'relative grid place-items-center rounded-full',
+          'relative order-first grid place-items-center rounded-full',
           zero
             ? 'h-control-sm w-10 [&>svg]:h-5 [&>svg]:w-5 group-hover/item:bg-muted group-data-[current]/item:bg-background-brand-subtle group-data-[current]/item:text-icon-brand'
             : 'h-8 w-12 [&>svg]:h-icon-lg [&>svg]:w-icon-lg group-hover/item:bg-muted group-data-[current]/item:bg-muted',
         )}
       >
         {icon}
+        {count ? <span className="sr-only">, </span> : null}
         {count ? (
           <span
-            aria-hidden
             className={cn(
               'absolute right-1 top-0 grid h-4 min-w-icon-sm place-items-center rounded-full',
               zero ? 'typography-avatar-xs bg-background-brand-bold-default px-micro text-text-on-brand' : 'typography-text-extra-small bg-background-inverse px-1 text-text-inverse',
@@ -86,7 +87,6 @@ const BottomNavigationItem = React.forwardRef<HTMLAnchorElement, BottomNavigatio
           </span>
         ) : null}
       </span>
-      <span aria-hidden={count ? true : undefined}>{label}</span>
     </Tag>
     );
   },

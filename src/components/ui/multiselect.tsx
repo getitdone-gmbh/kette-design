@@ -24,6 +24,25 @@ export type MultiSelectOptionId = string;
 export type MultiSelectOption = {
   label: string;
   id: MultiSelectOptionId;
+  // Marks this value as invalid. Its chip uses the destructive look and is announced as invalid.
+  invalid?: boolean;
+};
+
+type InvalidValueProps = {
+  invalidValues?: MultiSelectOptionId[];
+  isValueInvalid?: (id: MultiSelectOptionId) => boolean;
+  loading?: boolean;
+};
+
+// A selected id that is not in the options is shown with its id as label (never an empty chip).
+const resolveSelectedOption = (options: MultiSelectOption[] | undefined, id: MultiSelectOptionId): MultiSelectOption =>
+  options?.find((option) => option.id === id) ?? { id, label: id };
+
+// A selected value is invalid when the option says so, the consumer marks it, or it is not in the options (unless options are still loading).
+const isSelectedValueInvalid = (options: MultiSelectOption[] | undefined, id: MultiSelectOptionId, { invalidValues, isValueInvalid, loading }: InvalidValueProps) => {
+  const option = options?.find((o) => o.id === id);
+  if (!option) return !loading;
+  return Boolean(option.invalid) || Boolean(invalidValues?.includes(id)) || isValueInvalid?.(id) === true;
 };
 
 // Create a context for managing the currently open MultiSelect
@@ -103,6 +122,10 @@ export interface MultiSelectProps {
   invalid?: boolean;
   /** Points to the id of an external error message, announced via `aria-describedby`. */
   ariaDescribedBy?: string;
+  // Ids of selected values to show as invalid (destructive chip, announced as invalid). Same as `invalid: true` on the option.
+  invalidValues?: MultiSelectOptionId[];
+  // Decides per selected id whether the value is invalid. A selected id that is missing from `options` is always invalid (unless `loading`).
+  isValueInvalid?: (id: MultiSelectOptionId) => boolean;
   // Accessible name of the field when there is no visible `label`. Falls back to the placeholder.
   ariaLabel?: string;
   // Shows the chosen values as plain chips on the muted read-only surface. Stays focusable (`aria-readonly`), cannot be opened or changed.
@@ -184,9 +207,14 @@ const MultiSelectInput: FC<
   ariaDescribedBy,
   label,
   ariaLabel,
+  invalidValues,
+  isValueInvalid,
+  loading,
 }) => {
   const l = useLabels();
   const zero = usePreset() === 'zero';
+  const invalidProps = { invalidValues, isValueInvalid, loading };
+  const anyValueInvalid = (selected ?? []).some((id) => isSelectedValueInvalid(options, id, invalidProps));
   return (
   <div
     ref={comboboxRef}
@@ -197,7 +225,7 @@ const MultiSelectInput: FC<
     aria-labelledby={label ? multiSelectLabelId(id) : undefined}
     aria-disabled={disabled || undefined}
     aria-label={label ? undefined : (ariaLabel ?? placeholder ?? l.selectOptions)}
-    aria-invalid={invalid || undefined}
+    aria-invalid={invalid || anyValueInvalid || undefined}
     aria-describedby={ariaDescribedBy}
     data-id={id}
     className={cn(
@@ -237,7 +265,7 @@ const MultiSelectInput: FC<
               {visibleItems.map((item, index) => (
                 <DraggableChip
                   key={item}
-                  option={options?.find((option) => option.id === item)!}
+                  option={resolveSelectedOption(options, item)}
                   index={index}
                   selected={selected}
                   onChange={onChange}
@@ -247,6 +275,7 @@ const MultiSelectInput: FC<
                   options={options}
                   onUpdateOrder={onUpdateOrder}
                   chipVariant={chipVariant}
+                  invalid={isSelectedValueInvalid(options, item, invalidProps)}
                 />
               ))}
               {remainingCount > 0 && (
@@ -363,6 +392,7 @@ const DraggableChip: FC<{
   selectedOptionsAsListItems?: boolean;
   chipVariant?: 'default' | 'secondary' | 'info' | 'success' | 'destructive';
   truncateChips?: boolean;
+  invalid?: boolean;
 }> = ({
   option,
   index,
@@ -376,6 +406,7 @@ const DraggableChip: FC<{
   selectedOptionsAsListItems,
   chipVariant,
   truncateChips,
+  invalid,
 }) => {
   const l = useLabels();
   const zero = usePreset() === 'zero';
@@ -435,14 +466,18 @@ const DraggableChip: FC<{
         {selectedOptionsAsText ? (
           <div
             key={option?.id}
+            aria-invalid={invalid || undefined}
+            data-invalid={invalid || undefined}
             className={cn(
               'leading-0 text-sm flex flex-row items-center',
+              { 'text-text-destructive': invalid },
               { 'cursor-move': useDragAndDrop },
               { 'cursor-text': !useDragAndDrop },
               { disabled: 'text-text-subtle' },
             )}
           >
             {option?.label}
+            {invalid && <span className="sr-only">{l.invalidSuffix}</span>}
             <button
               type="button"
               aria-label={l.remove(option?.label)}
@@ -474,12 +509,15 @@ const DraggableChip: FC<{
           <Chip
             key={option?.id}
             variant={chipVariant}
+            invalid={invalid}
+            tinted={invalid ? true : undefined}
             size={zero ? 'compact' : undefined}
             className={cn(
               'items-center',
               { 'cursor-move': useDragAndDrop },
               { 'cursor-text': !useDragAndDrop },
               { 'max-w-[200px]': truncateChips },
+              { 'border-error': invalid },
             )}
             disabled={disabled}
             label={option?.label}
@@ -978,6 +1016,8 @@ const MultiSelectField: FC<MultiSelectProps> = ({
   invalid = false,
   ariaDescribedBy,
   ariaLabel,
+  invalidValues,
+  isValueInvalid,
 }) => {
   const l = useLabels();
   const placeholder = placeholderProp ?? l.searchEllipsis;
@@ -1256,6 +1296,9 @@ const MultiSelectField: FC<MultiSelectProps> = ({
     ariaDescribedBy,
     label,
     ariaLabel,
+    invalidValues,
+    isValueInvalid,
+    loading,
   };
 
   const multiSelectChipsProps = {
@@ -1277,6 +1320,9 @@ const MultiSelectField: FC<MultiSelectProps> = ({
     truncateChips,
     disableMaxChips,
     maxChipsToShow,
+    invalidValues,
+    isValueInvalid,
+    loading,
   };
 
   const multiSelectDropdownProps = {
@@ -1442,7 +1488,7 @@ const MultiSelectChips: FC<
     truncateChips?: boolean;
     disableMaxChips?: boolean;
     maxChipsToShow?: number;
-  }
+  } & InvalidValueProps
 > = ({
   selected,
   options,
@@ -1460,8 +1506,12 @@ const MultiSelectChips: FC<
   truncateChips,
   disableMaxChips = false,
   maxChipsToShow = 3,
+  invalidValues,
+  isValueInvalid,
+  loading,
 }) => {
   const l = useLabels();
+  const invalidProps = { invalidValues, isValueInvalid, loading };
   const visibleItems = disableMaxChips ? selected : selected.slice(0, maxChipsToShow);
   const remainingCount = disableMaxChips ? 0 : selected.length - maxChipsToShow;
 
@@ -1471,7 +1521,7 @@ const MultiSelectChips: FC<
         {visibleItems.map((item, index) => (
           <DraggableChip
             key={item}
-            option={options.find((option) => option.id === item)!}
+            option={resolveSelectedOption(options, item)}
             index={index}
             selected={selected}
             onChange={onChange}
@@ -1481,10 +1531,11 @@ const MultiSelectChips: FC<
             selectedOptionsAsText={selectedOptionsAsText}
             chipsAsCol={chipsAsCol}
             onUpdateOrder={onUpdateOrder}
-            options={selected.map((id) => options.find((option) => option.id === id)!)}
+            options={selected.map((id) => resolveSelectedOption(options, id))}
             selectedOptionsAsListItems={selectedOptionsAsListItems}
             chipVariant={highlightChipById.includes(item) ? 'info' : chipVariant}
             truncateChips={truncateChips}
+            invalid={isSelectedValueInvalid(options, item, invalidProps)}
           />
         ))}
         {remainingCount > 0 && (
@@ -1520,7 +1571,9 @@ const MultiSelect: FC<MultiSelectProps> = ({ readOnly = false, ...props }) => {
     );
   }
   const { id, label, options = [], selected = [], placeholder = l.searchEllipsis, className, invalid = false, ariaDescribedBy } = props as MultiSelectProps & { className?: string };
-  const chosen = options.filter((option) => selected.includes(option.id));
+  const chosen = selected.map((id) => resolveSelectedOption(options, id));
+  const invalidProps = { invalidValues: props.invalidValues, isValueInvalid: props.isValueInvalid, loading: props.loading };
+  const anyValueInvalid = chosen.some((option) => isSelectedValueInvalid(options, option.id, invalidProps));
   return (
     <Spacing direction="column" gap="2" wrap="nowrap">
       {label && <MultiSelectLabel label={label} htmlFor={id} />}
@@ -1534,7 +1587,7 @@ const MultiSelect: FC<MultiSelectProps> = ({ readOnly = false, ...props }) => {
         aria-haspopup="listbox"
         aria-labelledby={label ? multiSelectLabelId(id) : undefined}
         aria-label={label ? undefined : (props.ariaLabel ?? placeholder)}
-        aria-invalid={invalid || undefined}
+        aria-invalid={invalid || anyValueInvalid || undefined}
         aria-describedby={ariaDescribedBy}
         data-readonly=""
         className={cn(
@@ -1546,7 +1599,10 @@ const MultiSelect: FC<MultiSelectProps> = ({ readOnly = false, ...props }) => {
         )}
       >
         {chosen.length > 0 ? (
-          chosen.map((option) => <Chip key={option.id} label={option.label} variant="outline" size="control" />)
+          chosen.map((option) => {
+            const optionInvalid = isSelectedValueInvalid(options, option.id, invalidProps);
+            return <Chip key={option.id} label={option.label} variant="outline" size="control" invalid={optionInvalid} tinted={optionInvalid ? true : undefined} className={cn(optionInvalid && 'border-error')} />;
+          })
         ) : (
           <span className="text-text-subtle">{placeholder}</span>
         )}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "heading-tag",
+  "title": "Heading Tag",
+  "description": "Helper used by the Get IT Done components.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/heading-tag.ts",
+      "content": "// Heading element of a component title. Lets a consumer fit the component into the document outline.\nexport type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

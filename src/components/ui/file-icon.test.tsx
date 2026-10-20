@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
-import { FileIcon, fileExtensionOf, fileKindOf } from './file-icon';
+import { contrast, loadThemes } from '../../lib/token-contrast';
+import { FileIcon, fileExtensionOf, fileKindOf, type FileKind } from './file-icon';
 
 describe('file helpers', () => {
   it('derives extension and kind', () => {
@@ -70,5 +71,50 @@ describe('FileIcon folder kind (0.15)', () => {
   it('exposes the localized folder name when not decorative', () => {
     render(<FileIcon kind="folder" decorative={false} />);
     expect(screen.getByRole('img', { name: 'Folder' })).toBeInTheDocument();
+  });
+});
+
+describe('FileIcon document variant tag (0.26.10)', () => {
+  it('uses the file-tag typography role (uppercase comes from the role) at the left edge of the sheet', () => {
+    render(<FileIcon ext="pdf" variant="document" />);
+    const tag = screen.getByText('pdf');
+    expect(tag).toHaveClass('typography-file-tag', '-left-1', 'bottom-1');
+    expect(tag).not.toHaveClass('uppercase');
+  });
+
+  it('fills every tag with the default role and its on-default text', () => {
+    const { rerender } = render(<FileIcon ext="png" variant="document" />);
+    expect(screen.getByText('png')).toHaveClass('bg-data-file-image-default', 'text-data-file-image-on-default');
+    rerender(<FileIcon ext="mp4" variant="document" />);
+    expect(screen.getByText('mp4')).toHaveClass('bg-data-file-video-default', 'text-data-file-video-on-default');
+    rerender(<FileIcon ext="pdf" variant="document" />);
+    expect(screen.getByText('pdf')).toHaveClass('bg-data-file-pdf-default', 'text-data-file-pdf-on-default');
+  });
+
+  it('keeps 4.5:1 for every tag pair in every theme and mode', () => {
+    for (const theme of loadThemes()) {
+      for (const mode of ['light', 'dark'] as const) {
+        const t = theme[mode];
+        for (const type of ['archive', 'code', 'doc', 'generic', 'image', 'pdf', 'sheet', 'slide', 'video']) {
+          expect(contrast(t[`data-file-${type}-on-default`], t[`data-file-${type}-default`])).toBeGreaterThanOrEqual(4.5);
+        }
+      }
+    }
+  });
+
+  it('keeps the destructive tag in the error state', () => {
+    render(<FileIcon ext="pdf" variant="document" error />);
+    expect(screen.getByText('pdf')).toHaveClass('bg-background-destructive-bold-default');
+  });
+});
+
+describe('FileIcon kinds as used by FileUploadItem and MessageAttachment', () => {
+  it.each<[string, FileKind]>([
+    ['photo.png', 'image'],
+    ['clip.mp4', 'video'],
+    ['notes.xyz', 'other'],
+  ])('derives the kind of %s', (name, kind) => {
+    const { container } = render(<FileIcon name={name} />);
+    expect(container.firstElementChild).toHaveAttribute('data-kind', kind);
   });
 });
