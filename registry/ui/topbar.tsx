@@ -450,7 +450,7 @@ const brandLetterSpacing = {
 
 const brandTone = {
   default: { name: 'text-text-default', byline: 'text-text-subtle' },
-  inverse: { name: 'text-text-inverse', byline: 'text-text-inverse/80' },
+  inverse: { name: 'text-text-inverse', byline: 'text-text-inverse-subtle' },
   // The dark theme is scoped to the brand (class dark), so default text roles resolve light in both modes.
   'inverse-fixed': { name: 'text-text-default', byline: 'text-text-subtle' },
 } as const;

@@ -379,7 +379,7 @@ describe('TopBar 0.10 additions', () => {
     render(<TopBarBrand name="Wordmark" byline="by Get IT Done" tone="inverse" />);
     expect(screen.getByText('Wordmark')).toHaveClass('text-text-inverse');
     expect(screen.getByText('Wordmark')).not.toHaveClass('text-text-default');
-    expect(screen.getByText('by Get IT Done')).toHaveClass('text-text-inverse/80');
+    expect(screen.getByText('by Get IT Done')).toHaveClass('text-text-inverse-subtle');
   });
 
   it('TopBarMobileMenu opens a drawer with the links and closes on select', async () => {

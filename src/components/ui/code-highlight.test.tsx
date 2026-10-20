@@ -127,6 +127,6 @@ describe('CodeSnippet highlight', () => {
 
   it('uses the inverse palette on the inverse tone and works inline', () => {
     const { container } = render(<CodeSnippet code="npm i x # c" highlight="bash" variant="inline" tone="inverse" />);
-    expect(container.querySelector('[data-token=comment]')).toHaveClass('text-background/60');
+    expect(container.querySelector('[data-token=comment]')).toHaveClass('text-text-inverse-subtle');
   });
 });

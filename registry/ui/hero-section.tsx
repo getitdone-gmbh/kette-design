@@ -40,7 +40,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
         ) : null}
         <div className="flex flex-col items-center gap-4">
           <Headline className={cn('typography-display-sm md:typography-display', tone === 'inverse' ? 'text-text-inverse' : 'text-text-default')}>{headline}</Headline>
-          {supportingText ? <p className={cn('typography-lead-lg max-w-hero-copy', tone === 'inverse' ? 'text-text-inverse/80' : 'text-text-subtle')}>{supportingText}</p> : null}
+          {supportingText ? <p className={cn('typography-lead-lg max-w-hero-copy', tone === 'inverse' ? 'text-text-inverse-subtle' : 'text-text-subtle')}>{supportingText}</p> : null}
         </div>
         {primaryAction || secondaryAction ? (
           <div className="flex flex-wrap items-center justify-center gap-3">

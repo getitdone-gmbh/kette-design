@@ -52,7 +52,7 @@ const HelpIcon = React.forwardRef<HTMLButtonElement, HelpIconProps>(
         </TooltipTrigger>
         <TooltipContent side={side} align={align} className="max-w-xs">
           <p className="font-medium">{content}</p>
-          {supportingText && <p className="font-normal">{supportingText}</p>}
+          {supportingText && <p className="font-normal text-text-inverse-subtle">{supportingText}</p>}
           {arrow && <TooltipArrow />}
         </TooltipContent>
       </Tooltip>
