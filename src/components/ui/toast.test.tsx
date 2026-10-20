@@ -134,7 +134,7 @@ describe('Toast component', () => {
     it('carries matching hover and focus-visible full-opacity classes, not hover-only', () => {
       renderToast({ variant: 'destructive' });
       const close = screen.getByTestId('toast-close');
-      expect(close).toHaveClass('group-[.destructive]:text-general-error-on/70');
+      expect(close).toHaveClass('group-[.destructive]:text-general-error-on');
       expect(close).toHaveClass('group-[.destructive]:hover:text-general-error-on');
       expect(close).toHaveClass('group-[.destructive]:focus-visible:text-general-error-on');
     });

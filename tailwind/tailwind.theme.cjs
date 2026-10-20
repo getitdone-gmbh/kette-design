@@ -2598,6 +2598,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--semantic-text-inverse))`
                         : `rgb(var(--semantic-text-inverse) / ${opacityValue})`,
+                'text-inverse-subtle': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--semantic-text-inverse-subtle))`
+                        : `rgb(var(--semantic-text-inverse-subtle) / ${opacityValue})`,
                 'text-muted': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--semantic-text-muted))`
@@ -2618,6 +2622,10 @@ module.exports = {
                     opacityValue === undefined
                         ? `rgb(var(--semantic-text-on-inverse-static))`
                         : `rgb(var(--semantic-text-on-inverse-static) / ${opacityValue})`,
+                'text-on-inverse-static-subtle': ({ opacityValue }) =>
+                    opacityValue === undefined
+                        ? `rgb(var(--semantic-text-on-inverse-static-subtle))`
+                        : `rgb(var(--semantic-text-on-inverse-static-subtle) / ${opacityValue})`,
                 'text-on-paper': ({ opacityValue }) =>
                     opacityValue === undefined
                         ? `rgb(var(--semantic-text-on-paper))`

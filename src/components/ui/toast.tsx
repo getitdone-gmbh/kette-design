@@ -175,7 +175,7 @@ const ToastClose = React.forwardRef<
       'focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-focus focus-visible:ring-ring-default focus-visible:ring-offset-focus',
       'group-hover:opacity-100',
       'group-[.inverse]:static group-[.inverse]:text-background group-[.inverse]:opacity-100 group-[.inverse]:focus-visible:ring-background group-[.inverse]:focus-visible:ring-offset-0',
-      'group-[.destructive]:text-general-error-on/70',
+      'group-[.destructive]:text-general-error-on',
       'group-[.destructive]:hover:text-general-error-on',
       'group-[.destructive]:focus-visible:text-general-error-on',
       'group-[.destructive]:focus-visible:ring-general-error-on',

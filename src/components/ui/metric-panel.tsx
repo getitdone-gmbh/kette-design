@@ -11,12 +11,12 @@ export interface MetricPanelSecondary {
 
 // inverse follows the theme (light page: dark panel, dark page: light panel). inverse-fixed scopes the dark theme to the panel, so it stays dark in both modes.
 const toneStyles = {
-  inverse: { root: 'bg-background-inverse text-text-inverse', muted: 'text-text-inverse/80', divider: 'border-border-inverse/20' },
+  inverse: { root: 'bg-background-inverse text-text-inverse', muted: 'text-text-inverse-subtle', divider: 'border-border-inverse/20' },
   'inverse-fixed': {
     root: 'dark bg-background-subtle text-text-default',
     // Border of the fixed-dark panel. Dropped with bordered={false}.
     border: 'border border-solid border-border-subtle',
-    muted: 'text-text-default/80',
+    muted: 'text-text-subtle',
     divider: 'border-border-default',
   },
 } as const;

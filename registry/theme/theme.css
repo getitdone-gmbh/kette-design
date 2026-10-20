@@ -1274,11 +1274,13 @@
   --semantic-text-info: 37 99 235;
   --semantic-text-info-on-subtle: 29 78 216;
   --semantic-text-inverse: 248 250 252;
+  --semantic-text-inverse-subtle: 148 163 184;
   --semantic-text-muted: 71 85 105;
   --semantic-text-on-brand: 248 250 252;
   --semantic-text-on-destructive: 248 250 252;
   --semantic-text-on-info: 248 250 252;
   --semantic-text-on-inverse-static: 248 250 252;
+  --semantic-text-on-inverse-static-subtle: 148 163 184;
   --semantic-text-on-paper: 15 23 42;
   --semantic-text-on-paper-subtle: 71 85 105;
   --semantic-text-on-success: 248 250 252;
@@ -1702,6 +1704,7 @@
   --semantic-text-info: 59 130 246;
   --semantic-text-info-on-subtle: 219 234 254;
   --semantic-text-inverse: 15 23 42;
+  --semantic-text-inverse-subtle: 71 85 105;
   --semantic-text-muted: 148 163 184;
   --semantic-text-selected: 59 130 246;
   --semantic-text-subtle: 148 163 184;
@@ -2112,6 +2115,7 @@
     --semantic-text-info: 59 130 246;
     --semantic-text-info-on-subtle: 219 234 254;
     --semantic-text-inverse: 15 23 42;
+    --semantic-text-inverse-subtle: 71 85 105;
     --semantic-text-muted: 148 163 184;
     --semantic-text-selected: 59 130 246;
     --semantic-text-subtle: 148 163 184;
@@ -2521,6 +2525,7 @@
   --semantic-text-info: 37 99 235;
   --semantic-text-info-on-subtle: 29 78 216;
   --semantic-text-inverse: 248 250 252;
+  --semantic-text-inverse-subtle: 148 163 184;
   --semantic-text-muted: 71 85 105;
   --semantic-text-selected: 37 99 235;
   --semantic-text-subtle: 100 116 139;

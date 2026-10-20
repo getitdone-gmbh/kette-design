@@ -275,7 +275,7 @@ const CodeSnippet = React.forwardRef<HTMLDivElement, CodeSnippetProps>(
           'select-none border-0 border-r border-solid px-3 py-4 text-right font-normal tabular-nums',
           typeRole,
           inverse
-            ? 'border-background/20 text-background/60'
+            ? 'border-background/20 text-text-inverse-subtle'
             : 'border-border-default bg-background-neutral-subtle text-text-subtle-on-muted',
         )}
       >
@@ -314,7 +314,7 @@ const CodeSnippet = React.forwardRef<HTMLDivElement, CodeSnippetProps>(
           >
             <span
               data-code-label=""
-              className={cn('typography-text-extra-small min-w-0 flex-1 truncate', inverse ? 'text-background/60' : 'text-text-subtle-on-muted')}
+              className={cn('typography-text-extra-small min-w-0 flex-1 truncate', inverse ? 'text-text-inverse-subtle' : 'text-text-subtle-on-muted')}
             >
               {label}
             </span>
