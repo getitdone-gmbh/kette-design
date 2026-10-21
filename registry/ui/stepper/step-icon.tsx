@@ -72,7 +72,7 @@ const StepIcon = forwardRef<HTMLDivElement, StepIconProps>((props, ref) => {
       }
       return (
         <div key="check-icon">
-          <Check className={iconClass} />
+          <Check className={cn(iconClass, '[stroke-width:var(--size-icon-stroke-check,3)]')} />
         </div>
       );
     }

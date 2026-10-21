@@ -54,7 +54,7 @@ const StepMarker = React.forwardRef<HTMLSpanElement, StepMarkerProps>(({ classNa
     >
       {resolved === 'complete' ? (
         <>
-          <Check aria-hidden="true" />
+          <Check aria-hidden="true" className="[stroke-width:var(--size-icon-stroke-check,3)]" />
           <span className="sr-only">{`${step}, ${l.stepCompleted}`}</span>
         </>
       ) : resolved === 'error' ? (

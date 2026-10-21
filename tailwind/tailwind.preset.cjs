@@ -6,6 +6,8 @@ const PluginAnimate = require('tailwindcss-animate');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     prefix: '',
+    // Keeps the icon stroke base rule: Tailwind drops base rules whose class is not found in the content
+    safelist: ['lucide'],
     future: {
         hoverOnlyWhenSupported: true,
     },
@@ -915,6 +917,7 @@ module.exports = {
                         hairline: '2',
                         tight: '4',
                         popover: '12',
+                        'logo-tile-40': '10',
                     },
                     opacity: {
                         empty: '60%',
@@ -1569,6 +1572,17 @@ module.exports = {
                         'icon-sm': '16px',
                         'icon-md': '20px',
                         'icon-lg': '24px',
+                        'icon-nav': '15px',
+                        'icon-stroke': '1.75px',
+                        'icon-stroke-sm': '2.25px',
+                        'icon-stroke-check': '3px',
+                        'icon-stroke-px-24': '1.75px',
+                        'icon-stroke-px-20': '1.46px',
+                        'icon-stroke-px-16': '1.17px',
+                        'icon-stroke-px-15': '1.09px',
+                        'icon-stroke-px-14': '1.02px',
+                        'icon-stroke-sm-px-12': '1.125px',
+                        'icon-stroke-check-px-12': '1.5px',
                         'avatar-xs': '24px',
                         'avatar-sm': '32px',
                         'avatar-md': '40px',
@@ -5640,6 +5654,7 @@ module.exports = {
                             hairline: '0',
                             tight: '0',
                             popover: '0',
+                            'logo-tile-40': '0',
                         },
                         opacity: {
                             'ring-halo': '100%',
@@ -6311,6 +6326,13 @@ module.exports = {
                     },
                 },
             ],
+        }),
+        plugin(({ addBase }) => {
+            addBase({
+                ':where(svg.lucide[stroke-width="2"])': {
+                    'stroke-width': 'var(--size-icon-stroke, 1.75)',
+                },
+            });
         }),
         plugin(({ addVariant }) => {
             addVariant('search-cancel', '&::-webkit-search-cancel-button');

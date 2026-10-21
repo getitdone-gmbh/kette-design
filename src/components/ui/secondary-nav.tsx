@@ -93,7 +93,7 @@ const SecondaryNav = forwardRef<HTMLElement, SecondaryNavProps>(
                   const body = (
                     <>
                       {item.icon ? (
-                        <span aria-hidden="true" className={cn('flex h-icon-sm w-icon-sm shrink-0 items-center justify-center', zero && !selected && 'text-icon-subtle')}>
+                        <span aria-hidden="true" className={cn('flex h-icon-nav w-icon-nav shrink-0 items-center justify-center [&>svg]:h-icon-nav [&>svg]:w-icon-nav', zero && !selected && 'text-icon-subtle')}>
                           {item.icon}
                         </span>
                       ) : null}
