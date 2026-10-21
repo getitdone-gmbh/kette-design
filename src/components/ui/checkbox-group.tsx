@@ -158,7 +158,7 @@ const CheckboxGroupItem = React.forwardRef<HTMLInputElement, CheckboxGroupItemPr
             radio ? (
               <span className="h-2 w-2 rounded-full bg-icon-on-brand" />
             ) : (
-              <Check className="h-3 w-3" />
+              <Check className="h-3 w-3 [stroke-width:var(--size-icon-stroke-check,3)]" />
             )
           ) : null}
         </span>

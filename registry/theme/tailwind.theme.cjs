@@ -2742,6 +2742,7 @@ module.exports = {
                 surface: 'var(--borderRadius-surface)',
                 dialog: 'var(--borderRadius-dialog)',
                 popover: 'var(--borderRadius-popover)',
+                'logo-tile-40': 'var(--borderRadius-logo-tile-40)',
             },
             spacing: {
                 'control-sm': 'var(--size-control-sm)',
@@ -2757,6 +2758,7 @@ module.exports = {
                 'icon-sm': 'var(--size-icon-sm)',
                 'icon-md': 'var(--size-icon-md)',
                 'icon-lg': 'var(--size-icon-lg)',
+                'icon-nav': 'var(--size-icon-nav)',
                 'avatar-xs': 'var(--size-avatar-xs)',
                 'avatar-sm': 'var(--size-avatar-sm)',
                 'avatar-md': 'var(--size-avatar-md)',

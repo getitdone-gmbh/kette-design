@@ -10,6 +10,11 @@ const sections = [
 ];
 
 describe('SecondaryNav', () => {
+  it('sizes the item icon wrapper with the 15px nav icon token', () => {
+    render(<SecondaryNav aria-label="Files" sections={[{ id: 'a', items: [{ id: 'x', label: 'Inbox', icon: <svg data-testid="ico" /> }] }]} />);
+    expect(screen.getByTestId('ico').parentElement).toHaveClass('h-icon-nav', 'w-icon-nav');
+  });
+
   it('renders a named nav with section headers, items and counts', () => {
     render(<SecondaryNav aria-label="Files" sections={sections} />);
     expect(screen.getByRole('navigation', { name: 'Files' })).toBeInTheDocument();

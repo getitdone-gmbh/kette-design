@@ -2,6 +2,21 @@
 
 This package is a copy of the general components of the Get IT Done design system. Each release names the library and token versions it was synced from. Only changes to components that are part of this package are listed.
 
+## 0.3.4
+
+Synced from component-library-react 0.26.16 and figma-design-tokens 5.12.0 (was 0.26.14 and 5.10.0).
+
+### Components
+
+- **Icon stroke**: lucide icons that keep their default `stroke-width="2"` render with the prototype stroke `var(--size-icon-stroke, 1.75)`, 12px glyphs (`h-icon-2xs`, `size-icon-2xs` or the direct `svg` child of such a wrapper, for example `StepMarker` sm) with `var(--size-icon-stroke-sm, 2.25)`. An explicit `strokeWidth` prop such as `1.5` is kept. Both rules are wrapped in `:where()`, so a utility class still wins. This is a slight visible change: icons are thinner than before (was 2).
+- **Check marks**: `Checkbox`, the `CheckboxGroup` card tick, the completed `Stepper` step and `StepMarker` draw the check with `var(--size-icon-stroke-check, 3)`. `Checkbox` now uses the lucide `Check` instead of the Radix check glyph, same 12px (`sm`) and 16px sizes.
+- **Navigation icons are 15px** (`icon-nav`): `SecondaryNav` item icons (wrapper and the svg inside it) and the icons in vertical `Tabs` triggers. Was 16px for `SecondaryNav`.
+
+### Theme and Tailwind preset
+
+- New tokens from 5.11.0 to 5.12.0: `--size-icon-nav` (15px, `h-icon-nav`, `w-icon-nav`, `size-icon-nav`), `--size-icon-stroke`, `--size-icon-stroke-sm`, `--size-icon-stroke-check` and the Figma pixel strokes `--size-icon-stroke-px-*`, `--borderRadius-logo-tile-40` (`rounded-logo-tile-40`).
+- The preset (`@getitdone-gmbh/kette-design/tailwind/preset`) carries the stroke rules as base styles plus `safelist: ['lucide']`, so apps that build their own Tailwind with the preset get them without importing `styles.css`. The 1.75 rule comes from the token preset, the 2.25 rule for 12px glyphs is added by this package's preset; `dist/styles.css` and Storybook are built from the same preset, so each rule exists exactly once.
+
 ## 0.3.3
 
 Synced from component-library-react 0.26.14 and figma-design-tokens 5.10.0 (was 0.26.13 and 5.9.0).

@@ -41,7 +41,7 @@ const tabsTriggerVariants = cva(
           'h-control-sm shrink-0 gap-gap-control rounded-item px-control-px-sm typography-tab data-[state=active]:bg-background data-[state=active]:shadow-elevation-surface',
         // Vertical tab: left aligned, 32px high, `tab` type role, brand-subtle fill when active.
         vertical:
-          'h-8 w-full justify-start gap-2 rounded-item px-3 typography-tab data-[state=active]:bg-background-brand-subtle data-[state=active]:text-general-brand-on-container',
+          'h-8 w-full justify-start gap-2 rounded-item px-3 typography-tab [&>svg]:h-icon-nav [&>svg]:w-icon-nav [&>svg]:shrink-0 data-[state=active]:bg-background-brand-subtle data-[state=active]:text-general-brand-on-container',
         line: '-mb-px rounded-none border-b-2 border-solid border-transparent px-1 py-[6px] pb-2 data-[state=active]:border-foreground',
       },
       // Product preset (DesignSystemProvider `preset`). `zero` gives the line tab a 40px row with the tab role and the vertical tab the muted active row.

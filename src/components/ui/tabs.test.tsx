@@ -16,6 +16,17 @@ const renderTabs = (variant?: 'segmented' | 'line' | 'segment') =>
   );
 
 describe('Tabs', () => {
+  it('sizes vertical trigger icons with the 15px nav icon token', () => {
+    render(
+      <Tabs defaultValue="a" orientation="vertical">
+        <TabsList variant="vertical" aria-label="Sections">
+          <TabsTrigger value="a">Account</TabsTrigger>
+        </TabsList>
+      </Tabs>,
+    );
+    expect(screen.getByRole('tab', { name: 'Account' })).toHaveClass('[&>svg]:h-icon-nav', '[&>svg]:w-icon-nav');
+  });
+
   it('defaults to the segmented track with a raised active chip', () => {
     renderTabs();
     expect(screen.getByRole('tablist')).toHaveClass('bg-muted', 'p-[3px]', 'rounded-control', 'inline-flex');

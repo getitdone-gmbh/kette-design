@@ -488,6 +488,7 @@
   --borderRadius-surface: 12px;
   --borderRadius-dialog: 12px;
   --borderRadius-popover: 12px;
+  --borderRadius-logo-tile-40: 10px;
   --size-control-sm: 28px;
   --size-control-md: 32px;
   --size-control-lg: 36px;
@@ -513,6 +514,17 @@
   --size-icon-sm: 16px;
   --size-icon-md: 16px;
   --size-icon-lg: 24px;
+  --size-icon-nav: 15px;
+  --size-icon-stroke: 1.75px;
+  --size-icon-stroke-sm: 2.25px;
+  --size-icon-stroke-check: 3px;
+  --size-icon-stroke-px-24: 1.75px;
+  --size-icon-stroke-px-20: 1.46px;
+  --size-icon-stroke-px-16: 1.17px;
+  --size-icon-stroke-px-15: 1.09px;
+  --size-icon-stroke-px-14: 1.02px;
+  --size-icon-stroke-sm-px-12: 1.125px;
+  --size-icon-stroke-check-px-12: 1.5px;
   --size-avatar-xs: 24px;
   --size-avatar-sm: 32px;
   --size-avatar-md: 40px;
