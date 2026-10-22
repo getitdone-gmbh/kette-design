@@ -210,3 +210,30 @@ describe('Sidebar positioning and current', () => {
     expect(link).toHaveAttribute('data-active');
   });
 });
+
+describe('Sidebar workspace logo tiles', () => {
+  it('trigger logo uses the 24px logo tile tokens with weight 700', () => {
+    render(<Example />);
+    const logo = screen.getByText('GD');
+    expect(logo).toHaveClass('rounded-logo-tile-24', 'text-logo-tile-24', 'font-bold');
+    expect(logo.className).not.toContain('rounded-[6px]');
+    expect(logo.className).not.toContain('text-micro');
+  });
+
+  it('menu item logo uses the 20px logo tile tokens with weight 700', () => {
+    render(
+      <SidebarProvider defaultCollapsed={false}>
+        <SidebarWorkspaceSwitcher
+          logo="GD"
+          name="Get IT Done"
+          workspaces={[{ id: 'a', name: 'Alpha', logo: 'AL' }]}
+          activeWorkspaceId="a"
+        />
+      </SidebarProvider>,
+    );
+    fireEvent.keyDown(screen.getByRole('button', { name: /Get IT Done/ }), { key: 'Enter' });
+    const logo = screen.getByText('AL');
+    expect(logo).toHaveClass('rounded-logo-tile-20', 'text-logo-tile-20', 'font-bold');
+    expect(logo).not.toHaveClass('font-semibold');
+  });
+});

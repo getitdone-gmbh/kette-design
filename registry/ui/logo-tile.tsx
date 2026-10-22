@@ -6,7 +6,7 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { avatarFallbackColors } from '@/components/ui/avatar';
 
-// Figma `_Logo tile` (10526:297214): Color=1..8 -> colors/data/project/N, initials in the avatar-xs role, on-brand text.
+// Figma `_Logo tile` (10526:297214): Color=1..8 -> colors/data/project/N, initials in the logo tile font size per size (11/13/16px, weight 700), on-brand text.
 // Radius is size x 0.25 (prototype): 24px 6, 32px 8, 40px 10.
 // The colour map is shared with Avatar (`project-N`), so the two stay in lockstep.
 type LogoTileColor = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
@@ -14,9 +14,9 @@ type LogoTileColor = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 const logoTileVariants = cva('inline-flex shrink-0 select-none items-center justify-center', {
   variants: {
     size: {
-      xs: 'h-avatar-xs w-avatar-xs rounded-logo-tile-24 typography-avatar-xs',
-      sm: 'h-avatar-sm w-avatar-sm rounded-logo-tile-32 typography-ui-semibold',
-      md: 'h-avatar-md w-avatar-md rounded-logo-tile-40 typography-ui-semibold',
+      xs: 'h-avatar-xs w-avatar-xs rounded-logo-tile-24 text-logo-tile-24 font-bold leading-none',
+      sm: 'h-avatar-sm w-avatar-sm rounded-logo-tile-32 text-logo-tile-32 font-bold leading-none',
+      md: 'h-avatar-md w-avatar-md rounded-logo-tile-40 text-logo-tile-40 font-bold leading-none',
     },
   },
   defaultVariants: { size: 'xs' },

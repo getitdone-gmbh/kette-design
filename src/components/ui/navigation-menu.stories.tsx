@@ -152,3 +152,31 @@ export const Disabled: Story = {
   } as any,
   render: (args) => Component(args),
 };
+
+// A right-aligned menu opened on load: the Features panel is wider than the space right of its trigger and has to stay inside the viewport.
+export const RightAlignedNearEdge: Story = {
+  parameters: { layout: 'fullscreen' },
+  render: () => (
+    <div className="flex min-h-[420px] w-full items-start justify-end px-4 pt-4">
+      <NavigationMenu defaultValue="features">
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>Pricing</NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem value="features">
+            <NavigationMenuTrigger>Features</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                {components.map((component) => (
+                  <MenuListItem key={component.title} title={component.title} href={component.href}>
+                    {component.description}
+                  </MenuListItem>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+    </div>
+  ),
+};

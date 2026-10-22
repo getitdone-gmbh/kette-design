@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import { CookieConsent, type CookieConsentProps } from './cookie-consent';
 import { Link } from './link';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './sheet';
 
 const DismissibleDemo = (args: CookieConsentProps) => {
   const [open, setOpen] = useState(true);
@@ -38,6 +39,9 @@ export const Dismissible: Story = {
 };
 
 export const CenteredWide: Story = { args: { layout: 'centered-wide', onCustomize: () => undefined } };
+
+// A paragraph title adds no heading to the page, for banners that must stay outside the document outline.
+export const TitleAsParagraph: Story = { args: { titleAs: 'p' } };
 
 export const Closable: Story = { args: { closable: true } };
 
@@ -107,6 +111,33 @@ export const OverHorizontalCarousel: Story = {
           </a>
         ))}
       </div>
+      <CookieConsent {...args} />
+    </main>
+  ),
+};
+
+// Layering: a fixed banner sits below an open sheet, so the sheet and its last menu item are never covered (WCAG 2.4.11).
+export const BelowOpenSheet: Story = {
+  parameters: { layout: 'fullscreen' },
+  args: { positioning: 'fixed', onCustomize: () => undefined },
+  render: (args) => (
+    <main className="p-4">
+      <Link href="#top">Page link</Link>
+      <Sheet defaultOpen>
+        <SheetContent side="right">
+          <SheetHeader>
+            <SheetTitle>Menu</SheetTitle>
+            <SheetDescription>Navigation</SheetDescription>
+          </SheetHeader>
+          <ul className="m-0 flex list-none flex-col gap-4 p-0">
+            {['Features', 'Pricing', 'Docs', 'Contact'].map((item) => (
+              <li key={item}>
+                <Link href={`#${item.toLowerCase()}`}>{item}</Link>
+              </li>
+            ))}
+          </ul>
+        </SheetContent>
+      </Sheet>
       <CookieConsent {...args} />
     </main>
   ),
