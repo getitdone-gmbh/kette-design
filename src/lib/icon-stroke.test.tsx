@@ -9,7 +9,7 @@ import { Checkbox } from '../components/ui/checkbox';
 const require = createRequire(import.meta.url);
 const preset = require('../../tailwind/preset.cjs');
 
-// Compiles the base layer the way a consumer of the kette-design preset does, with content that never mentions `lucide`.
+// Compiles the base layer the way a consumer of the kette-design-community preset does, with content that never mentions `lucide`.
 const compileBase = async () => {
   const result = await postcss([
     tailwindcss({ presets: [preset], content: [{ raw: '<span class="h-icon-2xs"></span>', extension: 'html' }], corePlugins: { preflight: false } }),

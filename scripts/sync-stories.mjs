@@ -39,7 +39,8 @@ const patches = {
 
 // Example data on the shared fictional cast (docs/MAINTAINING.md, step 4). Longest matches first.
 const cast = [
-  ['@getitdone-gmbh/component-library-react', '@getitdone-gmbh/kette-design'],
+  ['@getitdone-gmbh/kette-design-enterprise', '@getitdone-gmbh/kette-design-community'],
+  ['@getitdone-gmbh/component-library-react', '@getitdone-gmbh/kette-design-community'],
   ['sk_' + 'live_51Hx9a2b3c4d5e6f7g8h9i0j', 'demo_key_51Hx9a2b3c4d5e6f7g8h9i0j'],
   ['<AvatarInitials>OR</AvatarInitials>', '<AvatarInitials>LH</AvatarInitials>'],
   ['<AvatarFallback>KM</AvatarFallback>', '<AvatarFallback>EP</AvatarFallback>'],
