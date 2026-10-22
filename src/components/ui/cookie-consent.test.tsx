@@ -1,5 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import * as React from 'react';
 import { vi } from 'vitest';
 
 import { CookieConsent } from './cookie-consent';
@@ -330,5 +331,115 @@ describe('CookieConsent action stacking', () => {
     );
     await user.click(screen.getByRole('button', { name: 'Settings' }));
     expect(screen.getByRole('button', { name: 'Back' }).parentElement).toHaveClass('flex-col', 'sm:flex-row');
+  });
+  describe('focus on reopen', () => {
+    const Page = ({ title = 'Cookies', titleAs, initialOpen = false, remount = false }: { title?: string; titleAs?: 'p'; initialOpen?: boolean; remount?: boolean }) => {
+      const [open, setOpen] = React.useState(initialOpen);
+      // `remount` re-creates the footer trigger with a new key while the banner is open, like a re-rendered footer.
+      const [generation, setGeneration] = React.useState(0);
+      return (
+        <div>
+          <footer>
+            <button key={remount ? generation : 0} type="button" id="cookie-settings" onClick={() => setOpen(true)}>
+              Cookie settings
+            </button>
+          </footer>
+          <button type="button" onClick={() => setGeneration((g) => g + 1)}>
+            Rerender footer
+          </button>
+          <CookieConsent
+            open={open}
+            title={title}
+            titleAs={titleAs}
+            description="We use cookies."
+            onAccept={() => setOpen(false)}
+            onDecline={() => setOpen(false)}
+          />
+        </div>
+      );
+    };
+
+    it('does not take focus on the first automatic appearance', () => {
+      render(<Page initialOpen />);
+      expect(screen.getByRole('region', { name: 'Cookies' })).toBeInTheDocument();
+      expect(document.body).toHaveFocus();
+    });
+
+    it('does not take focus when the banner appears without a trigger holding focus', () => {
+      const { rerender } = render(<CookieConsent open={false} title="Cookies" description="x" onAccept={() => undefined} onDecline={() => undefined} />);
+      rerender(<CookieConsent open title="Cookies" description="x" onAccept={() => undefined} onDecline={() => undefined} />);
+      expect(document.body).toHaveFocus();
+    });
+
+    it('moves focus to the title on a user reopen and back to the trigger on accept', async () => {
+      const user = userEvent.setup();
+      render(<Page />);
+      const trigger = screen.getByRole('button', { name: 'Cookie settings' });
+      await user.click(trigger);
+      expect(screen.getByRole('heading', { name: 'Cookies' })).toHaveFocus();
+      await user.click(screen.getByRole('button', { name: 'Accept all' }));
+      expect(screen.queryByRole('region')).toBeNull();
+      expect(trigger).toHaveFocus();
+    });
+
+    it('returns focus after decline and after a keyboard reopen', async () => {
+      const user = userEvent.setup();
+      render(<Page />);
+      const trigger = screen.getByRole('button', { name: 'Cookie settings' });
+      trigger.focus();
+      await user.keyboard('{Enter}');
+      expect(screen.getByRole('heading', { name: 'Cookies' })).toHaveFocus();
+      await user.click(screen.getByRole('button', { name: 'Decline non-essential' }));
+      expect(trigger).toHaveFocus();
+    });
+
+    it('moves focus to a paragraph title when titleAs is p', async () => {
+      const user = userEvent.setup();
+      render(<Page titleAs="p" />);
+      await user.click(screen.getByRole('button', { name: 'Cookie settings' }));
+      const region = screen.getByRole('region', { name: 'Cookies' });
+      const title = within(region).getByText('Cookies');
+      expect(title.tagName).toBe('P');
+      expect(title).toHaveFocus();
+    });
+
+    it('focuses the region when there is no title', async () => {
+      const user = userEvent.setup();
+      render(<Page title="" />);
+      await user.click(screen.getByRole('button', { name: 'Cookie settings' }));
+      expect(screen.getByRole('region', { name: 'Cookie consent' })).toHaveFocus();
+    });
+
+    it('finds a re-created trigger again when the banner closes', async () => {
+      const user = userEvent.setup();
+      render(<Page remount />);
+      await user.click(screen.getByRole('button', { name: 'Cookie settings' }));
+      await user.click(screen.getByRole('button', { name: 'Rerender footer' }));
+      const fresh = document.getElementById('cookie-settings');
+      await user.click(screen.getByRole('button', { name: 'Accept all' }));
+      expect(document.getElementById('cookie-settings')).toBe(fresh);
+      expect(fresh).toHaveFocus();
+    });
+
+    it('treats a banner mounted while a trigger holds focus as a reopen (uncontrolled use)', async () => {
+      const Mounted = () => {
+        const [shown, setShown] = React.useState(false);
+        return (
+          <div>
+            <button type="button" onClick={() => setShown(true)}>
+              Cookie settings
+            </button>
+            {shown ? <CookieConsent title="Cookies" description="x" onAccept={() => setShown(false)} onDecline={() => setShown(false)} /> : null}
+          </div>
+        );
+      };
+      const user = userEvent.setup();
+      render(<Mounted />);
+      const trigger = screen.getByRole('button', { name: 'Cookie settings' });
+      await user.click(trigger);
+      expect(screen.getByRole('heading', { name: 'Cookies' })).toHaveFocus();
+      await user.click(screen.getByRole('button', { name: 'Accept all' }));
+      expect(trigger).toHaveFocus();
+    });
   });
 });

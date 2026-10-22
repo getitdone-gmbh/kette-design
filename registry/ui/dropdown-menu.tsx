@@ -328,5 +328,5 @@ export {
 //    the design tokens (`styles/theme.css`), `figma-tokens/default_theme_dark.json` or the relevant
 //    per-theme dark override). BLOCKED on design-tokens-maintainer adding distinct dark values for
 //    all 6 keys and rebuilding (`build:css-vars`, `build:themes`), each meeting >=4.5:1 (text) /
-//    >=3:1 (ring/border) against the new dark panel background — component-library-react cannot
+//    >=3:1 (ring/border) against the new dark panel background — kette-design-enterprise cannot
 //    verify or fix this from dropdown-menu.tsx.

@@ -2,6 +2,28 @@
 
 This package is a copy of the general components of the Get IT Done design system. Each release names the library and token versions it was synced from. Only changes to components that are part of this package are listed.
 
+## 0.4.1
+
+Synced from kette-design-enterprise 0.27.2 and kette-tokens 5.18.1 (was component-library-react 0.26.23 and figma-design-tokens 5.16.0; both upstream packages were renamed in between, kette-design-enterprise 0.27.0 and kette-tokens 5.18.0 have no component or theme changes).
+
+### Components
+
+- **`Button` icon-only heights**: every icon size now has the height of the text size with the same name, from the control tokens. In the zero theme of this package: `icon-sm` 28, `icon` 32, `icon-lg` 36 (was 44), `icon-xl` 40 (was 48), `icon-2xl` 60 (was 56). Mixed rows of text and icon buttons line up.
+- **New `Button` size `icon-xs`**: dense icon button for list rows, tags, comments and chat. Hit area `control-xs` (24px in zero, meets the 24px target size minimum, WCAG 2.5.8), glyph `icon-xs` (14px), also for the `icon` prop.
+- **`Button` link padding**: `variant="link"` sets plain `p-0` instead of `!p-0`, so a `className` such as `px-3` wins without `!`. New prop `padded` (link variant only) keeps the horizontal padding of the size, for a link button in a toolbar or button group. Other variants ignore it.
+- **`CookieConsent` focus on reopen**: when the banner opens again while a button or link outside it has focus (for example a "Cookie settings" link in the footer), focus moves to the banner title, or to the region when there is no title. After accept, decline, save or close it returns to the opener, also when the opener was re-rendered. The first automatic appearance still takes no focus. A reopen also resets an earlier `dismissBehavior="defer"` dismissal and the settings view. No new props.
+- `src/lib/return-focus.tsx` exports `findReplacement`; in the shadcn registry `cookie-consent` now depends on `return-focus`.
+- Tests: `button-sizes.test.tsx` (new; checks the zero preset against `styles/theme.css`, the default, neutral and windows-95 cases of the library are left out because this package ships the zero theme only), `button.test.tsx`, `cookie-consent.test.tsx`.
+- Comments in Accordion, Alert, Card, Dropdown Menu and Table name the token package by its new name.
+
+### Theme and Tailwind preset
+
+- New tokens from 5.17.0: `--z-chrome-2` (31) and `--z-chrome-3` (32), `z-chrome-2` and `z-chrome-3` in the preset, for stacked page chrome above `z-chrome`.
+
+### Stories
+
+- New: Button `IconOnlyDense`, `SizeScale`, `LinkPadded`, Cookie Consent `ReopenFromFooterLink`. 128 story files with 1031 stories.
+
 ## 0.4.0
 
 Renamed from `@getitdone-gmbh/kette-design` to `@getitdone-gmbh/kette-design-community`, repo `getitdone-gmbh/kette-design-community`. Synced from component-library-react 0.26.23 and figma-design-tokens 5.16.0, the same as 0.3.7.

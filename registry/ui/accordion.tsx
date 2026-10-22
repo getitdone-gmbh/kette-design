@@ -156,7 +156,7 @@ export { Accordion, AccordionContent, AccordionItem, AccordionTrigger };
 //    invert in dark) is paired against a foreground that never adapts — contrast collapses to
 //    ~1.2:1 in dark mode (needs >=4.5:1, WCAG 1.4.3 AA).
 //    IMPORTANT: the source of truth is already fixed — `figma-tokens/default_theme_dark.json` in
-//    the figma-design-tokens repo already carries distinct dark values (accordion/background →
+//    the kette-tokens repo already carries distinct dark values (accordion/background →
 //    slate.900, accordion/foreground → slate.50), and running `npm run build:css-vars` from that
 //    repo's current HEAD locally reproduces the correct `.dark`/media overrides. The gap is purely
 //    that the last published package (3.4.10) was not rebuilt/republished after that source fix

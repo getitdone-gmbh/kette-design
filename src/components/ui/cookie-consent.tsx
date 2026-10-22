@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import { findReplacement } from '../../lib/return-focus';
 import { cn } from '../../lib/utils';
 import type { HeadingTag } from './heading-tag';
 import { Button } from './button';
@@ -79,6 +80,13 @@ const SCROLL_PADDING_GAP = 8;
 
 // Links inside the running text keep an underline: their colour alone is not 3:1 against the surrounding text (WCAG 1.4.1).
 const inlineLink = '[&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:no-underline';
+
+// Shared focus ring of the library, for the elements that take programmatic focus on a reopen.
+const programmaticFocusRing = 'focus-visible:outline-none focus-visible:ring-focus focus-visible:ring-offset-focus focus-visible:ring-offset-background focus-visible:ring-ring-default';
+
+// A trigger is a button or link outside the banner. Only such an element holding focus proves that the user asked for the banner.
+const isTrigger = (el: Element | null, banner: HTMLElement | null): el is HTMLElement =>
+  el instanceof HTMLElement && !banner?.contains(el) && el.matches('button, a[href], [role="button"], [role="link"]');
 
 const scrollsVertically = (el: HTMLElement) => {
   const { overflowY } = window.getComputedStyle(el);
@@ -181,7 +189,44 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
       if (view === 'settings') (headingRef.current ?? sectionRef.current)?.focus();
       else settingsButtonRef.current?.focus();
     }, [view]);
-    const reserveScrollSpace = open && !deferred && positioning === 'fixed';
+    const visible = open && !deferred;
+    const opener = React.useRef<HTMLElement | null>(null);
+    const wasVisible = React.useRef(false);
+    // A reopen (`open` turns true again) shows a banner that was dismissed before, so a deferred dismissal no longer hides it.
+    React.useEffect(() => {
+      if (open) setDeferred(false);
+    }, [open]);
+    // The very first automatic appearance never moves focus. When the banner appears while a button or link outside it holds focus (a "Cookie settings" trigger in the footer), focus moves to the heading, or to the region without a title, and the trigger is remembered. When the banner goes away (accept, decline, save, close) focus returns to that trigger, also if it was re-rendered meanwhile.
+    React.useEffect(() => {
+      if (visible) {
+        const active = document.activeElement;
+        if (isTrigger(active, sectionRef.current)) {
+          opener.current = active;
+          viewChanged.current = false;
+          setView('summary');
+          (headingRef.current ?? sectionRef.current)?.focus();
+        } else {
+          opener.current = null;
+        }
+      } else if (wasVisible.current) {
+        const target = findReplacement(opener.current);
+        opener.current = null;
+        const active = document.activeElement;
+        if (target && (!active || active === document.body || !active.isConnected)) target.focus();
+      }
+      wasVisible.current = visible;
+    }, [visible]);
+    // A banner that a consumer removes from the tree (conditional rendering) also hands focus back.
+    React.useEffect(
+      () => () => {
+        const target = findReplacement(opener.current);
+        opener.current = null;
+        const active = document.activeElement;
+        if (target && (!active || active === document.body || !active.isConnected)) target.focus();
+      },
+      [],
+    );
+    const reserveScrollSpace = visible && positioning === 'fixed';
     // While a fixed banner is showing, keep focused page content above it. Its height is reserved as scroll padding on the document scroller, and as an end-of-body spacer so the end of the page can scroll clear of it too, whatever the body height.
     React.useEffect(() => {
       const node = sectionRef.current;
@@ -253,11 +298,12 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
           if (typeof ref === 'function') ref(node);
           else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node;
         }}
-        tabIndex={inSettings ? -1 : undefined}
+        tabIndex={-1}
         aria-label={heading ? undefined : l.cookieConsentRegion}
         aria-labelledby={heading ? titleId : undefined}
         className={cn(
           'relative z-banner flex flex-col gap-4 rounded-surface border border-solid border-border bg-popover p-6 text-popover-foreground shadow-elevation-raised',
+          programmaticFocusRing,
           wide ? 'max-w-4xl' : 'max-w-reading sm:flex-row sm:items-end',
           wide && !inSettings && 'md:flex-row md:items-end',
           positioning === 'fixed' && (wide ? 'fixed inset-x-4 bottom-4 mx-auto' : 'fixed bottom-4 left-4 right-4 sm:right-auto sm:w-full'),
@@ -272,7 +318,7 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
         ) : null}
         <div className={cn('flex min-w-0 flex-1 flex-col gap-2', closable && 'pr-8')}>
           {heading ? (
-            <Title ref={headingRef} id={titleId} tabIndex={-1} className="typography-ui-semibold m-0 focus-visible:outline-none">
+            <Title ref={headingRef} id={titleId} tabIndex={-1} className={cn('typography-ui-semibold m-0', programmaticFocusRing)}>
               {heading}
             </Title>
           ) : null}

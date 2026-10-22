@@ -91,7 +91,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
           { 'border border-solid': zero && !transparent && !noBorder },
           // CARD-TOK-01 / CARD-A11Y-02 TOKEN GAP: plain `bg-background` (and the `card-*`/`primary`/
           // `ring-default`/`error` tokens used below) are declared once at `:root` with no `.dark`
-          // override in figma-design-tokens `dist/theme.css` — this Card renders the identical
+          // override in kette-tokens `dist/theme.css` — this Card renders the identical
           // light-mode surface in dark mode. Same root cause already tracked on the composable Card
           // (see card.tsx); needs dark-mode-tuned values from design-tokens-maintainer, nothing to
           // change here once they ship.
@@ -110,7 +110,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
           // purely informational Card can still be shown as "unavailable" (MAT-CARD-04).
           //
           // CARD-A11Y-03 fix: `opacity-disabled` is not a defined Tailwind utility anywhere in this
-          // design system (no `disabled` key in the opacity scale of figma-design-tokens' preset,
+          // design system (no `disabled` key in the opacity scale of kette-tokens' preset,
           // built theme, or this repo's tailwind.config.cjs), so it silently compiled to no CSS rule.
           // Using the real `opacity-50` utility (same interim fallback used in card.tsx/Tabs/
           // NavigationMenu) until design-tokens-maintainer ships a proper `opacity.disabled` scale.

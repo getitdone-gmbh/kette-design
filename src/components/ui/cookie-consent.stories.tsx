@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
+import { Button } from './button';
 import { CookieConsent, type CookieConsentProps } from './cookie-consent';
 import { Link } from './link';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './sheet';
@@ -141,4 +142,24 @@ export const BelowOpenSheet: Story = {
       <CookieConsent {...args} />
     </main>
   ),
+};
+
+const ReopenFromFooterLinkDemo = (args: CookieConsentProps) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <main className="flex min-h-64 flex-col justify-between gap-8 p-4">
+      <p className="typography-ui m-0">The banner was decided earlier. Use the footer link to open it again: focus moves into the banner and returns to the link when you decide.</p>
+      <footer>
+        <Button type="button" variant="link" onClick={() => setOpen(true)}>
+          Cookie settings
+        </Button>
+      </footer>
+      <CookieConsent {...args} open={open} onAccept={() => setOpen(false)} onDecline={() => setOpen(false)} />
+    </main>
+  );
+};
+
+// A "Cookie settings" link in the footer reopens a banner the visitor dismissed before. Focus moves to the banner title and returns to the link after accept, decline or save. The first automatic appearance never takes focus.
+export const ReopenFromFooterLink: Story = {
+  render: (args) => <ReopenFromFooterLinkDemo {...args} />,
 };
