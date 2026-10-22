@@ -22,7 +22,7 @@ This package is the component layer of the Community edition of [Die Kette](http
 `@getitdone-gmbh/kette-design-enterprise` and `@getitdone-gmbh/kette-tokens` are private packages for licence holders. Upgrade to the [Enterprise edition](https://kette.itdone.de/en/enterprise), then install via the Kette CLI:
 
 1. `curl -fsSL https://kette.itdone.de/install | sh` (Windows: `irm https://kette.itdone.de/install.ps1 | iex`)
-2. `kette login <licence key>` unlocks the Enterprise edition and sets up npm access for the `@getitdone-gmbh` scope (registry `https://npm.kette.itdone.de/`). npm package access is switched on with the CLI update due by 30 November 2026; until then `kette login` says so and leaves your npmrc unchanged, and `kette update` adds the access afterwards.
+2. `kette login <licence key>` unlocks the Enterprise edition and sets up npm access for the `@getitdone-gmbh` scope (registry `https://npm.kette.itdone.de/`).
 3. `npm install @getitdone-gmbh/kette-design-enterprise` (tokens: `@getitdone-gmbh/kette-tokens`)
 
 The CLI itself is free. Without a licence key it sets up the Community rule set and the review agent of Die Kette in your project, see [kette-cli](https://github.com/getitdone-gmbh/kette-cli).
