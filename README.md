@@ -2,16 +2,28 @@
 
 [![npm](https://img.shields.io/npm/v/@getitdone-gmbh/kette-design-community?label=npm&color=cb3837)](https://www.npmjs.com/package/@getitdone-gmbh/kette-design-community) [![license](https://img.shields.io/npm/l/@getitdone-gmbh/kette-design-community)](LICENSE)
 
-Free React components from the Get IT Done design system: the primitives plus the general components we build business software with. They are built on shadcn/ui and Radix UI, styled with Tailwind CSS, written in TypeScript, and they include a light and a dark theme.
+Version 0.4.0 on npm. Free React components from the Get IT Done design system: the primitives plus the general components we build business software with. They are built on shadcn/ui and Radix UI, styled with Tailwind CSS, written in TypeScript, and they include a light and a dark theme.
 
 We build business software with many screens, tables, forms and states. These components are the base layer of that system. We are sharing them in case they are useful to others working on similar products.
 
 ## Editions
 
-| Edition | What you get | Licence | Where |
-| --- | --- | --- | --- |
-| **Community** | This package: 127 components, the zero theme and a Tailwind preset | MIT, free | [npm](https://www.npmjs.com/package/@getitdone-gmbh/kette-design-community) |
-| **Enterprise (Die Kette)** | The complete chain: all components, design tokens, domain components, page templates, Figma files, agents and the rule set | Commercial, with every Die Kette licence | [kette.itdone.de](https://kette.itdone.de) |
+| | Community | Enterprise (Die Kette) |
+| --- | --- | --- |
+| React components | `@getitdone-gmbh/kette-design-community`: 127 components, the zero theme and a Tailwind preset | `@getitdone-gmbh/kette-design-enterprise`: the full library this package is copied from |
+| Design tokens | Theme CSS variables and Tailwind preset inside this package | `@getitdone-gmbh/kette-tokens`: the token source with all themes and the Figma variables |
+| Domain components and page templates | | Included |
+| Figma files, agents and rule set | | Included |
+| Licence | MIT, free | Commercial, with a Die Kette licence |
+| Get it | [npm](https://www.npmjs.com/package/@getitdone-gmbh/kette-design-community), shadcn registry | [kette.itdone.de](https://kette.itdone.de) |
+
+Install via Die Kette (Enterprise Edition, [kette.itdone.de](https://kette.itdone.de)):
+
+1. `curl -fsSL https://kette.itdone.de/install | sh` (Windows: `irm https://kette.itdone.de/install.ps1 | iex`)
+2. `kette login <licence key>` unlocks the Enterprise Edition and sets up npm access for the `@getitdone-gmbh` scope (registry `https://npm.kette.itdone.de/`)
+3. `npm install @getitdone-gmbh/kette-design-enterprise` (tokens: `@getitdone-gmbh/kette-tokens`)
+
+The CLI itself is free. Without a licence key it sets up the Community rule set and the review agent of Die Kette in your project, see [kette-cli](https://github.com/getitdone-gmbh/kette-cli).
 
 ## What is included
 
@@ -85,13 +97,13 @@ Texts are English by default. Wrap your app in `<DesignSystemProvider locale="de
 
 ### With the shadcn CLI
 
-Every component is also available from our registry, so you can copy the source into your project and change it:
+Every component is also available from our registry at `https://zero-design.itdone.de/r` (index: [registry.json](https://zero-design.itdone.de/r/registry.json)), so you can copy the source into your project and change it:
 
 ```bash
 npx shadcn@latest add https://zero-design.itdone.de/r/theme.json https://zero-design.itdone.de/r/button.json
 ```
 
-The `theme` item adds `styles/getitdone/theme.css`, `styles/getitdone/animation.css`, `styles/getitdone/document-surface.css` and the Tailwind preset in `tailwind/getitdone/` (inside `src/` when your project has one). Import both CSS files in your global CSS and add the preset to `presets` in your Tailwind config, as shown above. Components pull in their helpers automatically.
+Each item is `https://zero-design.itdone.de/r/<name>.json`, named after the component file (for example `data-grid`, `date-picker`, `sidebar`). The `theme` item adds `styles/getitdone/theme.css`, `styles/getitdone/animation.css`, `styles/getitdone/document-surface.css` and the Tailwind preset in `tailwind/getitdone/` (inside `src/` when your project has one). Import both CSS files in your global CSS and add the preset to `presets` in your Tailwind config, as shown above. Components pull in their helpers automatically.
 
 ## The rest of the system
 
@@ -104,20 +116,22 @@ This package is one layer. The full design system goes further, from single comp
 | Complex application components | Domain components built on the primitives: task boards, time grids, goal and capacity cards, pipelines, file views | [zero.itdone.de](https://zero.itdone.de) |
 | Page templates | Complete pages: app frame, dashboard, data grid, guided processes, settings, calendar, mobile, with a build guide per page | [zero-pages.itdone.de](https://zero-pages.itdone.de) |
 
-The complete chain (tokens, primitives, domain components, page templates, Figma files and the rule set) is the Enterprise edition, available through [Die Kette](https://kette.itdone.de).
+The complete chain (tokens, primitives, domain components, page templates, Figma files and the rule set) is the Enterprise edition, available through [Die Kette](https://kette.itdone.de), see [Editions](#editions).
 
 ## Storybook
 
-The stories sit next to the components (`src/components/ui/**/*.stories.tsx`). They are not part of the npm package or the shadcn registry. Start Storybook locally, with light and dark mode and German or English labels in the toolbar:
+The stories sit next to the components (`src/components/ui/**/*.stories.tsx`). They are not part of the npm package or the shadcn registry, and there is no hosted Storybook for this package. Start Storybook locally, with light and dark mode and German or English labels in the toolbar:
 
 ```bash
 npm install
 npm run storybook
 ```
 
-`npm run build-storybook` writes a static build to `storybook-static/`. The complete documentation of the full library is at [components.itdone.de](https://components.itdone.de).
+`npm run build-storybook` writes a static build to `storybook-static/`. The hosted Storybook of the full Enterprise library, which these stories are synced from, is at [components.itdone.de](https://components.itdone.de).
 
 ## Development
+
+Maintainers: how this package is synced from the Enterprise library, released and published is in [docs/MAINTAINING.md](docs/MAINTAINING.md).
 
 ```bash
 npm install
