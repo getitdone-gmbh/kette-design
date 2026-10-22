@@ -21,7 +21,7 @@ export const OpenerCapture = ({ onCapture }: { onCapture: RememberOpener }) => {
 };
 
 // An opener that was re-rendered with a new key while the overlay was open is a new element: the remembered one is detached. The new element is found again by id, else by tag, accessible name and text.
-const findReplacement = (old: HTMLElement | null): HTMLElement | null => {
+export const findReplacement = (old: HTMLElement | null): HTMLElement | null => {
   if (!old) return null;
   if (old.isConnected) return old;
   if (old.id) {

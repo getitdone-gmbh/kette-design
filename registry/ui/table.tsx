@@ -870,7 +870,7 @@ export {
 //
 // 4. TABLE-A11Y-01 (blocker): `colors/table/background/default`, `colors/table/background/selected`,
 //    and `colors/table/foreground/default` are published with a `:root`-only (light) value in
-//    `figma-design-tokens/dist/theme.css` — neither the `.dark` block nor
+//    `kette-tokens/dist/theme.css` — neither the `.dark` block nor
 //    `@media (prefers-color-scheme: dark)` overrides any of the three, so in dark mode Table
 //    renders a light/near-black surface island against otherwise-dark chrome. This is a token
 //    VALUE gap in the design tokens (`styles/theme.css`), not something table.tsx can fix by

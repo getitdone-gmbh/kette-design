@@ -18,7 +18,7 @@ import { useLabels, usePreset } from './labels-context';
 // + `default_theme_dark.json`) already defines dedicated `general.{info,success,warning,error}
 // .container` / `.on-container` pairs, which would be the more semantically exact tokens for this
 // role — but they were never carried into the built CSS vars / Tailwind theme (`dist/theme.css`
-// has no `--colors-general-*-container` entries at all). Until `figma-design-tokens` regenerates
+// has no `--colors-general-*-container` entries at all). Until `kette-tokens` regenerates
 // its CSS-var build to include them, this file intentionally falls back to the opacity-modified
 // `-default` token above rather than hardcoding a value or fabricating a token name.
 //

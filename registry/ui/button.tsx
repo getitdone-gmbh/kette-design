@@ -104,7 +104,7 @@ const buttonVariants = cva('', {
         'data-[state=open]:bg-muted',
         'active:bg-muted-strong',
       ],
-      link: ['border-transparent', 'underline-offset-4', 'hover:font-semibold', '!p-0'],
+      link: ['border-transparent', 'underline-offset-4', 'hover:font-semibold'],
     },
     size: {
       // Control heights, paddings and icon sizes bind to the `--size-control-*` and `--size-icon-*` tokens, so one markup is comfortable in every theme and compact in `zero`.
@@ -120,14 +120,15 @@ const buttonVariants = cva('', {
       'clamp-sm': ['text-clamp-small', 'leading-clamp-small', 'h-8', 'px-6'],
       link: ['text-base', 'leading-base', 'px-8'],
       'link-sm': ['text-sm', 'leading-sm', 'px-6'],
-      // Icon-only squares. Rendered sizes by preset:
-      // icon: control-md (40 default, 32 zero), icon-sm: 36 default and 28 zero (zero binds it to control-sm),
-      // icon-lg 44, icon-xl 48, icon-2xl 56 in both. Label type of every icon size is the matching `typography-button-*` role.
+      // Icon-only squares share the height of the text size with the same name, so a row that mixes text and icon buttons lines up.
+      // Heights bind to the control tokens: icon-xs 28 (24 in zero), icon-sm 32 (28), icon 40 (32), icon-lg 42 (36), icon-xl 48 (40), icon-2xl 60 in every preset.
+      // icon-xs is the dense list size (row actions, tags, comments): the hit area is the token (24 at least, WCAG 2.5.8) and the glyph is the `icon-xs` token (14).
+      'icon-xs': ['typography-button-sm', 'h-control-xs', 'w-control-xs', '[&>svg]:h-icon-xs', '[&>svg]:w-icon-xs'],
+      'icon-sm': ['typography-button-sm', 'h-control-sm', 'w-control-sm'],
       icon: ['typography-button-md', 'h-control-md', 'w-control-md'],
-      'icon-sm': ['typography-button-sm', 'h-9', 'w-9'],
-      'icon-lg': ['typography-button-lg', 'h-11', 'w-11'],
-      'icon-xl': ['typography-button-xl', 'h-12', 'w-12'],
-      'icon-2xl': ['typography-button-2xl', 'h-14', 'w-14'],
+      'icon-lg': ['typography-button-lg', 'h-control-lg', 'w-control-lg'],
+      'icon-xl': ['typography-button-xl', 'h-control-xl', 'w-control-xl'],
+      'icon-2xl': ['typography-button-2xl', 'h-15', 'w-15'],
       // Density-aware sizes: height comes from the `--size-control-*` token vars, so the same markup is
       // comfortable (32/40/42) in every theme and compact (28/32/36) in themes that ship compact density
       // (e.g. `zero`). Opt in per control (or per table) instead of changing the default sizes.
@@ -149,7 +150,6 @@ const buttonVariants = cva('', {
     { preset: 'zero', size: ['sm', 'control-sm'], className: ['text-[length:var(--typo-button-sm-size)]', 'font-[number:var(--typo-button-sm-weight)]', 'leading-[var(--typo-button-sm-lh)]', 'tracking-[var(--typo-button-sm-ls)]'] },
     { preset: 'zero', size: 'control-md', className: ['text-ui', 'font-medium', 'leading-normal', 'gap-gap-control'] },
     { preset: 'zero', size: ['default', 'md', 'lg', 'xl', 'control-lg'], className: 'gap-gap-control' },
-    { preset: 'zero', size: 'icon-sm', className: ['h-control-sm', 'w-control-sm'] },
     { preset: 'zero', variant: ['default', 'primary', 'destructive'], className: 'shadow-elevation-surface' },
     // Outline in zero: hover tints the surface and the border keeps the default role (also in dark).
     {
@@ -179,7 +179,7 @@ const FILLED_COUNT: Record<string, string> = {
 // Round count pill outside zero: 20px high, at least 20px wide (min-width via theme(), because consumer Tailwind 3.3 has no min-w-5 utility), centred, so one digit is a circle and longer text grows into a pill.
 const COUNT_PILL = ['inline-flex', 'h-5', '[min-width:theme(spacing.5)]', 'items-center', 'justify-center', 'rounded-full', 'px-1', 'tabular-nums', 'text-xs'];
 
-const iconSlotClass = (size: ButtonProps['size']) => (size === '2xl' ? ['h-6', 'w-6'] : ['h-icon-md', 'w-icon-md']);
+const iconSlotClass = (size: ButtonProps['size']) => (size === '2xl' ? ['h-6', 'w-6'] : size === 'icon-xs' ? ['h-icon-xs', 'w-icon-xs'] : ['h-icon-md', 'w-icon-md']);
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -193,6 +193,8 @@ export interface ButtonProps
    */
   dotLeading?: boolean;
   underline?: boolean;
+  // Link variant only: keeps the horizontal padding of the size, so a link button in a toolbar or button group has the same hit area as its neighbours. Without it the link has no padding and reads as inline text.
+  padded?: boolean;
   // Busy state: shows a spinner in the icon slot, keeps the label, blocks activation and sets `aria-busy`.
   loading?: boolean;
   // Accessible busy text read by screen readers while `loading`. Wins over the provider label.
@@ -208,7 +210,7 @@ export interface ButtonProps
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, icon, dotLeading = false, underline = false, loading = false, loadingLabel, count, countPlacement = 'end', status, statusLabel, children, disabled, onClick, 'aria-label': ariaLabel, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, icon, dotLeading = false, underline = false, padded = false, loading = false, loadingLabel, count, countPlacement = 'end', status, statusLabel, children, disabled, onClick, 'aria-label': ariaLabel, ...props }, ref) => {
     const l = useLabels({ loading: loadingLabel });
     const zero = usePreset() === 'zero';
     // Without an explicit variant the zero preset renders the secondary (outline) button, filled brand stays opt-in.
@@ -268,7 +270,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           { 'hover:underline': underline },
           { 'hover:decoration-2': underline },
           { underline: underline && resolvedVariant === 'link' },
-          buttonVariants({ variant: resolvedVariant, size, preset: zero ? 'zero' : 'default', className }),
+          buttonVariants({ variant: resolvedVariant, size, preset: zero ? 'zero' : 'default', className: [resolvedVariant === 'link' && !padded && 'p-0', className] }),
         )}
         ref={ref}
         data-slot="button"

@@ -65,11 +65,12 @@ describe('Button component', () => {
   // --- Icon-only size scale (Figma "Icon=Only" across sm/md/lg/xl/2xl) ---
   describe('icon-only size scale', () => {
     it.each([
-      ['icon-sm', 'h-9', 'w-9'],
+      ['icon-xs', 'h-control-xs', 'w-control-xs'],
+      ['icon-sm', 'h-control-sm', 'w-control-sm'],
       ['icon', 'h-control-md', 'w-control-md'],
-      ['icon-lg', 'h-11', 'w-11'],
-      ['icon-xl', 'h-12', 'w-12'],
-      ['icon-2xl', 'h-14', 'w-14'],
+      ['icon-lg', 'h-control-lg', 'w-control-lg'],
+      ['icon-xl', 'h-control-xl', 'w-control-xl'],
+      ['icon-2xl', 'h-15', 'w-15'],
     ] as const)('renders %s at the correct square dimensions', (size, h, w) => {
       render(
         <Button size={size} aria-label="Go back">

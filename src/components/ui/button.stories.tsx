@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ArrowLeftIcon } from 'lucide-react';
+import { ArrowLeftIcon, MoreHorizontalIcon, XIcon } from 'lucide-react';
 import { Button, ButtonProps } from './button';
 
 const meta = {
@@ -186,6 +186,18 @@ export const IconOnlyExtraExtraLarge: Story = {
   } as ButtonProps,
 };
 
+// Dense list rows (tasks, tags, comments, chat): 28px in the default scale, 24px in zero, glyph 14px. Both pass the 24px target size minimum (WCAG 2.5.8).
+export const IconOnlyDense: Story = {
+  args: {
+    ...defaultArgs,
+    variant: 'ghost',
+    size: 'icon-xs',
+    icon: <XIcon />,
+    children: null,
+    'aria-label': 'Remove',
+  } as ButtonProps,
+};
+
 export const DotLeading: Story = {
   args: {
     ...defaultArgs,
@@ -257,7 +269,7 @@ export const States: Story = {
   ),
 };
 
-/** `sm` is 13px/500 at 32px (padding and gap from the button tokens). `control-sm` is an alias of `sm`, `control-md` and `control-lg` follow the theme density vars (zero: 28/32/36). */
+/** `sm` is 13px/500 at 32px, 28 in zero (padding and gap from the button tokens). `control-sm` is an alias of `sm`, `control-md` and `control-lg` follow the theme density vars (zero: 28/32/36). */
 export const DenseSizes: StoryObj<typeof Button> = {
   render: () => (
     <div className="flex flex-wrap items-center gap-2">
@@ -305,6 +317,67 @@ export const CountVariants: Story = {
           {variant}
         </Button>
       ))}
+    </div>
+  ),
+};
+
+const SIZE_ROWS = [
+  { label: 'xs', text: null, icon: 'icon-xs' },
+  { label: 'sm', text: 'sm', icon: 'icon-sm' },
+  { label: 'default', text: 'default', icon: 'icon' },
+  { label: 'lg', text: 'lg', icon: 'icon-lg' },
+  { label: 'xl', text: 'xl', icon: 'icon-xl' },
+  { label: '2xl', text: '2xl', icon: 'icon-2xl' },
+] as const;
+
+/** Text and icon-only button of every size side by side. Each icon size has the height of its text size, so mixed rows line up. Use the theme switcher to compare the default scale with zero. */
+export const SizeScale: StoryObj<typeof Button> = {
+  render: () => (
+    <div className="grid grid-cols-[80px_repeat(4,max-content)] items-center gap-x-4 gap-y-3 p-6 text-sm text-foreground">
+      <span />
+      <span className="text-muted-foreground">Text</span>
+      <span className="text-muted-foreground">Icon only</span>
+      <span className="text-muted-foreground">Mixed row</span>
+      <span />
+      {SIZE_ROWS.map((row) => (
+        <div key={row.label} className="contents">
+          <span className="text-muted-foreground">{row.label}</span>
+          {row.text ? <Button variant="outline" size={row.text}>Button</Button> : <span className="text-muted-foreground">none</span>}
+          <Button variant="outline" size={row.icon} aria-label={`Icon ${row.label}`}>
+            <ArrowLeftIcon />
+          </Button>
+          <div className="flex items-center gap-2">
+            {row.text ? <Button variant="outline" size={row.text}>Edit</Button> : null}
+            <Button variant="ghost" size={row.icon} aria-label={`More ${row.label}`}>
+              <MoreHorizontalIcon />
+            </Button>
+          </div>
+          <span />
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+/** Link variant: unpadded by default so it reads as inline text. `padded` keeps the horizontal padding of the size, for a link button next to other buttons in a toolbar or group. */
+export const LinkPadded: StoryObj<typeof Button> = {
+  render: () => (
+    <div className="flex flex-col gap-4 p-6 text-sm text-foreground">
+      <p>
+        Inline: read the <Button variant="link" size="sm">docs</Button> before you start.
+      </p>
+      <div className="flex items-center gap-2">
+        <Button variant="outline" size="sm">Save</Button>
+        <Button variant="link" size="sm" padded>Cancel</Button>
+        <Button variant="link" size="sm" padded>Reset</Button>
+      </div>
+      <div role="toolbar" aria-label="Row actions" className="flex items-center gap-1">
+        <Button variant="ghost" size="sm">Edit</Button>
+        <Button variant="link" size="sm" padded>Details</Button>
+        <Button variant="ghost" size="icon-sm" aria-label="More">
+          <MoreHorizontalIcon />
+        </Button>
+      </div>
     </div>
   ),
 };

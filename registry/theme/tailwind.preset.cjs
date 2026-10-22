@@ -1739,6 +1739,8 @@ module.exports = {
                         raised: '1',
                         sticky: '10',
                         chrome: '30',
+                        'chrome-2': '31',
+                        'chrome-3': '32',
                         banner: '40',
                         dropdown: '65',
                         sheet: '50',

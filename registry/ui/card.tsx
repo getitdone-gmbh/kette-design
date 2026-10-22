@@ -20,7 +20,7 @@ export const InsideCardContext = React.createContext(false);
 // inventing new ones, so Card's state language stays one system with its siblings.
 //
 // KNOWN TOKEN GAP (CARD-TOK-01 / CARD-A11Y-02): `--colors-card-background-default`, `--colors-card-
-// foreground-default`, and `--colors-card-foreground-muted` (figma-design-tokens `dist/theme.css`)
+// foreground-default`, and `--colors-card-foreground-muted` (kette-tokens `dist/theme.css`)
 // are declared once at `:root` and never redefined under `.dark` — Card renders the identical
 // light-mode surface/text colors in dark mode. This is the same root cause already flagged on
 // `general-border-default` (see ALERT-TOK-03 in alert.tsx, the token-gap note in chip.tsx): the
@@ -43,7 +43,7 @@ const cardVariants = cva(
     // Card can still be shown as "unavailable".
     //
     // CARD-A11Y-03 fix: `opacity-disabled` is not a defined Tailwind utility anywhere in this
-    // design system (no `disabled` key in the opacity scale of figma-design-tokens' preset, built
+    // design system (no `disabled` key in the opacity scale of kette-tokens' preset, built
     // theme, or this repo's tailwind.config.cjs — confirmed by direct inspection), so it silently
     // compiled to no CSS rule and the Disabled story rendered pixel-identical to Default. Using the
     // real `opacity-50` utility here (same interim fallback already used by Tabs/NavigationMenu in

@@ -2922,6 +2922,8 @@ module.exports = {
                 raised: 'var(--z-raised)',
                 sticky: 'var(--z-sticky)',
                 chrome: 'var(--z-chrome)',
+                'chrome-2': 'var(--z-chrome-2)',
+                'chrome-3': 'var(--z-chrome-3)',
                 banner: 'var(--z-banner)',
                 dropdown: 'var(--z-dropdown)',
                 sheet: 'var(--z-sheet)',
