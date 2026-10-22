@@ -7,6 +7,7 @@ import { AlertCircle, X } from 'lucide-react';
 import * as React from 'react';
 
 import { EscapeGuardContext, guardNestedEscape, useGuardedOpen } from './../../lib/nested-layer';
+import { INSET_SCOPE_ATTRIBUTE, scrollInsetClasses, useStickyInset } from './../../lib/sticky-inset';
 import { cn } from './../../lib/utils';
 import type { HeadingTag } from './heading-tag';
 import { AutosaveStatus } from './autosave-status';
@@ -201,6 +202,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
           }}
           aria-busy={state === 'loading' || undefined}
           data-sheet-mode={mode}
+          {...{ [INSET_SCOPE_ATTRIBUTE]: '' }}
           data-sheet-state={state}
           data-sheet-inset={inset !== 'none' ? inset : undefined}
           data-sheet-scoped={scoped || undefined}
@@ -212,6 +214,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
           className={cn(
             card ? sheetBase : sheetVariants({ side, sized }),
             sized && widthSize && sheetSizeWidth[widthSize],
+            scrollInsetClasses,
             !padded && 'flex flex-col gap-0 p-0',
             mode === 'push' && side === 'right' && 'rounded-l-surface',
             mode === 'push' && side === 'left' && 'rounded-r-surface',
@@ -259,11 +262,13 @@ interface SheetHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'zero';
 }
 
-const SheetHeader = ({ className, variant: variantProp, ...props }: SheetHeaderProps) => {
+const SheetHeader = React.forwardRef<HTMLDivElement, SheetHeaderProps>(({ className, variant: variantProp, ...props }, ref) => {
   const zero = usePreset() === 'zero';
   const variant = variantProp ?? (zero ? 'zero' : 'default');
+  const stickyRef = useStickyInset<HTMLDivElement>('top', ref);
   return (
     <div
+      ref={stickyRef}
       className={cn(
         'flex flex-col text-left',
         variant === 'zero' ? 'gap-2 border-0 border-b border-solid border-hairline px-5 py-4' : 'space-y-2',
@@ -272,7 +277,7 @@ const SheetHeader = ({ className, variant: variantProp, ...props }: SheetHeaderP
       {...props}
     />
   );
-};
+});
 SheetHeader.displayName = 'SheetHeader';
 
 interface SheetFooterProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -284,13 +289,15 @@ interface SheetFooterProps extends React.HTMLAttributes<HTMLDivElement> {
   leftAction?: React.ReactNode;
 }
 
-const SheetFooter = ({ className, variant: variantProp, status, leftAction, children, ...props }: SheetFooterProps) => {
+const SheetFooter = React.forwardRef<HTMLDivElement, SheetFooterProps>(({ className, variant: variantProp, status, leftAction, children, ...props }, ref) => {
   const state = React.useContext(SheetStateContext);
+  const stickyRef = useStickyInset<HTMLDivElement>('bottom', ref);
   const zero = usePreset() === 'zero';
   const variant = variantProp ?? (zero ? 'zero' : 'default');
   if (variant === 'zero') {
     return (
       <div
+        ref={stickyRef}
         className={cn(
           'flex min-h-sheet-footer items-center gap-2 border-0 border-t border-solid border-hairline px-5 py-3',
           className,
@@ -303,11 +310,11 @@ const SheetFooter = ({ className, variant: variantProp, status, leftAction, chil
     );
   }
   return (
-    <div className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)} {...props}>
+    <div ref={stickyRef} className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)} {...props}>
       {children}
     </div>
   );
-};
+});
 SheetFooter.displayName = 'SheetFooter';
 
 interface SheetTitleProps extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title> {
@@ -403,7 +410,7 @@ const SheetBody = React.forwardRef<HTMLDivElement, SheetBodyProps>(
         ref={ref}
         data-state={state}
         aria-busy={state === 'loading' || undefined}
-        className={cn('flex min-h-0 flex-1 flex-col overflow-y-auto', className)}
+        className={cn('flex min-h-0 flex-1 flex-col overflow-y-auto', scrollInsetClasses, className)}
         {...props}
       >
         {state === 'loading' ? (

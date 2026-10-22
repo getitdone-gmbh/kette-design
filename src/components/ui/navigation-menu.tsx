@@ -4,7 +4,8 @@ import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu';
 import { cva } from 'class-variance-authority';
 import { ChevronDown } from 'lucide-react';
 
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, MutableRefObject, useCallback, useEffect, useRef } from 'react';
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, MutableRefObject, useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { menuItemFocusVisible } from '../../lib/recipes';
 import { cn } from '../../lib/utils';
 
@@ -85,53 +86,82 @@ interface NavigationMenuViewportProps extends ComponentPropsWithoutRef<typeof Na
 }
 
 const DEFAULT_COLLISION_PADDING = 16;
+// Gap in px between the root and the panel (the mt-[6px] of the viewport). The indicator arrow fills it.
+const PANEL_OFFSET = 6;
 
+const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
+
+// The panel renders in a portal on the dropdown layer, so the page chrome stacking context (header, topbar) can no longer clip or under-cover it (a cookie banner, z-banner, stays below). The portal anchor is `fixed` and placed from the root rect: below the root, shifted sideways to stay inside the viewport, and capped to the height that is left below the root. Radix keeps the content in the viewport element, so its focus and keyboard handling is unchanged.
 const NavigationMenuViewport = forwardRef<ElementRef<typeof NavigationMenuPrimitive.Viewport>, NavigationMenuViewportProps>(
   ({ className, collisionPadding = DEFAULT_COLLISION_PADDING, ...props }, ref) => {
-    const wrapperRef = useRef<HTMLDivElement | null>(null);
-    const viewportRef = useRef<HTMLDivElement | null>(null);
-    // Radix anchors the panel at the left edge of the root. Shift it left when it would run past the right viewport edge, and right when it would run past the left edge.
+    // State instead of refs: the panel only exists while a menu is open, so the effects must re-run when it mounts.
+    const [origin, setOrigin] = useState<HTMLSpanElement | null>(null);
+    const [anchor, setAnchor] = useState<HTMLDivElement | null>(null);
+    const [viewport, setViewport] = useState<HTMLDivElement | null>(null);
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
+    const root = origin?.parentElement ?? null;
+    // Stable callback ref: an inline function would detach and attach on every render and loop through the state setter.
+    const setViewportRef = useCallback(
+      (node: HTMLDivElement | null) => {
+        setViewport(node);
+        if (typeof ref === 'function') ref(node);
+        else if (ref) (ref as MutableRefObject<HTMLDivElement | null>).current = node;
+      },
+      [ref],
+    );
+
     const place = useCallback(() => {
-      const wrapper = wrapperRef.current;
-      const viewport = viewportRef.current;
-      const root = wrapper?.parentElement;
-      if (!wrapper || !viewport || !root) return;
-      const width = viewport.offsetWidth;
-      if (width === 0) return;
-      const rootLeft = root.getBoundingClientRect().left;
-      const available = document.documentElement.clientWidth;
+      if (!anchor || !root) return;
+      const rootRect = root.getBoundingClientRect();
+      const availableWidth = document.documentElement.clientWidth;
+      const availableHeight = document.documentElement.clientHeight;
+      const width = viewport?.offsetWidth ?? 0;
       let shift = 0;
-      const overflow = rootLeft + width - (available - collisionPadding);
-      if (overflow > 0) shift = -overflow;
-      if (rootLeft + shift < collisionPadding) shift = collisionPadding - rootLeft;
-      wrapper.style.left = `${shift}px`;
-    }, [collisionPadding]);
-    useEffect(() => {
-      const viewport = viewportRef.current;
+      if (width > 0) {
+        // Radix anchors the panel at the left edge of the root. Shift it left when it would run past the right viewport edge, and right when it would run past the left edge.
+        const overflow = rootRect.left + width - (availableWidth - collisionPadding);
+        if (overflow > 0) shift = -overflow;
+        if (rootRect.left + shift < collisionPadding) shift = collisionPadding - rootRect.left;
+      }
+      anchor.style.left = `${rootRect.left + shift}px`;
+      anchor.style.top = `${rootRect.bottom}px`;
+      anchor.style.setProperty('--navigation-menu-available-height', `${Math.max(availableHeight - rootRect.bottom - PANEL_OFFSET - collisionPadding, 0)}px`);
+    }, [anchor, root, viewport, collisionPadding]);
+
+    // Runs on first open (the viewport element appears), on content size changes (observer), on window resize and on scroll of any ancestor.
+    useIsomorphicLayoutEffect(() => {
       place();
+      if (!anchor || !root) return undefined;
       window.addEventListener('resize', place);
+      window.addEventListener('scroll', place, true);
       const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(place);
+      observer?.observe(root);
       if (viewport) observer?.observe(viewport);
       return () => {
         window.removeEventListener('resize', place);
+        window.removeEventListener('scroll', place, true);
         observer?.disconnect();
       };
-    }, [place]);
-    return (
-      <div ref={wrapperRef} data-slot="navigation-menu-viewport-anchor" className={cn('absolute left-0 top-full flex justify-center')}>
+    }, [place, anchor, root, viewport]);
+
+    const panel = (
+      <div ref={setAnchor} data-slot="navigation-menu-viewport-anchor" className={cn('fixed z-dropdown flex justify-center')}>
         <NavigationMenuPrimitive.Viewport
           className={cn(
-            'origin-top-center relative mt-[6px] h-[var(--radix-navigation-menu-viewport-height)] w-full max-w-[calc(100vw-theme(spacing.8))] overflow-hidden rounded-popover border border-solid border-hairline bg-popover text-popover-foreground shadow-popover duration-150 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-[0.98] md:w-[var(--radix-navigation-menu-viewport-width)]',
+            'origin-top-center relative mt-[6px] h-[var(--radix-navigation-menu-viewport-height)] max-h-[var(--navigation-menu-available-height)] w-full max-w-[calc(100vw-theme(spacing.8))] overflow-y-auto overflow-x-hidden overscroll-contain rounded-popover border border-solid border-hairline bg-popover text-popover-foreground shadow-popover duration-150 [scroll-padding-block:theme(spacing.2)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-[0.98] md:w-[var(--radix-navigation-menu-viewport-width)]',
             className,
           )}
-          ref={(node) => {
-            viewportRef.current = node;
-            if (typeof ref === 'function') ref(node);
-            else if (ref) (ref as MutableRefObject<HTMLDivElement | null>).current = node;
-          }}
+          ref={setViewportRef}
           {...props}
         />
       </div>
+    );
+    return (
+      <>
+        <span ref={setOrigin} hidden aria-hidden="true" data-slot="navigation-menu-viewport-origin" />
+        {mounted && createPortal(panel, document.body)}
+      </>
     );
   },
 );

@@ -207,3 +207,34 @@ export const NestedLayers: Story = {
     </Dialog>
   ),
 };
+
+const stickyFields = Array.from({ length: 20 }, (_, index) => `Field ${index + 1}`);
+
+// A dialog that scrolls as a whole with a sticky header and footer. Shift+Tab from the last field up to the first keeps each field clear of the bars (WCAG 2.4.11).
+export const StickyHeaderAndFooter: Story = {
+  parameters: { layout: 'fullscreen' },
+  render: () => (
+    <Dialog defaultOpen>
+      <DialogTrigger asChild>
+        <Button>Open dialog</Button>
+      </DialogTrigger>
+      <DialogContent className="max-h-[80vh] p-0">
+        <DialogHeader className="sticky top-0 z-raised border-0 border-b border-solid border-hairline bg-background p-6">
+          <DialogTitle>Edit record</DialogTitle>
+          <DialogDescription>The header stays in view while the form scrolls.</DialogDescription>
+        </DialogHeader>
+        <form className="flex flex-col gap-4 px-6">
+          {stickyFields.map((label) => (
+            <label key={label} className="flex flex-col gap-1 text-sm">
+              {label}
+              <input className="h-10 rounded-control border border-solid border-border bg-background px-3" />
+            </label>
+          ))}
+        </form>
+        <DialogFooter className="sticky bottom-0 z-raised border-0 border-t border-solid border-hairline bg-background p-6">
+          <Button type="button">Save</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  ),
+};

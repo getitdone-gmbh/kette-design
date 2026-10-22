@@ -2,6 +2,29 @@
 
 This package is a copy of the general components of the Get IT Done design system. Each release names the library and token versions it was synced from. Only changes to components that are part of this package are listed.
 
+## 0.3.7
+
+Synced from component-library-react 0.26.23 and figma-design-tokens 5.16.0 (was 0.26.22 and 5.15.0).
+
+### Components
+
+- **`NavigationMenu` placement**: the open panel is placed on the first open, when its content changes, on window resize and on page scroll. Before, it moved only on resize.
+- **`NavigationMenu` layer**: the open panel renders in a portal on `body` on the dropdown layer (`z-dropdown`, 65), so a header on the chrome layer no longer clips it and a cookie banner (`z-banner`, 40) can no longer cover its last rows. The viewport anchor is now `position: fixed` with viewport coordinates for `left` and `top` (before: an offset from the root). A header that wrapped the panel in its own `z-index` or a resize workaround can drop it.
+- **`NavigationMenu` height**: the panel is capped to the viewport height below the trigger minus `collisionPadding` (`--navigation-menu-available-height`) and scrolls inside, reachable by keyboard.
+- **Page chrome layer**: the fixed `Sidebar` uses `z-chrome` (30, was a raw 30). Put `sticky top-0 z-chrome` on your own app header or `TopBar`.
+- **Sticky bars in `Sheet`, `Dialog` and `Drawer`**: a sticky or fixed `SheetHeader`, `SheetFooter`, `DialogHeader`, `DialogFooter`, `DrawerHeader` or `DrawerFooter` reports its height as `--sticky-inset-top` or `--sticky-inset-bottom` on the content. The content panel, `SheetBody` and `DialogBody` use it as scroll padding, so a focused element is never hidden under the bar (WCAG 2.4.11). A bar in normal flow adds no padding. The six parts now forward a `ref`. New helper `src/lib/sticky-inset.ts`, in the shadcn registry as `sticky-inset` (pulled in by `sheet`, `dialog` and `drawer`).
+- **Focus return**: an opener that is re-created with a new key while a controlled overlay is open gets focus back on close. It is found again by id, else by tag, accessible name and text.
+- Tests: `navigation-menu.test.tsx`, `src/lib/overlay-behaviour.test.tsx`, `src/lib/css-selectors.test.ts`, `src/lib/z-layers.test.ts` (chrome layer), `src/lib/icon-stroke.test.tsx`.
+
+### Theme and Tailwind preset
+
+- New token from 5.16.0: `--z-chrome` (30, `z-chrome`).
+- **Fix: malformed selector in `dist/styles.css` and the preset.** The 2.25 rule for 12px glyphs is now three rules with one selector each, and the size classes are matched as `[class~='h-icon-2xs']` and `[class~='size-icon-2xs']`. Before, Tailwind treated the class selector in the base rule as a utility and re-emitted it under `[&>svg]:h-icon-2xs`, which produced the dead selector `...h-icon-2xs>svgsvg.lucide`. The new test `src/lib/css-selectors.test.ts` builds the package CSS and parses every selector. `postcss-selector-parser` is a new dev dependency for that test.
+
+### Stories
+
+- New: Dialog `StickyHeaderAndFooter`, Navigation Menu `LongPanelAboveBanner`, Sheet `StickyHeaderReverseTab`. 128 story files with 1027 stories.
+
 ## 0.3.6
 
 Synced from component-library-react 0.26.22 and figma-design-tokens 5.15.0 (was 0.26.18 and 5.13.0).

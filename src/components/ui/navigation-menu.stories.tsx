@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { cn } from '../../lib/utils';
+import { CookieConsent } from './cookie-consent';
 import {
   MenuListItem,
   NavigationMenu,
@@ -177,6 +178,38 @@ export const RightAlignedNearEdge: Story = {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
+    </div>
+  ),
+};
+
+const tallItems = Array.from({ length: 14 }, (_, index) => ({ title: `Feature ${index + 1}`, href: `/feature-${index + 1}`, description: 'Short description of the feature.' }));
+
+// A header on the chrome layer with a long panel and a fixed cookie banner: the open panel sits on the dropdown layer above the banner, is capped to the space below the header and scrolls. Check it at 390x640, 1024x700 and 1440x900.
+export const LongPanelAboveBanner: Story = {
+  parameters: { layout: 'fullscreen' },
+  render: () => (
+    <div className="min-h-screen">
+      <header className="sticky top-0 z-chrome flex h-16 w-full items-center justify-end border-0 border-b border-solid border-hairline bg-background px-4">
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem value="features">
+              <NavigationMenuTrigger>Features</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[calc(100vw-theme(spacing.8))] max-w-[340px] gap-1 p-2">
+                  {tallItems.map((item) => (
+                    <MenuListItem key={item.title} title={item.title} href={item.href}>
+                      {item.description}
+                    </MenuListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </header>
+      <div className="fixed inset-x-0 bottom-0 p-4">
+        <CookieConsent positioning="static" title="Cookies" description="Only the cookies needed to run the site are set by default." onAccept={() => undefined} onDecline={() => undefined} />
+      </div>
     </div>
   ),
 };

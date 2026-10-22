@@ -17,12 +17,17 @@ const tokenValue = (name: string) => {
   return match ? Number(match[1]) : null;
 };
 
-// Layer order: page chrome (below 40) < banners (40) < sheet (50) < dialog (60) < dropdown (65) < toast (70) < tooltip (80).
+// Layer order: page chrome (chrome 30) < banners (40) < sheet (50) < dialog (60) < dropdown (65) < toast (70) < tooltip (80).
 describe('z-index layering', () => {
   it('keeps banners below every modal layer and the modal layers below popovers', () => {
     const order = [tokenValue('banner'), tokenValue('sheet'), tokenValue('dialog'), tokenValue('dropdown'), tokenValue('toast'), tokenValue('tooltip')];
     expect(order.every((value) => value !== null)).toBe(true);
     expect([...order].sort((a, b) => (a as number) - (b as number))).toEqual(order);
+  });
+
+  it('keeps page chrome on the chrome layer, below the banner layer', () => {
+    expect(tokenValue('chrome')).toBe(30);
+    expect(readFileSync(join(root, 'ui/sidebar.tsx'), 'utf8')).toContain('z-chrome');
   });
 
   it('never uses a raw z-index of 40 or more in a component', () => {

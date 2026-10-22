@@ -6,6 +6,7 @@ import { X } from 'lucide-react';
 import * as React from 'react';
 
 import { EscapeGuardContext, guardNestedEscape, useGuardedOpen } from '@/lib/nested-layer';
+import { INSET_SCOPE_ATTRIBUTE, scrollInsetClasses, useStickyInset } from '@/lib/sticky-inset';
 import { cn } from '@/lib/utils';
 import { useLabels, usePreset } from '@/components/ui/labels-context';
 
@@ -140,8 +141,10 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
         // Escape inside a select list, menu or popover closes that layer only.
         guardNestedEscape(escapeGuard, event);
       }}
+      {...{ [INSET_SCOPE_ATTRIBUTE]: '' }}
       className={cn(
         'max-h-screen',
+        scrollInsetClasses,
         scrollable ? 'overflow-hidden' : 'overflow-y-auto',
         'fixed',
         'left-[50%]',
@@ -198,8 +201,9 @@ interface DialogHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   orientation?: 'vertical' | 'horizontal';
 }
 
-const DialogHeader = ({ className, orientation = 'vertical', ...props }: DialogHeaderProps) => (
+const DialogHeader = React.forwardRef<HTMLDivElement, DialogHeaderProps>(({ className, orientation = 'vertical', ...props }, ref) => (
   <div
+    ref={useStickyInset<HTMLDivElement>('top', ref)}
     className={cn(
       'flex text-left',
       orientation === 'horizontal' ? 'flex-row items-start gap-4 pr-8' : 'flex-col space-y-[6px]',
@@ -207,12 +211,12 @@ const DialogHeader = ({ className, orientation = 'vertical', ...props }: DialogH
     )}
     {...props}
   />
-);
+));
 DialogHeader.displayName = 'DialogHeader';
 
-const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('flex shrink-0 flex-col-reverse gap-2 sm:flex-row sm:justify-end', className)} {...props} />
-);
+const DialogFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
+  <div ref={useStickyInset<HTMLDivElement>('bottom', ref)} className={cn('flex shrink-0 flex-col-reverse gap-2 sm:flex-row sm:justify-end', className)} {...props} />
+));
 DialogFooter.displayName = 'DialogFooter';
 
 // Scrolling middle part of a `scrollable` DialogContent. The overflow clips at the padding box, so the body pads itself by 4px and pulls back with a negative margin: layout stays put and focus rings of its controls are not cut off. It never takes initial focus (DialogContent focuses the first field). It is a tab stop only while it holds nothing focusable, so keyboard users can still scroll plain content.
@@ -244,7 +248,7 @@ const DialogBody = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={hasFocusableChild ? undefined : 0}
       data-slot="dialog-body"
-      className={cn('-m-1 min-h-0 flex-1 overflow-y-auto p-1 focus-visible:outline-none focus-visible:ring-focus focus-visible:ring-offset-focus focus-visible:ring-offset-background focus-visible:ring-ring-default', className)}
+      className={cn('-m-1 min-h-0 flex-1 overflow-y-auto p-1', scrollInsetClasses, 'focus-visible:outline-none focus-visible:ring-focus focus-visible:ring-offset-focus focus-visible:ring-offset-background focus-visible:ring-ring-default', className)}
       {...props}
     />
   );

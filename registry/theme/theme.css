@@ -675,6 +675,7 @@
   --z-base: 0;
   --z-raised: 1;
   --z-sticky: 10;
+  --z-chrome: 30;
   --z-banner: 40;
   --z-dropdown: 65;
   --z-sheet: 50;

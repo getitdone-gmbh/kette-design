@@ -1738,6 +1738,7 @@ module.exports = {
                         base: '0',
                         raised: '1',
                         sticky: '10',
+                        chrome: '30',
                         banner: '40',
                         dropdown: '65',
                         sheet: '50',

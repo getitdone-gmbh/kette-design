@@ -121,7 +121,7 @@ type SidebarPosition = 'sticky' | 'fixed' | 'static';
 
 const sidebarPositionClasses: Record<SidebarPosition, string> = {
   sticky: 'sticky top-0 h-screen',
-  fixed: 'fixed bottom-0 left-0 top-topbar z-30',
+  fixed: 'fixed bottom-0 left-0 top-topbar z-chrome',
   static: 'relative',
 };
 

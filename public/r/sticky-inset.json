@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sticky-inset",
+  "title": "Sticky Inset",
+  "description": "Helper used by the Get IT Done components.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://zero-design.itdone.de/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/lib/sticky-inset.ts",
+      "content": "'use client';\n\nimport * as React from 'react';\n\n// A sticky or fixed header or footer inside a scrolling overlay covers the focused element when the browser scrolls it to the edge (reverse Tab to the first field, WCAG 2.4.11 Focus Not Obscured).\n// The bar reports its height as --sticky-inset-top or --sticky-inset-bottom on the overlay content (the element with data-inset-scope). Scroll containers read it as scroll-padding, so a focused element always stops clear of the bar.\nexport const INSET_SCOPE_ATTRIBUTE = 'data-inset-scope';\n\n// Utility classes for the scroll containers of an overlay: the content panel and its scrolling body.\nexport const scrollInsetClasses = 'scroll-pt-[var(--sticky-inset-top,0px)] scroll-pb-[var(--sticky-inset-bottom,0px)]';\n\ntype Edge = 'top' | 'bottom';\n\nconst property = (edge: Edge) => `--sticky-inset-${edge}`;\n\nexport function useStickyInset<T extends HTMLElement>(edge: Edge, forwardedRef?: React.ForwardedRef<T>) {\n  const [element, setElement] = React.useState<T | null>(null);\n  const setRef = React.useCallback(\n    (node: T | null) => {\n      setElement(node);\n      if (typeof forwardedRef === 'function') forwardedRef(node);\n      else if (forwardedRef) (forwardedRef as React.MutableRefObject<T | null>).current = node;\n    },\n    [forwardedRef],\n  );\n  React.useEffect(() => {\n    if (!element) return undefined;\n    const scope = element.closest<HTMLElement>(`[${INSET_SCOPE_ATTRIBUTE}]`);\n    if (!scope) return undefined;\n    const name = property(edge);\n    const report = () => {\n      const position = window.getComputedStyle(element).position;\n      // Only a bar that stays in view while the content scrolls can cover a focused element.\n      const covers = position === 'sticky' || position === 'fixed';\n      scope.style.setProperty(name, covers ? `${element.offsetHeight}px` : '0px');\n    };\n    report();\n    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(report);\n    observer?.observe(element);\n    window.addEventListener('resize', report);\n    return () => {\n      observer?.disconnect();\n      window.removeEventListener('resize', report);\n      scope.style.removeProperty(name);\n    };\n  }, [element, edge]);\n  return setRef;\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}
