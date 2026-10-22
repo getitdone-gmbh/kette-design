@@ -1,16 +1,16 @@
 {
-  "name": "@getitdone-gmbh/kette-design",
-  "version": "0.3.7",
+  "name": "@getitdone-gmbh/kette-design-community",
+  "version": "0.4.0",
   "description": "Free React components of the Get IT Done design system for complex software: primitives plus general components such as sidebar, data grid, date picker, multiselect, file upload, charts and kanban. shadcn/ui and Radix UI based, Tailwind CSS, TypeScript, light and dark theme included.",
   "license": "MIT",
   "author": "Get IT Done GmbH",
   "homepage": "https://components.itdone.de",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/getitdone-gmbh/kette-design.git"
+    "url": "git+https://github.com/getitdone-gmbh/kette-design-community.git"
   },
   "bugs": {
-    "url": "https://github.com/getitdone-gmbh/kette-design/issues"
+    "url": "https://github.com/getitdone-gmbh/kette-design-community/issues"
   },
   "keywords": [
     "react",

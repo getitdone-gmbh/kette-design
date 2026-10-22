@@ -1,6 +1,6 @@
-# @getitdone-gmbh/kette-design
+# @getitdone-gmbh/kette-design-community
 
-[![npm](https://img.shields.io/npm/v/@getitdone-gmbh/kette-design?label=npm&color=cb3837)](https://www.npmjs.com/package/@getitdone-gmbh/kette-design) [![license](https://img.shields.io/npm/l/@getitdone-gmbh/kette-design)](LICENSE)
+[![npm](https://img.shields.io/npm/v/@getitdone-gmbh/kette-design-community?label=npm&color=cb3837)](https://www.npmjs.com/package/@getitdone-gmbh/kette-design-community) [![license](https://img.shields.io/npm/l/@getitdone-gmbh/kette-design-community)](LICENSE)
 
 Free React components from the Get IT Done design system: the primitives plus the general components we build business software with. They are built on shadcn/ui and Radix UI, styled with Tailwind CSS, written in TypeScript, and they include a light and a dark theme.
 
@@ -10,7 +10,7 @@ We build business software with many screens, tables, forms and states. These co
 
 | Edition | What you get | Licence | Where |
 | --- | --- | --- | --- |
-| **Community** | This package: 127 components, the zero theme and a Tailwind preset | MIT, free | [npm](https://www.npmjs.com/package/@getitdone-gmbh/kette-design) |
+| **Community** | This package: 127 components, the zero theme and a Tailwind preset | MIT, free | [npm](https://www.npmjs.com/package/@getitdone-gmbh/kette-design-community) |
 | **Enterprise (Die Kette)** | The complete chain: all components, design tokens, domain components, page templates, Figma files, agents and the rule set | Commercial, with every Die Kette licence | [kette.itdone.de](https://kette.itdone.de) |
 
 ## What is included
@@ -32,24 +32,24 @@ The library and token versions each release is synced from are listed in one pla
 ### As an npm package
 
 ```bash
-npm install @getitdone-gmbh/kette-design
+npm install @getitdone-gmbh/kette-design-community
 ```
 
 ```js
 // tailwind.config.cjs
 module.exports = {
-  presets: [require('@getitdone-gmbh/kette-design/tailwind/preset')],
+  presets: [require('@getitdone-gmbh/kette-design-community/tailwind/preset')],
   darkMode: ['class'],
-  content: ['./src/**/*.{ts,tsx}', './node_modules/@getitdone-gmbh/kette-design/dist/**/*.js'],
+  content: ['./src/**/*.{ts,tsx}', './node_modules/@getitdone-gmbh/kette-design-community/dist/**/*.js'],
 };
 ```
 
 ```css
 /* app.css */
-@import '@getitdone-gmbh/kette-design/theme.css';
-@import '@getitdone-gmbh/kette-design/animation.css';
+@import '@getitdone-gmbh/kette-design-community/theme.css';
+@import '@getitdone-gmbh/kette-design-community/animation.css';
 /* Only needed for DocumentSurface: keeps the paper light inside a dark app. */
-@import '@getitdone-gmbh/kette-design/document-surface.css';
+@import '@getitdone-gmbh/kette-design-community/document-surface.css';
 
 @tailwind base;
 @tailwind components;
@@ -57,7 +57,7 @@ module.exports = {
 ```
 
 ```tsx
-import { Button, Card, CardContent, CardHeader, CardTitle } from '@getitdone-gmbh/kette-design';
+import { Button, Card, CardContent, CardHeader, CardTitle } from '@getitdone-gmbh/kette-design-community';
 
 export function Example() {
   return (
@@ -73,11 +73,11 @@ export function Example() {
 }
 ```
 
-No Tailwind in your app? Import the prebuilt stylesheet instead: `import '@getitdone-gmbh/kette-design/styles.css'`.
+No Tailwind in your app? Import the prebuilt stylesheet instead: `import '@getitdone-gmbh/kette-design-community/styles.css'`.
 
 Dark mode follows the `dark` class on `<html>`, or the system setting when no class is set.
 
-`PhoneInput` shows country flags from `/flags/<code>.svg`. Copy `node_modules/@getitdone-gmbh/kette-design/flags` into your public folder, or point `flagBasePath` to where you serve them. Missing flags are hidden.
+`PhoneInput` shows country flags from `/flags/<code>.svg`. Copy `node_modules/@getitdone-gmbh/kette-design-community/flags` into your public folder, or point `flagBasePath` to where you serve them. Missing flags are hidden.
 
 `MultiSelect` and `SingleSelect` open only inside a `MultiSelectProvider` or `SingleSelectProvider` (one per page is enough, it keeps a single list open at a time).
 

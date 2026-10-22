@@ -36,9 +36,9 @@ export const BlockInverse: Story = { args: { tone: 'inverse' } };
 export const WithHeader: Story = { args: { label: 'Terminal', lineNumbers: false, code: 'npm run build' } };
 export const Compact: Story = { args: { textSize: 'compact' } };
 export const NoLineNumbers: Story = { args: { lineNumbers: false } };
-export const Inline: Story = { args: { variant: 'inline', code: 'npm i @getitdone-gmbh/kette-design' } };
+export const Inline: Story = { args: { variant: 'inline', code: 'npm i @getitdone-gmbh/kette-design-community' } };
 export const InlineInverse: Story = {
-  args: { variant: 'inline', tone: 'inverse', code: 'npm i @getitdone-gmbh/kette-design' },
+  args: { variant: 'inline', tone: 'inverse', code: 'npm i @getitdone-gmbh/kette-design-community' },
 };
 
 export const Highlighted: Story = { args: { highlight: 'ts', code: "import { Schema } from 'mongoose';\n\n// Collection name\nexport const collection = 'Design';\nconst limit = 20;\nconst schema = new Schema({ name: String });" } };

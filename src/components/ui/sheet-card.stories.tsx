@@ -88,7 +88,7 @@ const Demo = ({
             {code && (
               <SheetCodeBlock
                 label="Terminal"
-                code={'npm install @getitdone-gmbh/kette-design\nnpm run build'}
+                code={'npm install @getitdone-gmbh/kette-design-community\nnpm run build'}
                 language="Shell"
               />
             )}

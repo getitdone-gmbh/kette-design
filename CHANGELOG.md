@@ -2,6 +2,17 @@
 
 This package is a copy of the general components of the Get IT Done design system. Each release names the library and token versions it was synced from. Only changes to components that are part of this package are listed.
 
+## 0.4.0
+
+Renamed from `@getitdone-gmbh/kette-design` to `@getitdone-gmbh/kette-design-community`, repo `getitdone-gmbh/kette-design-community`. Synced from component-library-react 0.26.23 and figma-design-tokens 5.16.0, the same as 0.3.7.
+
+### Migration
+
+- `npm uninstall @getitdone-gmbh/kette-design && npm install @getitdone-gmbh/kette-design-community`
+- Replace `@getitdone-gmbh/kette-design` with `@getitdone-gmbh/kette-design-community` in imports, CSS `@import`s, the Tailwind `presets` entry and the Tailwind `content` path (`./node_modules/@getitdone-gmbh/kette-design-community/dist/**/*.js`).
+- No component, theme or preset changes. `@getitdone-gmbh/kette-design` stays at 0.3.7 and is deprecated with a pointer to the new name.
+- The shadcn registry at `zero-design.itdone.de/r` keeps its URLs.
+
 ## 0.3.7
 
 Synced from component-library-react 0.26.23 and figma-design-tokens 5.16.0 (was 0.26.22 and 5.15.0).

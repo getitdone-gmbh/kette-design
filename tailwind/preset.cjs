@@ -2,7 +2,7 @@
  * Tailwind CSS Preset — CSS Variable Architecture
  *
  * Single import for consuming apps:
- *   const preset = require('@getitdone-gmbh/kette-design/tailwind/preset');
+ *   const preset = require('@getitdone-gmbh/kette-design-community/tailwind/preset');
  *   module.exports = { presets: [preset], darkMode: ['class'], content: [...] };
  *
  * Automatically handles:
@@ -190,7 +190,7 @@ if (hasCssVars) {
         addComponents({
           '.typography-button': { 'font-family': 'inherit', 'font-size': 'inherit' },
         });
-        // kette-design only: 2.25 stroke for 12px glyphs (library tailwind.css), icons marked data-stroke="fixed" keep their own stroke. The 1.75 rule comes from the token preset above, so it is not repeated here.
+        // kette-design-community only: 2.25 stroke for 12px glyphs (library tailwind.css), icons marked data-stroke="fixed" keep their own stroke. The 1.75 rule comes from the token preset above, so it is not repeated here.
         // One selector per rule, and the size classes as [class~=...] attribute selectors: Tailwind treats a class selector in a base rule as a utility and re-emitted it under variants such as `[&>svg]:h-icon-2xs`, which produced the malformed selector `...h-icon-2xs>svgsvg.lucide`.
         const smallStroke = { 'stroke-width': 'var(--size-icon-stroke-sm, 2.25)' };
         addBase({ ":where(svg.lucide[stroke-width='2']:not([data-stroke='fixed'])[class~='h-icon-2xs'])": smallStroke });
