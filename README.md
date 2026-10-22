@@ -6,6 +6,8 @@ Version 0.4.0 on npm. Free React components from the Get IT Done design system: 
 
 We build business software with many screens, tables, forms and states. These components are the base layer of that system. We are sharing them in case they are useful to others working on similar products.
 
+This package is the component layer of the Community edition of [Die Kette](https://kette.itdone.de), our design system chain from prototype and tokens to components, domain components, page templates and apps. It is free under the MIT licence. Need the full chain? See the [Enterprise edition](https://kette.itdone.de/en/enterprise).
+
 ## Editions
 
 | | Community | Enterprise (Die Kette) |
@@ -15,12 +17,12 @@ We build business software with many screens, tables, forms and states. These co
 | Domain components and page templates | | Included |
 | Figma files, agents and rule set | | Included |
 | Licence | MIT, free | Commercial, with a Die Kette licence |
-| Get it | [npm](https://www.npmjs.com/package/@getitdone-gmbh/kette-design-community), shadcn registry | [kette.itdone.de](https://kette.itdone.de) |
+| Get it | [npm](https://www.npmjs.com/package/@getitdone-gmbh/kette-design-community), [shadcn registry](#with-the-shadcn-cli) | Private package via `kette login`, see [Enterprise edition](https://kette.itdone.de/en/enterprise) |
 
-Install via Die Kette (Enterprise Edition, [kette.itdone.de](https://kette.itdone.de)):
+`@getitdone-gmbh/kette-design-enterprise` and `@getitdone-gmbh/kette-tokens` are private packages for licence holders. Upgrade to the [Enterprise edition](https://kette.itdone.de/en/enterprise), then install via the Kette CLI:
 
 1. `curl -fsSL https://kette.itdone.de/install | sh` (Windows: `irm https://kette.itdone.de/install.ps1 | iex`)
-2. `kette login <licence key>` unlocks the Enterprise Edition and sets up npm access for the `@getitdone-gmbh` scope (registry `https://npm.kette.itdone.de/`)
+2. `kette login <licence key>` unlocks the Enterprise edition and sets up npm access for the `@getitdone-gmbh` scope (registry `https://npm.kette.itdone.de/`). npm package access is switched on with the CLI update due by 30 November 2026; until then `kette login` says so and leaves your npmrc unchanged, and `kette update` adds the access afterwards.
 3. `npm install @getitdone-gmbh/kette-design-enterprise` (tokens: `@getitdone-gmbh/kette-tokens`)
 
 The CLI itself is free. Without a licence key it sets up the Community rule set and the review agent of Die Kette in your project, see [kette-cli](https://github.com/getitdone-gmbh/kette-cli).
@@ -116,7 +118,7 @@ This package is one layer. The full design system goes further, from single comp
 | Complex application components | Domain components built on the primitives: task boards, time grids, goal and capacity cards, pipelines, file views | [zero.itdone.de](https://zero.itdone.de) |
 | Page templates | Complete pages: app frame, dashboard, data grid, guided processes, settings, calendar, mobile, with a build guide per page | [zero-pages.itdone.de](https://zero-pages.itdone.de) |
 
-The complete chain (tokens, primitives, domain components, page templates, Figma files and the rule set) is the Enterprise edition, available through [Die Kette](https://kette.itdone.de), see [Editions](#editions).
+The complete chain (tokens, primitives, domain components, page templates, Figma files and the rule set) is the [Enterprise edition](https://kette.itdone.de/en/enterprise) of [Die Kette](https://kette.itdone.de), see [Editions](#editions).
 
 ## Storybook
 
