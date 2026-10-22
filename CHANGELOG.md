@@ -2,6 +2,20 @@
 
 This package is a copy of the general components of the Get IT Done design system. Each release names the library and token versions it was synced from. Only changes to components that are part of this package are listed.
 
+## 0.3.5
+
+Synced from component-library-react 0.26.18 and figma-design-tokens 5.13.0 (was 0.26.16 and 5.12.0).
+
+### Components
+
+- **Behaviour change: `AlertTitle` renders a `<p>`, not an `<h5>`**. An alert title is rarely a real section heading, and the old default caused heading-order skips. The typography stays (`font-semibold leading-none`). `titleAs` still renders any `h1` to `h6`: where the title belongs to the document outline, pass `titleAs="h3"` (or the level that fits the page). Tests or selectors that looked up `role="heading"` for an alert title need `titleAs` or should query the text. `AlertTitleProps` now extends `React.HTMLAttributes<HTMLElement>`, the ref type is `HTMLElement`.
+- **`LogoTile` radius is fixed per size** (size x 0.25, as in the prototype): `xs` (24px) `rounded-logo-tile-24` (6px), `sm` (32px) `rounded-logo-tile-32` (8px), `md` (40px) `rounded-logo-tile-40` (10px). Was `rounded-item` for all sizes. The radius no longer follows the theme radius roles; it is 0 in the windows-95 theme. `DescriptionList` uses `LogoTile` and follows.
+
+### Theme and Tailwind preset
+
+- New tokens from 5.13.0: `--borderRadius-logo-tile-24`, `--borderRadius-logo-tile-32`, `--borderRadius-logo-tile-48` next to `--borderRadius-logo-tile-40` (`rounded-logo-tile-24/-32/-40/-48`).
+- Icon stroke opt-out: the 1.75 base rule from the token preset is now `:where(svg.lucide[stroke-width="2"]:not([data-stroke="fixed"]))`. An icon that deliberately sets `strokeWidth={2}` keeps stroke 2 with `data-stroke="fixed"`. Specificity stays zero.
+
 ## 0.3.4
 
 Synced from component-library-react 0.26.16 and figma-design-tokens 5.12.0 (was 0.26.14 and 5.10.0).

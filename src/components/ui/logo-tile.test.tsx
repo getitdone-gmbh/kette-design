@@ -4,11 +4,20 @@ import { createRef } from 'react';
 import { LogoTile } from './logo-tile';
 
 describe('LogoTile', () => {
-  it('renders initials on the project colour with on-brand text and the item radius', () => {
+  it('renders initials on the project colour with on-brand text and the 24px radius', () => {
     render(<LogoTile initials="NH" data-testid="tile" />);
     const tile = screen.getByTestId('tile');
     expect(tile).toHaveTextContent('NH');
-    expect(tile).toHaveClass('bg-data-project-1', 'text-data-project-1-on', 'rounded-item', 'h-avatar-xs', 'w-avatar-xs', 'typography-avatar-xs');
+    expect(tile).toHaveClass('bg-data-project-1', 'text-data-project-1-on', 'rounded-logo-tile-24', 'h-avatar-xs', 'w-avatar-xs', 'typography-avatar-xs');
+  });
+
+  it.each([
+    ['xs', 'rounded-logo-tile-24'],
+    ['sm', 'rounded-logo-tile-32'],
+    ['md', 'rounded-logo-tile-40'],
+  ] as const)('size %s uses %s (size x 0.25)', (size, radius) => {
+    render(<LogoTile initials="X" size={size} data-testid="tile" />);
+    expect(screen.getByTestId('tile')).toHaveClass(radius);
   });
 
   it.each([1, 2, 3, 4, 5, 6, 7, 8] as const)('maps Color=%s to colors/data/project/%s', (n) => {

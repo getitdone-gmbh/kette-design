@@ -917,7 +917,10 @@ module.exports = {
                         hairline: '2',
                         tight: '4',
                         popover: '12',
+                        'logo-tile-24': '6',
+                        'logo-tile-32': '8',
                         'logo-tile-40': '10',
+                        'logo-tile-48': '12',
                     },
                     opacity: {
                         empty: '60%',
@@ -5654,7 +5657,10 @@ module.exports = {
                             hairline: '0',
                             tight: '0',
                             popover: '0',
+                            'logo-tile-24': '0',
+                            'logo-tile-32': '0',
                             'logo-tile-40': '0',
+                            'logo-tile-48': '0',
                         },
                         opacity: {
                             'ring-halo': '100%',
@@ -6329,7 +6335,7 @@ module.exports = {
         }),
         plugin(({ addBase }) => {
             addBase({
-                ':where(svg.lucide[stroke-width="2"])': {
+                ':where(svg.lucide[stroke-width="2"]:not([data-stroke="fixed"]))': {
                     'stroke-width': 'var(--size-icon-stroke, 1.75)',
                 },
             });

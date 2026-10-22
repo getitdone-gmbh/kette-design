@@ -54,6 +54,13 @@ describe('icon stroke rule from the Tailwind preset', () => {
     expect(strokeFor(rules, svg)).toBeNull();
   });
 
+  it('keeps stroke 2 on an icon marked data-stroke="fixed" (tokens 5.13.0)', () => {
+    const { container } = render(<Plus strokeWidth={2} data-stroke="fixed" />);
+    const svg = container.querySelector('svg')!;
+    expect(svg.getAttribute('stroke-width')).toBe('2');
+    expect(strokeFor(rules, svg)).toBeNull();
+  });
+
   it('uses the small stroke for 12px glyph wrappers', () => {
     const { container } = render(
       <span className="h-icon-2xs">

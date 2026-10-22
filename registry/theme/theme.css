@@ -488,7 +488,10 @@
   --borderRadius-surface: 12px;
   --borderRadius-dialog: 12px;
   --borderRadius-popover: 12px;
+  --borderRadius-logo-tile-24: 6px;
+  --borderRadius-logo-tile-32: 8px;
   --borderRadius-logo-tile-40: 10px;
+  --borderRadius-logo-tile-48: 12px;
   --size-control-sm: 28px;
   --size-control-md: 32px;
   --size-control-lg: 36px;
