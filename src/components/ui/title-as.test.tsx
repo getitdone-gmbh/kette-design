@@ -13,13 +13,14 @@ import { SheetSection } from './sheet';
 const level = (name: string) => screen.getByRole('heading', { name: new RegExp(name) }).tagName;
 
 describe('titleAs', () => {
-  it('keeps the current heading level by default and follows titleAs', () => {
+  it('renders a plain paragraph by default and a heading with titleAs', () => {
     const { rerender } = render(
       <Alert>
         <AlertTitle>Alert head</AlertTitle>
       </Alert>,
     );
-    expect(level('Alert head')).toBe('H5');
+    expect(screen.queryByRole('heading')).toBeNull();
+    expect(screen.getByText('Alert head').tagName).toBe('P');
     rerender(
       <Alert>
         <AlertTitle titleAs="h2">Alert head</AlertTitle>

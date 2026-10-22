@@ -2742,7 +2742,10 @@ module.exports = {
                 surface: 'var(--borderRadius-surface)',
                 dialog: 'var(--borderRadius-dialog)',
                 popover: 'var(--borderRadius-popover)',
+                'logo-tile-24': 'var(--borderRadius-logo-tile-24)',
+                'logo-tile-32': 'var(--borderRadius-logo-tile-32)',
                 'logo-tile-40': 'var(--borderRadius-logo-tile-40)',
+                'logo-tile-48': 'var(--borderRadius-logo-tile-48)',
             },
             spacing: {
                 'control-sm': 'var(--size-control-sm)',

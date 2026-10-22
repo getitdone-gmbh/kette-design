@@ -170,19 +170,19 @@ const Alert = React.forwardRef<
 });
 Alert.displayName = 'Alert';
 
-export interface AlertTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
-  // Heading element, so the alert fits the document outline. Default h5.
+export interface AlertTitleProps extends React.HTMLAttributes<HTMLElement> {
+  // Optional heading element (h1-h6). Without it the title is a plain paragraph, so alerts do not add heading-order skips to the page.
   titleAs?: HeadingTag;
 }
 
-const AlertTitle = React.forwardRef<HTMLHeadingElement, AlertTitleProps>(
-  ({ className, titleAs: Title = 'h5', ...props }, ref) => (
-    // The rule can't see through the `{...props}` spread; every consumer passes visible title text
-    // as children (see stories/tests).
+const AlertTitle = React.forwardRef<HTMLElement, AlertTitleProps>(({ className, titleAs, ...props }, ref) => {
+  const Title = (titleAs ?? 'p') as React.ElementType;
+  return (
+    // The rule can't see through the `{...props}` spread; every consumer passes visible title text as children (see stories/tests).
     // eslint-disable-next-line jsx-a11y/heading-has-content
     <Title ref={ref} className={cn('font-semibold leading-none', className)} {...props} />
-  ),
-);
+  );
+});
 AlertTitle.displayName = 'AlertTitle';
 
 const AlertDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
