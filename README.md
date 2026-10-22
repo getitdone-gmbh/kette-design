@@ -23,7 +23,7 @@ We build business software with many screens, tables, forms and states. These co
 
 Plus the zero theme as CSS variables (typography, colours, radii, elevation, light and dark) and a Tailwind CSS 3 preset.
 
-Every component with a story in the library comes with it: 128 story files with 1024 stories, see [Storybook](#storybook).
+Every component with a story in the library comes with it: 128 story files with 1027 stories, see [Storybook](#storybook).
 
 The library and token versions each release is synced from are listed in one place, the [sync history](docs/MAINTAINING.md#sync-history). What changed per release is in [CHANGELOG.md](CHANGELOG.md).
 

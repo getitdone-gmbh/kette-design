@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';
 
+import { INSET_SCOPE_ATTRIBUTE, scrollInsetClasses, useStickyInset } from '../../lib/sticky-inset';
 import { cn } from '../../lib/utils';
 import { usePreset } from './labels-context';
 
@@ -35,7 +36,9 @@ const DrawerContent = React.forwardRef<
       <DrawerOverlay />
       <DrawerPrimitive.Content
         ref={ref}
+        {...{ [INSET_SCOPE_ATTRIBUTE]: '' }}
         className={cn(
+          scrollInsetClasses,
           'fixed inset-x-0 bottom-0 z-sheet mt-24 flex h-auto flex-col rounded-t-dialog border border-solid bg-background',
           // Zero: default border role and the raised elevation, ui type role for the body.
           zero ? 'typography-ui border-border-default shadow-elevation-raised' : 'border-hairline shadow-dialog',
@@ -51,14 +54,14 @@ const DrawerContent = React.forwardRef<
 });
 DrawerContent.displayName = 'DrawerContent';
 
-const DrawerHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('grid gap-[6px] p-4 text-center sm:text-left', className)} {...props} />
-);
+const DrawerHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
+  <div ref={useStickyInset<HTMLDivElement>('top', ref)} className={cn('grid gap-[6px] p-4 text-center sm:text-left', className)} {...props} />
+));
 DrawerHeader.displayName = 'DrawerHeader';
 
-const DrawerFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('mt-auto flex flex-col gap-2 p-4', className)} {...props} />
-);
+const DrawerFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
+  <div ref={useStickyInset<HTMLDivElement>('bottom', ref)} className={cn('mt-auto flex flex-col gap-2 p-4', className)} {...props} />
+));
 DrawerFooter.displayName = 'DrawerFooter';
 
 const DrawerTitle = React.forwardRef<

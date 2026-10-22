@@ -897,6 +897,7 @@
         "https://zero-design.itdone.de/r/labels-context.json",
         "https://zero-design.itdone.de/r/nested-layer.json",
         "https://zero-design.itdone.de/r/return-focus.json",
+        "https://zero-design.itdone.de/r/sticky-inset.json",
         "https://zero-design.itdone.de/r/utils.json",
         "https://zero-design.itdone.de/r/theme.json"
       ],
@@ -934,6 +935,7 @@
       ],
       "registryDependencies": [
         "https://zero-design.itdone.de/r/labels-context.json",
+        "https://zero-design.itdone.de/r/sticky-inset.json",
         "https://zero-design.itdone.de/r/utils.json",
         "https://zero-design.itdone.de/r/theme.json"
       ],
@@ -2402,6 +2404,7 @@
         "https://zero-design.itdone.de/r/nested-layer.json",
         "https://zero-design.itdone.de/r/return-focus.json",
         "https://zero-design.itdone.de/r/skeleton.json",
+        "https://zero-design.itdone.de/r/sticky-inset.json",
         "https://zero-design.itdone.de/r/utils.json",
         "https://zero-design.itdone.de/r/theme.json"
       ],
@@ -3158,6 +3161,22 @@
       "files": [
         {
           "path": "registry/lib/return-focus.tsx",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "sticky-inset",
+      "type": "registry:lib",
+      "title": "Sticky Inset",
+      "description": "Helper used by the Get IT Done components.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://zero-design.itdone.de/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/lib/sticky-inset.ts",
           "type": "registry:lib"
         }
       ]

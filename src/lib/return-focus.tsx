@@ -20,6 +20,21 @@ export const OpenerCapture = ({ onCapture }: { onCapture: RememberOpener }) => {
   return null;
 };
 
+// An opener that was re-rendered with a new key while the overlay was open is a new element: the remembered one is detached. The new element is found again by id, else by tag, accessible name and text.
+const findReplacement = (old: HTMLElement | null): HTMLElement | null => {
+  if (!old) return null;
+  if (old.isConnected) return old;
+  if (old.id) {
+    const byId = document.getElementById(old.id);
+    if (byId) return byId;
+  }
+  const label = old.getAttribute('aria-label');
+  const text = old.textContent?.trim() ?? '';
+  if (!label && !text) return null;
+  const candidates = Array.from(document.querySelectorAll<HTMLElement>(old.tagName.toLowerCase()));
+  return candidates.find((candidate) => candidate.getAttribute('aria-label') === label && (candidate.textContent?.trim() ?? '') === text) ?? null;
+};
+
 export const useReturnFocusFallback = (consumerHandler?: (event: Event) => void) => {
   const opener = React.useRef<HTMLElement | null>(null);
   const remember = React.useCallback<RememberOpener>((element) => {
@@ -29,12 +44,12 @@ export const useReturnFocusFallback = (consumerHandler?: (event: Event) => void)
     (event: Event) => {
       consumerHandler?.(event);
       if (event.defaultPrevented) return;
-      const target = opener.current;
+      const target = findReplacement(opener.current);
       // Radix runs its own trigger focus right after this handler, so the fallback waits for it.
       queueMicrotask(() => {
         const active = document.activeElement;
         const lost = !active || active === document.body || !active.isConnected;
-        if (lost && target && target.isConnected) target.focus();
+        if (lost && target) target.focus();
       });
     },
     [consumerHandler],

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { DesignSystemProvider } from './design-system-provider';
 
 import { Button } from './button';
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from './sheet';
+import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from './sheet';
 
 const meta = {
   title: 'Primitives/Sheet',
@@ -89,6 +89,40 @@ export const PaddingDefaults: Story = {
             <SheetTitle>Padded content</SheetTitle>
             <SheetDescription>padded is the default outside zero. The close button has a 24px target around the 16px icon.</SheetDescription>
           </SheetHeader>
+        </SheetContent>
+      </Sheet>
+    ),
+  ],
+};
+
+const fields = Array.from({ length: 24 }, (_, index) => `Field ${index + 1}`);
+
+// A sheet with a sticky header and footer inside a scrolling panel. Tab to the last field, then Shift+Tab back up: the first field stops below the header and the last above the footer (WCAG 2.4.11).
+export const StickyHeaderReverseTab: Story = {
+  args: {} as any,
+  parameters: { layout: 'fullscreen' },
+  decorators: [
+    () => (
+      <Sheet defaultOpen>
+        <SheetTrigger asChild>
+          <Button>Open Sheet</Button>
+        </SheetTrigger>
+        <SheetContent side="right" padded={false} className="overflow-y-auto">
+          <SheetHeader className="sticky top-0 z-raised border-0 border-b border-solid border-hairline bg-background p-6">
+            <SheetTitle>Edit record</SheetTitle>
+            <SheetDescription>The header stays in view while the form scrolls.</SheetDescription>
+          </SheetHeader>
+          <form className="flex flex-col gap-4 p-6">
+            {fields.map((label) => (
+              <label key={label} className="flex flex-col gap-1 text-sm">
+                {label}
+                <input className="h-10 rounded-control border border-solid border-border bg-background px-3" />
+              </label>
+            ))}
+          </form>
+          <SheetFooter className="sticky bottom-0 z-raised border-0 border-t border-solid border-hairline bg-background p-6">
+            <Button type="button">Save</Button>
+          </SheetFooter>
         </SheetContent>
       </Sheet>
     ),

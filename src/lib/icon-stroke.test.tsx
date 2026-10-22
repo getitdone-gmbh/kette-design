@@ -35,9 +35,11 @@ describe('icon stroke rule from the Tailwind preset', () => {
     rules = strokeRules(await compileBase());
   }, 30000);
 
-  it('ships each rule once: 1.75 from the token preset, then 2.25 for 12px glyphs', () => {
+  it('ships each rule once: 1.75 from the token preset, then 2.25 for 12px glyphs in three single-selector rules', () => {
     expect(rules.map((r) => [r.variable, r.fallback])).toEqual([
       ['--size-icon-stroke', '1.75'],
+      ['--size-icon-stroke-sm', '2.25'],
+      ['--size-icon-stroke-sm', '2.25'],
       ['--size-icon-stroke-sm', '2.25'],
     ]);
   });
@@ -61,6 +63,11 @@ describe('icon stroke rule from the Tailwind preset', () => {
     expect(strokeFor(rules, svg)).toBeNull();
   });
 
+  it.each(['h-icon-2xs', 'size-icon-2xs'])('uses the small stroke for a 12px icon with %s', (size) => {
+    const { container } = render(<Check className={size} />);
+    expect(strokeFor(rules, container.querySelector('svg')!)).toBe('2.25');
+  });
+
   it('uses the small stroke for 12px glyph wrappers', () => {
     const { container } = render(
       <span className="h-icon-2xs">
@@ -78,10 +85,13 @@ describe('data-stroke="fixed" opt-out', () => {
   }, 30000);
 
   it('declares the opt-out on every 12px selector', () => {
-    const small = rules.find((r) => r.variable === '--size-icon-stroke-sm')!;
-    const parts = small.selector.split(/,\s*(?=svg|\[)/);
-    expect(parts).toHaveLength(3);
-    parts.forEach((part) => expect(part.replace(/"/g, "'")).toContain(":not([data-stroke='fixed'])"));
+    const small = rules.filter((r) => r.variable === '--size-icon-stroke-sm');
+    // one selector per rule, three rules: .h-icon-2xs, .size-icon-2xs and the wrapper child
+    expect(small).toHaveLength(3);
+    small.forEach((rule) => {
+      expect(rule.selector).not.toContain(',');
+      expect(rule.selector.replace(/"/g, "'")).toContain(":not([data-stroke='fixed'])");
+    });
   });
 
   it('keeps an icon marked data-stroke="fixed" out of the 12px rule, both direct and wrapped', () => {
