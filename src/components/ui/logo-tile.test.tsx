@@ -8,7 +8,7 @@ describe('LogoTile', () => {
     render(<LogoTile initials="NH" data-testid="tile" />);
     const tile = screen.getByTestId('tile');
     expect(tile).toHaveTextContent('NH');
-    expect(tile).toHaveClass('bg-data-project-1', 'text-data-project-1-on', 'rounded-logo-tile-24', 'h-avatar-xs', 'w-avatar-xs', 'typography-avatar-xs');
+    expect(tile).toHaveClass('bg-data-project-1', 'text-data-project-1-on', 'rounded-logo-tile-24', 'h-avatar-xs', 'w-avatar-xs', 'text-logo-tile-24', 'font-bold');
   });
 
   it.each([
@@ -18,6 +18,17 @@ describe('LogoTile', () => {
   ] as const)('size %s uses %s (size x 0.25)', (size, radius) => {
     render(<LogoTile initials="X" size={size} data-testid="tile" />);
     expect(screen.getByTestId('tile')).toHaveClass(radius);
+  });
+
+  it.each([
+    ['xs', 'text-logo-tile-24'],
+    ['sm', 'text-logo-tile-32'],
+    ['md', 'text-logo-tile-40'],
+  ] as const)('size %s sets the initials to %s in bold', (size, fontSize) => {
+    render(<LogoTile initials="X" size={size} data-testid="tile" />);
+    const tile = screen.getByTestId('tile');
+    expect(tile).toHaveClass(fontSize, 'font-bold');
+    expect(tile.className).not.toMatch(/typography-/);
   });
 
   it.each([1, 2, 3, 4, 5, 6, 7, 8] as const)('maps Color=%s to colors/data/project/%s', (n) => {

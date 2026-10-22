@@ -25,7 +25,7 @@ const HoverCardContent = React.forwardRef<React.ElementRef<typeof HoverCardPrimi
         align={align}
         sideOffset={sideOffset}
         className={cn(
-          'z-[250] outline-none',
+          'z-dropdown outline-none',
           zero ? 'p-4 typography-ui' : 'p-2 !text-clamp-small !leading-clamp-small',
           overlaySurface,
           zero && overlaySurfaceZero,
@@ -43,7 +43,7 @@ const HoverCardContent = React.forwardRef<React.ElementRef<typeof HoverCardPrimi
           <div
             aria-hidden="true"
             data-hover-card-backdrop=""
-            className={cn('pointer-events-none fixed inset-0 z-[250] animate-in fade-in-0 motion-reduce:animate-none', zero ? 'bg-overlay-scrim' : 'bg-overlay')}
+            className={cn('pointer-events-none fixed inset-0 z-dialog animate-in fade-in-0 motion-reduce:animate-none', zero ? 'bg-overlay-scrim' : 'bg-overlay')}
           />
           {content}
         </div>

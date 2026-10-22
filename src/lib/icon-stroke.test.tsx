@@ -71,6 +71,35 @@ describe('icon stroke rule from the Tailwind preset', () => {
   });
 });
 
+describe('data-stroke="fixed" opt-out', () => {
+  let rules: Rule[] = [];
+  beforeAll(async () => {
+    rules = strokeRules(await compileBase());
+  }, 30000);
+
+  it('declares the opt-out on every 12px selector', () => {
+    const small = rules.find((r) => r.variable === '--size-icon-stroke-sm')!;
+    const parts = small.selector.split(/,\s*(?=svg|\[)/);
+    expect(parts).toHaveLength(3);
+    parts.forEach((part) => expect(part.replace(/"/g, "'")).toContain(":not([data-stroke='fixed'])"));
+  });
+
+  it('keeps an icon marked data-stroke="fixed" out of the 12px rule, both direct and wrapped', () => {
+    const { container } = render(
+      <>
+        <Check data-stroke="fixed" className="h-icon-2xs" />
+        <span className="h-icon-2xs">
+          <Check data-stroke="fixed" />
+        </span>
+      </>,
+    );
+    container.querySelectorAll('svg').forEach((svg) => {
+      expect(svg.getAttribute('data-stroke')).toBe('fixed');
+      expect(strokeFor(rules, svg)).toBeNull();
+    });
+  });
+});
+
 describe('check mark stroke fallback', () => {
   it('Checkbox draws the check at 3 without the CSS variable defined', () => {
     const { container } = render(<Checkbox checked aria-label="x" />);

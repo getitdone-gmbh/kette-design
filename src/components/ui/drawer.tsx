@@ -21,7 +21,7 @@ const DrawerOverlay = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
-  <DrawerPrimitive.Overlay ref={ref} className={cn('fixed inset-0 z-50 bg-overlay', className)} {...props} />
+  <DrawerPrimitive.Overlay ref={ref} className={cn('fixed inset-0 z-sheet bg-overlay', className)} {...props} />
 ));
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
 
@@ -36,7 +36,7 @@ const DrawerContent = React.forwardRef<
       <DrawerPrimitive.Content
         ref={ref}
         className={cn(
-          'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-dialog border border-solid bg-background',
+          'fixed inset-x-0 bottom-0 z-sheet mt-24 flex h-auto flex-col rounded-t-dialog border border-solid bg-background',
           // Zero: default border role and the raised elevation, ui type role for the body.
           zero ? 'typography-ui border-border-default shadow-elevation-raised' : 'border-hairline shadow-dialog',
           className,

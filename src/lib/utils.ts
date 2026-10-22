@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { extendTailwindMerge } from 'tailwind-merge';
 
-// Font sizes the the design tokens preset adds on top of Tailwind's scale (theme.fontSize).
+// Font sizes the design tokens preset adds on top of Tailwind's scale (theme.fontSize).
 // tailwind-merge only knows the default sizes and treats any other `text-*` as a color, so e.g. `text-ui`
 // would silently drop `text-text-muted`. utils.test.ts asserts this list matches the installed preset.
 export const TOKEN_FONT_SIZES = [
@@ -29,6 +29,11 @@ export const TOKEN_FONT_SIZES = [
   'title-lg',
   'display-md',
   'file-tag',
+  'logo-tile-20',
+  'logo-tile-24',
+  'logo-tile-32',
+  'logo-tile-40',
+  'logo-tile-48',
 ];
 
 // Named spacing tokens of the preset, so size, padding and gap overrides (`px-0` over `px-control-px-sm`) win over the token utilities.

@@ -22,12 +22,15 @@ export interface CookieConsentCategory {
 
 export type CookieConsentSelection = Record<string, boolean>;
 
+// Element of the banner title: a heading level, or `p` for a title that is not part of the document outline.
+export type CookieConsentTitleTag = HeadingTag | 'p';
+
 export interface CookieConsentProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   // Visibility is owned by the consumer, who also persists the decision.
   open?: boolean;
   title?: React.ReactNode;
-  // Heading element of the title, so the banner fits the document outline. Default h2.
-  titleAs?: HeadingTag;
+  // Element of the title. h1-h6 fit the banner into the document outline (default h2), `p` renders a plain paragraph so the banner adds no heading to the page.
+  titleAs?: CookieConsentTitleTag;
   // What is stored and why. Link the privacy policy inside the text.
   description: React.ReactNode;
   onAccept: () => void;
@@ -109,7 +112,7 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
       className,
       open = true,
       title,
-      titleAs: Title = 'h2',
+      titleAs = 'h2',
       description,
       onAccept,
       onDecline,
@@ -150,6 +153,7 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
       cookieConsentRegion: regionLabel,
     };
     const l = useLabels(labels);
+    const Title = titleAs as React.ElementType;
     const titleId = React.useId();
     const [view, setView] = React.useState<'summary' | 'settings'>('summary');
     const [draft, setDraft] = React.useState<CookieConsentSelection>(() => initialSelection(categories ?? [], value ?? initialConsent));
@@ -167,7 +171,7 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [storedKey]);
     const [deferred, setDeferred] = React.useState(false);
-    const headingRef = React.useRef<HTMLHeadingElement | null>(null);
+    const headingRef = React.useRef<HTMLElement | null>(null);
     const sectionRef = React.useRef<HTMLElement | null>(null);
     const settingsButtonRef = React.useRef<HTMLButtonElement | null>(null);
     // The banner never takes focus on its own. Only a user-driven switch between the views moves it: into the settings panel on open, back to the Settings button on return.
@@ -253,7 +257,7 @@ const CookieConsent = React.forwardRef<HTMLElement, CookieConsentProps>(
         aria-label={heading ? undefined : l.cookieConsentRegion}
         aria-labelledby={heading ? titleId : undefined}
         className={cn(
-          'relative z-50 flex flex-col gap-4 rounded-surface border border-solid border-border bg-popover p-6 text-popover-foreground shadow-elevation-raised',
+          'relative z-banner flex flex-col gap-4 rounded-surface border border-solid border-border bg-popover p-6 text-popover-foreground shadow-elevation-raised',
           wide ? 'max-w-4xl' : 'max-w-reading sm:flex-row sm:items-end',
           wide && !inSettings && 'md:flex-row md:items-end',
           positioning === 'fixed' && (wide ? 'fixed inset-x-4 bottom-4 mx-auto' : 'fixed bottom-4 left-4 right-4 sm:right-auto sm:w-full'),

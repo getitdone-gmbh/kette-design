@@ -2,6 +2,29 @@
 
 This package is a copy of the general components of the Get IT Done design system. Each release names the library and token versions it was synced from. Only changes to components that are part of this package are listed.
 
+## 0.3.6
+
+Synced from component-library-react 0.26.22 and figma-design-tokens 5.15.0 (was 0.26.18 and 5.13.0).
+
+### Components
+
+- **`LogoTile` initials** use the logo tile font sizes and weight 700 (`font-bold`): `xs` (24px) `text-logo-tile-24` (11px), `sm` (32px) `text-logo-tile-32` (13px), `md` (40px) `text-logo-tile-40` (16px). Was the avatar-xs role (10px, weight 600) for `xs` and the ui-semibold role (weight 600) for `sm` and `md`. `DescriptionList` uses `LogoTile` and follows.
+- **`Sidebar` workspace switcher**: the trigger logo (24px) uses `rounded-logo-tile-24 text-logo-tile-24` instead of `rounded-[6px]` and `text-micro` (same pixels, weight 700). The menu item logo (20px) uses `rounded-logo-tile-20 text-logo-tile-20 font-bold leading-none` (radius 5, 10px, weight 700), was `rounded-item text-micro`.
+- **`CookieConsent`**: `titleAs` also accepts `p` (new exported type `CookieConsentTitleTag`, `HeadingTag | 'p'`). With `titleAs="p"` the banner title is a plain paragraph, the region keeps its accessible name and the banner adds no heading to the page. Default stays `h2`.
+- **Layering**: one z-index order for fixed and overlay components, see `docs/layering.md`. Page chrome (below 40), banners (40), sheet (50), dialog (60), menus and popovers (65), toast (70), tooltip (80). `CookieConsent` and the floating `ChatWindow` use `z-banner` (40, was 50), so every sheet and dialog now covers them (WCAG 2.4.11). `Sheet` and `Drawer` use `z-sheet`, `Toast` uses `z-toast` (70, was a raw 100), `HoverCard` content uses `z-dropdown` (65, was a raw 250) and its backdrop `z-dialog`, `Table` uses `z-sticky` and `z-raised`, the `NavigationMenu` root and indicator `z-sticky` and `z-raised`. Consumers that wrap a banner in their own z-index above 40 should drop that value.
+- **`NavigationMenu`**: the open panel stays inside the viewport. It is shifted left when it would pass the right edge and right when it would pass the left edge. New prop `collisionPadding` (px, default 16) on `NavigationMenu` and `NavigationMenuViewport`. The panel width is capped at the viewport width minus that margin.
+- `cn()` knows the `text-logo-tile-20/24/32/40/48` font sizes, so a later text colour class no longer merges them away.
+- Tests: Logo Tile, Sidebar logo tiles, Cookie Consent `titleAs="p"`, `navigation-menu.test.tsx`, `src/lib/z-layers.test.ts` (no raw z-index of 40 or more in a component, banner below the modal layers).
+
+### Theme and Tailwind preset
+
+- New tokens from 5.14.0 and 5.15.0: `--fontSize-logo-tile-20` to `-48` (`text-logo-tile-*`), `--borderRadius-logo-tile-20` (`rounded-logo-tile-20`), `--z-banner` (40, `z-banner`).
+- Icon stroke: the 2.25 rule for 12px glyphs in this package's preset now has the same `:not([data-stroke="fixed"])` opt-out as the 1.75 rule. Icons marked `data-stroke="fixed"` keep their own stroke inside 12px wrappers.
+
+### Stories
+
+- New: Cookie Consent `TitleAsParagraph` and `BelowOpenSheet`, Navigation Menu `RightAlignedNearEdge`. 128 story files with 1024 stories.
+
 ## 0.3.5
 
 Synced from component-library-react 0.26.18 and figma-design-tokens 5.13.0 (was 0.26.16 and 5.12.0).

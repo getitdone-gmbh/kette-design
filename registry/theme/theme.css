@@ -488,10 +488,16 @@
   --borderRadius-surface: 12px;
   --borderRadius-dialog: 12px;
   --borderRadius-popover: 12px;
+  --borderRadius-logo-tile-20: 5px;
   --borderRadius-logo-tile-24: 6px;
   --borderRadius-logo-tile-32: 8px;
   --borderRadius-logo-tile-40: 10px;
   --borderRadius-logo-tile-48: 12px;
+  --fontSize-logo-tile-20: 10px;
+  --fontSize-logo-tile-24: 11px;
+  --fontSize-logo-tile-32: 13px;
+  --fontSize-logo-tile-40: 16px;
+  --fontSize-logo-tile-48: 16px;
   --size-control-sm: 28px;
   --size-control-md: 32px;
   --size-control-lg: 36px;
@@ -669,6 +675,7 @@
   --z-base: 0;
   --z-raised: 1;
   --z-sticky: 10;
+  --z-banner: 40;
   --z-dropdown: 65;
   --z-sheet: 50;
   --z-sheet-2: 51;

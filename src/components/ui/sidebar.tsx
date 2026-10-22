@@ -304,7 +304,7 @@ const SidebarWorkspaceSwitcher = React.forwardRef<HTMLButtonElement, SidebarWork
       >
         <span
           aria-hidden
-          className="grid h-[24px] w-[24px] shrink-0 place-items-center overflow-hidden rounded-[6px] bg-sidebar-accent-foreground text-micro font-bold text-sidebar-background"
+          className="grid h-[24px] w-[24px] shrink-0 place-items-center overflow-hidden rounded-logo-tile-24 bg-sidebar-accent-foreground text-logo-tile-24 font-bold text-sidebar-background"
         >
           {logo}
         </span>
@@ -332,7 +332,7 @@ const SidebarWorkspaceSwitcher = React.forwardRef<HTMLButtonElement, SidebarWork
                   className={cn(workspace.id === activeWorkspaceId && 'bg-muted')}
                 >
                   {workspace.logo && (
-                    <span aria-hidden className="grid h-5 w-5 shrink-0 place-items-center overflow-hidden rounded-item bg-background-brand-bold-default text-micro font-bold text-text-on-brand">
+                    <span aria-hidden className="grid h-5 w-5 shrink-0 place-items-center overflow-hidden rounded-logo-tile-20 bg-background-brand-bold-default text-logo-tile-20 font-bold leading-none text-text-on-brand">
                       {workspace.logo}
                     </span>
                   )}

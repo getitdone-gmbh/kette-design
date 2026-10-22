@@ -174,7 +174,7 @@ const TableHeader = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTable
           // that raw value stayed white in dark mode, occluding scrolled-under rows with a
           // light panel over a dark table. Token-driven, it now tracks the theme in both modes.
           stickyHeader &&
-            `sticky ${stickyMode === 'page' ? 'top-[var(--table-sticky-offset,var(--size-topbar))]' : 'top-0'} z-10 ${
+            `sticky ${stickyMode === 'page' ? 'top-[var(--table-sticky-offset,var(--size-topbar))]' : 'top-0'} z-sticky ${
               headerTone === 'muted' ? 'bg-muted' : 'bg-background'
             } shadow-[0_1px_0_0] shadow-border-muted`,
           className,
@@ -397,7 +397,7 @@ const tableHeadVariants = cva(
 // Pinned (sticky) first column. Solid page background plus the row's own tint (--table-pin-tint, set per row state) so hover, selected, invalid, active and striped rows stay opaque,
 // an inset gutter in the row's accent colour (--table-pin-accent) because the row border scrolls away, and an edge shadow that only shows while the table is scrolled sideways.
 const tablePinned = [
-  'sticky left-0 z-[1] bg-background',
+  'sticky left-0 z-raised bg-background',
   '[background-image:linear-gradient(var(--table-pin-tint,transparent),var(--table-pin-tint,transparent))]',
   '[box-shadow:inset_theme(borderWidth.4)_0_0_0_var(--table-pin-accent,transparent)]',
   'after:pointer-events-none after:absolute after:inset-y-0 after:left-full after:w-3 after:bg-gradient-to-r after:from-overlay-scrim after:to-transparent after:opacity-0 after:transition-opacity',
@@ -445,7 +445,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
         className={cn(
           tableHeadVariants({ density }),
           headerTone === 'muted' && 'bg-muted text-text-muted',
-          pinned && ['sticky left-0 z-[1]', headerTone === 'muted' ? 'bg-muted' : 'bg-background', tablePinned[3], tablePinned[4]],
+          pinned && ['sticky left-0 z-raised', headerTone === 'muted' ? 'bg-muted' : 'bg-background', tablePinned[3], tablePinned[4]],
           select && [tableSelectCell, selectCellPadding(density, zeroPreset)],
           align === 'right' && 'text-right',
           align === 'center' && 'text-center',

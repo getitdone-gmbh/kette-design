@@ -46,4 +46,11 @@ describe('titleAs', () => {
     render(ui('h4'));
     expect(level('Heading')).toBe('H4');
   });
+
+  it('CookieConsent renders a paragraph with titleAs="p" and keeps the region name', () => {
+    render(<CookieConsent title="Heading" titleAs="p" description="Text" onAccept={() => undefined} onDecline={() => undefined} />);
+    expect(screen.queryByRole('heading')).toBeNull();
+    expect(screen.getByText('Heading').tagName).toBe('P');
+    expect(screen.getByRole('region', { name: 'Heading' })).toBeTruthy();
+  });
 });

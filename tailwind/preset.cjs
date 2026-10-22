@@ -190,9 +190,9 @@ if (hasCssVars) {
         addComponents({
           '.typography-button': { 'font-family': 'inherit', 'font-size': 'inherit' },
         });
-        // kette-design only: 2.25 stroke for 12px glyphs (library tailwind.css). The 1.75 rule comes from the token preset above, so it is not repeated here.
+        // kette-design only: 2.25 stroke for 12px glyphs (library tailwind.css), icons marked data-stroke="fixed" keep their own stroke. The 1.75 rule comes from the token preset above, so it is not repeated here.
         addBase({
-          ":where(svg.lucide[stroke-width='2'].h-icon-2xs, svg.lucide[stroke-width='2'].size-icon-2xs, [class*='icon-2xs'] > svg.lucide[stroke-width='2'])": {
+          ":where(svg.lucide[stroke-width='2']:not([data-stroke='fixed']).h-icon-2xs, svg.lucide[stroke-width='2']:not([data-stroke='fixed']).size-icon-2xs, [class*='icon-2xs'] > svg.lucide[stroke-width='2']:not([data-stroke='fixed']))": {
             'stroke-width': 'var(--size-icon-stroke-sm, 2.25)',
           },
         });

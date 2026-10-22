@@ -141,7 +141,7 @@ const ChatWindow = React.forwardRef<HTMLElement, ChatWindowProps>(
         }}
         className={cn(
           // max-w keeps both float offsets (left-4 and right-4) inside the viewport on phones.
-          'z-50 flex w-sheet-sm max-w-[calc(100%-theme(spacing.8))] flex-col overflow-hidden rounded-surface border border-solid border-border bg-popover text-popover-foreground shadow-elevation-raised outline-none',
+          'z-banner flex w-sheet-sm max-w-[calc(100%-theme(spacing.8))] flex-col overflow-hidden rounded-surface border border-solid border-border bg-popover text-popover-foreground shadow-elevation-raised outline-none',
           positioning === 'fixed' ? 'fixed' : 'absolute',
           side === 'right' ? 'right-4' : 'left-4',
           'bottom-4',
